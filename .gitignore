@@ -17,7 +17,7 @@ backend/var/sessions/*
 !backend/var/SymfonyRequirements.php
 backend/vendor/
 backend/web/bundles/
-
+backend/node_modules
 
 
 # FRONTEND
