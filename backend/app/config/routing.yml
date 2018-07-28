@@ -1,0 +1,10 @@
+common:
+    resource: "@CommonBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /user
+    condition: "request.isXmlHttpRequest()"

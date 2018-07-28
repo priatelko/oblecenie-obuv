@@ -1,0 +1,101 @@
+<?php
+
+namespace CommonBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Sprava
+ *
+ * @ORM\Table(name="sprava", indexes={@ORM\Index(name="IDX_E5578BD43AE519E", columns={"id_user_from"}), @ORM\Index(name="IDX_E5578BD114DCF71", columns={"id_user_to"}), @ORM\Index(name="IDX_E5578BD1BB9D5A2", columns={"id_parent"}), @ORM\Index(name="IDX_E5578BD7AAAF543", columns={"id_artikel"})})
+ * @ORM\Entity
+ */
+class Sprava
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subject", type="string", length=50, nullable=true)
+     */
+    private $subject;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="text", type="text", length=65535, nullable=true)
+     */
+    private $text;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_create", type="datetime", nullable=false)
+     */
+    private $dateCreate;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_active", type="boolean", nullable=false)
+     */
+    private $isActive = '1';
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_reading", type="datetime", nullable=true)
+     */
+    private $dateReading;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \CommonBundle\Entity\Uzivatel
+     *
+     * @ORM\ManyToOne(targetEntity="CommonBundle\Entity\Uzivatel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user_to", referencedColumnName="id")
+     * })
+     */
+    private $idUserTo;
+
+    /**
+     * @var \CommonBundle\Entity\Sprava
+     *
+     * @ORM\ManyToOne(targetEntity="CommonBundle\Entity\Sprava")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_parent", referencedColumnName="id")
+     * })
+     */
+    private $idParent;
+
+    /**
+     * @var \CommonBundle\Entity\Uzivatel
+     *
+     * @ORM\ManyToOne(targetEntity="CommonBundle\Entity\Uzivatel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_user_from", referencedColumnName="id")
+     * })
+     */
+    private $idUserFrom;
+
+    /**
+     * @var \CommonBundle\Entity\Artikel
+     *
+     * @ORM\ManyToOne(targetEntity="CommonBundle\Entity\Artikel")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="id_artikel", referencedColumnName="id")
+     * })
+     */
+    private $idArtikel;
+
+
+}
+

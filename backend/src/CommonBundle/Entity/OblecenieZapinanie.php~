@@ -1,0 +1,54 @@
+<?php
+
+namespace CommonBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * OblecenieZapinanie
+ *
+ * @ORM\Table(name="oblecenie_zapinanie")
+ * @ORM\Entity
+ */
+class OblecenieZapinanie
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nazov", type="string", length=255, nullable=false)
+     */
+    private $nazov;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="zorad", type="integer", nullable=false)
+     */
+    private $zorad;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="CommonBundle\Entity\Oblecenie", mappedBy="oblecenieZapinanie")
+     */
+    private $oblecenie;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->oblecenie = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+}
+

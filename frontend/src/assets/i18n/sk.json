@@ -1,0 +1,45 @@
+{
+  "core": {
+    "projectTitle": "Oblečenie a obuv",
+    "portalTitle": "Portál, predaj a kúpa"
+  },
+  "common": {
+    "dress": "Oblečenie",
+    "shoes": "Obuv"
+  },
+  "page": {
+    "homepage": {
+      "title": "Oblečenie a obuv"
+    },
+    "pageNotFound": {
+      "title": "Stránka sa nenašla",
+      "body": "Pokračujte na hlavnej stránke"
+    }
+  },
+  "component": {
+    "header": {
+      "searchFilter": "Vyhľadávací filter",
+      "button": {
+        "filterOn": "Filtruj iba oblečenie",
+        "filterOff": "Filtruj iba obuv",
+        "filterBoth": "Filtruj oblečenie aj obuv",
+        "add": "Pridať oblečenie alebo obuv",
+        "advancedSearch": "Rozšírené vyhľadávanie",
+        "user": "Užívateľský účet"
+      },
+      "searchPlaceholder": "hľadaj...",
+      "user": {
+        "login": "Prihlásiť sa",
+        "regist": "Registrácia",
+        "forgotPassword": "Zabudol som heslo"
+      }
+    },
+    "user-regist": {
+      "title": "Registrácia predajcu/kupcu"
+    }
+  },
+
+
+  "things": "SK There {count, plural, =0{is} one{is} other{are}} {count, plural, =0{} one{a} other{several}} {count, plural, =0{nothing} one{thing} other{things}}",
+  "people": "{gender, select, male{He is} female{She is} other{They are}} {how}"
+}

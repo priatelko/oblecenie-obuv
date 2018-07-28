@@ -1,0 +1,68 @@
+<?php
+
+namespace CommonBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Currency
+ *
+ * @ORM\Table(name="currency")
+ * @ORM\Entity
+ */
+class Currency
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=10, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sign", type="string", length=5, nullable=false)
+     */
+    private $sign;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="valid_from", type="date", nullable=false)
+     */
+    private $validFrom;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="valid_to", type="date", nullable=false)
+     */
+    private $validTo;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date_create", type="datetime", nullable=false)
+     */
+    private $dateCreate;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+
+}
+
