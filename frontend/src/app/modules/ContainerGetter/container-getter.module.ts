@@ -10,7 +10,7 @@ export let ContainerInjector: Injector;
   declarations: []
 })
 export class ContainerGetterModule {
-  constructor(private injector: Injector) {
-    ContainerInjector = this.injector;
+  constructor(private _injector: Injector) {
+    ContainerInjector = this._injector;
   }
 }

@@ -1,0 +1,28 @@
+/**
+ * Bootstrap
+ */
+
+@import '~node_modules/bootstrap/scss/bootstrap.scss';
+
+// Overrides
+
+// dropdown
+.dropdown-item {
+  a {
+    text-decoration: none;
+    color: $text-color;
+  }
+
+  .icon {
+    vertical-align: middle;
+  }
+}
+
+
+/**
+ * Custom layout
+ */
+
+a {
+  cursor: pointer;
+}

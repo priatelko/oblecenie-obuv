@@ -1,4 +1,11 @@
 services:
-#    common.example:
-#        class: CommonBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    CommonBundle\Services\Helpers:
+        public: true
+        arguments: 
+            $manager: '@doctrine.orm.entity_manager'
+            $requestStack: '@request_stack'
+            
+    CommonBundle\Services\JwtAuth:
+        public: true
+        arguments: 
+            $manager: '@doctrine.orm.entity_manager'

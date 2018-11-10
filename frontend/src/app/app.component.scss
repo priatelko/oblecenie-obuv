@@ -1,0 +1,15 @@
+@import '~src/sass/variables';
+
+.flash-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: showFlashmessage .2s ease;
+  z-index: $zindex-loading-indicator;
+}
+
+@keyframes showFlashmessage {
+  0% {opacity: 0; transform: translate(-50%, -25%);}
+  100% {opacity: 1; transform: translate(-50%, -50%);}
+}

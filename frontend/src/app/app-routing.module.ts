@@ -7,7 +7,7 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { HomepageComponent } from './pages/homepage/homepage.component';
 
 const appRoutes: Routes = [
-  { path: '',   component: HomepageComponent, pathMatch: 'full', data: { title: 'page.homepage.title' } },
+  { path: '', component: HomepageComponent, pathMatch: 'full', data: { title: 'page.homepage.title' } },
   { path: '**', component: PageNotFoundComponent, data: { title: 'page.pageNotFound.title' } }
 ];
 

@@ -1,36 +1,37 @@
-<h1 class="sr-only">{{ 'core.projectTitle'|translate }}. {{ 'core.portalTitle'|translate }}.</h1>
+<h1 class="sr-only">{{ 'core.portalTitle'|translate }}.</h1>
+
 <div class="container-fluid / mt-2">
-  <form>
-    <legend class="sr-only">{{ 'component.header.searchFilter'|translate }}</legend>
+  <form role="search" id="searchForm">
     <div class="input-group input-group-lg">
       <div class="input-group-prepend">
-        <button type="button" class="btn"
-          title="{{ 'component.header.button.filterOn'|translate }} {{ 'common.dress'|translate }}"
+        <button type="button" class="btn btn-outline-primary btn-transparent" role="checkbox" [attr.aria-checked]="isActiveSearchType('dress') ? true : false"
+          title="{{ 'component.header.button.filterDress'|translate }}" aria-controls="searchForm"
           (click)="setActiveSearchType('dress')"
-          [ngClass]="{'btn-primary': isActiveSearchType('dress'), 'btn-outline-secondary': !isActiveSearchType('dress')}"><i class="oo-dress" aria-hidden="true"></i></button>
+          [ngClass]="{'btn-primary': isActiveSearchType('dress'), 'btn-outline-secondary': !isActiveSearchType('dress')}"><i class="oo-dress icon--lg" aria-hidden="true"></i></button>
       </div>
       <div class="input-group-prepend">
-        <button type="button" class="btn"
-          title="{{ 'component.header.button.filterOn'|translate }} {{ 'common.shoes'|translate }}"
+        <button type="button" class="btn btn-outline-primary btn-transparent" role="checkbox" [attr.aria-checked]="isActiveSearchType('shoes') ? true : false"
+          title="{{ 'component.header.button.filterShoes'|translate }}" aria-controls="searchForm"
           (click)="setActiveSearchType('shoes')"
-          [ngClass]="{'btn-primary': isActiveSearchType('shoes'), 'btn-outline-secondary': !isActiveSearchType('shoes')}"><i class="oo-shoe" aria-hidden="true"></i></button>
+          [ngClass]="{'btn-primary': isActiveSearchType('shoes'), 'btn-outline-secondary': !isActiveSearchType('shoes')}"><i class="oo-shoe icon--lg" aria-hidden="true"></i></button>
       </div>
-      <input class="form-control" type="search" placeholder="{{ 'component.header.searchPlaceholder'|translate }}" aria-label="Search">
-      <div class="input-group-append">
-        <button type="button" class="btn btn-outline-primary btn-transparent / text-color" title="{{ 'component.header.button.advancedSearch'|translate }}"><i class="icon icon--lg">more_vert</i></button>
-        <button type="button" class="btn btn-outline-primary btn-transparent / text-color" title="{{ 'component.header.button.add'|translate }}"><i class="icon icon--lg">add</i></button>
-        <div dropdown class="dropdown">
-          <button dropdownToggle type="button" class="btn btn-outline-primary btn-transparent / text-color / dropdown-toggle / h-100" title="{{ 'component.header.button.user'|translate }}" id="userAccountDropdown"><i class="icon icon--lg">person</i></button>
+      <input class="form-control" type="search" placeholder="{{ 'component.header.searchPlaceholder'|translate }}" tabindex="1">
 
+      <button type="button" class="input-group-append btn btn-outline-primary btn-transparent / text-color" title="{{ 'component.header.button.advancedSearch'|translate }}"><i class="icon icon--lg" aria-hidden="true">more_vert</i></button>
+      <nav class="input-group-append">
+        <h2 class="sr-only">{{ 'component.header.mainNavTitle'|translate }}.</h2>
+        <button type="button" class="btn btn-outline-primary btn-transparent / text-color" title="{{ 'component.header.button.add'|translate }}"><i class="icon icon--lg" aria-hidden="true">add</i></button>
+        <div dropdown class="dropdown">
+          <button dropdownToggle type="button" class="btn btn-outline-primary btn-transparent / text-color / dropdown-toggle / h-100" title="{{ 'component.header.button.user'|translate }}" id="userAccountDropdown"><i class="icon icon--lg" aria-hidden="true">person</i></button>
             <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="userAccountDropdown">
-              <li class="dropdown-item / pointer"><a href="#"><i class="icon" aria-hidden="true">input</i> {{ 'component.header.user.login'|translate }}</a></li>
+              <li class="dropdown-item / pointer" (click)="openLoginModal(loginModal)"><a href="#"><i class="icon" aria-hidden="true">input</i> {{ 'component.header.user.login'|translate }}</a></li>
               <li class="dropdown-item / pointer" (click)="openRegistModal(registModal)"><i class="icon" aria-hidden="true">person_add</i> {{ 'component.header.user.regist'|translate }}</li>
               <li class="dropdown-divider"></li>
               <li class="dropdown-item / pointer"><a href="#"><i class="icon" aria-hidden="true">person_outline</i> {{ 'component.header.user.forgotPassword'|translate }}</a></li>
             </ul>
 
         </div>
-      </div>
+      </nav>
     </div>
   </form>
   <div class="mt1">
@@ -43,4 +44,8 @@
 
 <ng-template #registModal>
   <app-user-regist [modalRef]="registModalRef"></app-user-regist>
+</ng-template>
+
+<ng-template #loginModal>
+  <app-user-login [modalRef]="loginModalRef"></app-user-login>
 </ng-template>

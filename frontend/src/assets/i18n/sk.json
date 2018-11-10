@@ -1,11 +1,17 @@
 {
   "core": {
     "projectTitle": "Oblečenie a obuv",
-    "portalTitle": "Portál, predaj a kúpa"
+    "portalTitle": "Portál, predaj a kúpa oblečenia a obuvy"
   },
   "common": {
     "dress": "Oblečenie",
-    "shoes": "Obuv"
+    "shoes": "Obuv",
+    "choose": "Vyberte si",
+    "youNavigated": "Presmerovali ste sa na",
+    "requestLoading": "Doťahujú sa vzdialené dáta",
+    "requestLoaded": "Vzdialené dáta sa dotiahli",
+    "close": "Zavrieť",
+    "loadingData": "Načítavam dáta..."
   },
   "page": {
     "homepage": {
@@ -18,10 +24,10 @@
   },
   "component": {
     "header": {
-      "searchFilter": "Vyhľadávací filter",
+      "mainNavTitle": "Hlavná navigácia",
       "button": {
-        "filterOn": "Filtruj iba oblečenie",
-        "filterOff": "Filtruj iba obuv",
+        "filterDress": "Filtruj iba oblečenie",
+        "filterShoes": "Filtruj iba obuv",
         "filterBoth": "Filtruj oblečenie aj obuv",
         "add": "Pridať oblečenie alebo obuv",
         "advancedSearch": "Rozšírené vyhľadávanie",
@@ -35,7 +41,44 @@
       }
     },
     "user-regist": {
-      "title": "Registrácia predajcu/kupcu"
+      "title": "Registrácia profilu",
+      "perex": "Pred dokončením registrácie si vyberte rolu (predajcu alebo kupcu) pod ktorou budete chcieť práve vystupovať.",
+      "fields": {
+        "email": {
+          "label": "Email",
+          "error": "Email nie je správne vyplnený."
+        },
+        "password": {
+          "label": "Heslo",
+          "error": "Heslo musí obsahovať 6 až 50 znakov."
+        },
+        "confirmPassword": {
+          "label": "Zopakuj heslo",
+          "error": "Heslo sa nezhoduje so zopakovaným heslom."
+        },
+        "role": {
+          "label": "Rola",
+          "error": "Vyberte rolu."
+        },
+        "submit": {
+          "label": "Zaregistruj"
+        }
+      },
+      "error": {
+        "1": "Nastala naočakávaná chyba.",
+        "2": "Email nie je správne vyplnený.",
+        "3": "Email už je zaregistrovaný."
+      },
+      "success": "Boli ste úspešne zaregistrovaný a zároveň prihlásený."
+    },
+    "user-login": {
+      "title": "Prihlásiť sa",
+      "perex": "Pred prihlásením si vyberte rolu (predajcu alebo kupcu) pod ktorou chcete práve teraz vystupovať.",
+      "fields": {
+        "submit": {
+          "label": "Prihlásiť sa"
+        }
+      }
     }
   },
 

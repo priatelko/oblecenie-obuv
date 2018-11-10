@@ -7,14 +7,15 @@ import { BaseComponent } from './base.component';
 
 import { ContainerGetterModule } from '../modules/ContainerGetter/container-getter.module';
 import { HeaderModule } from '../components/header/header.module';
-import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { CoreModule } from '../modules/SharedModule/core.module';
 
 @NgModule({
   imports: [
-    TranslateModule,
+    CoreModule,
     RouterModule,
-
+    CommonModule,
     HeaderModule,
   ],
   declarations: [
@@ -24,7 +25,9 @@ import { RouterModule } from '@angular/router';
     ListComponent
   ],
   exports: [
-    ContainerGetterModule
+    ContainerGetterModule,
+    CommonModule,
+    CoreModule
   ]
 })
 export class BaseModule { }

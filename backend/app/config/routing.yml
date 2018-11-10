@@ -1,10 +1,10 @@
 common:
     resource: "@CommonBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /api
 
 user:
     resource: "@UserBundle/Controller/"
     type:     annotation
-    prefix:   /user
-    condition: "request.isXmlHttpRequest()"
+    prefix:   /api/user
+#    condition: "request.isXmlHttpRequest()"

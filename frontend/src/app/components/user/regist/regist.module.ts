@@ -1,20 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { TranslateModule } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { RegistComponent } from './regist.component';
+import { CoreModule } from '../../../modules/SharedModule/core.module';
+import { MaterialModule } from '../../../modules/SharedModule/material.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
-    TranslateModule
+    HttpModule,
+    ReactiveFormsModule,
+    CoreModule,
+    MaterialModule
   ],
   declarations: [
     RegistComponent
   ],
   exports: [
-    RegistComponent
+    RegistComponent,
+    CoreModule
   ]
 })
 export class RegistModule { }
