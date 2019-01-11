@@ -1,0 +1,10 @@
+@mixin forn-control-reuired() {
+  border-left: .4rem solid $red;
+
+  &.ng-invalid.ng-touched {
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-color: $red;
+  }
+}

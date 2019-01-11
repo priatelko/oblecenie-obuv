@@ -1,77 +1,108 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Observable } from 'rxjs';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { Observable, Subscription } from 'rxjs';
 
-import { UserService } from '../user.service';
+import { UserService } from '../../../services/User/user.service';
 import { RoleEntityService, RoleEntity } from '../../../entity/role-entity.service';
+import { Validator } from 'src/app/custom/validator.custom';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-user-regist',
   templateUrl: './regist.component.html',
   styleUrls: ['./regist.component.scss']
 })
-export class RegistComponent implements OnInit {
-
-  @Input() modalRef: BsModalRef;
-
+export class RegistComponent implements OnInit, OnDestroy {
   registForm: FormGroup;
+  registSubscription: Subscription;
 
   roles$: Observable<RoleEntity[]>;
 
+  // Regist mode
+  componentMode = {
+    mode: 'regist',
+    submit: 'regist',
+  };
+
+  get isEditMode() {
+    return this.dialogData && this.dialogData.editProfile === true;
+  }
+
   constructor(
-    private _userService: UserService,
-    private _roleRepository: RoleEntityService,
+    private userService: UserService,
+    private roleRepository: RoleEntityService,
+    private dialogRef: MatDialogRef<RegistComponent>,
+    @Inject(MAT_DIALOG_DATA) public dialogData: any
   ) {
     this.registForm = this.createFormGroup();
   }
 
   ngOnInit() {
-    this.roles$ = this._roleRepository.findAll();
+    this.roles$ = this.roleRepository.findAll();
+
+      // Edit mode
+    if (this.isEditMode) {
+      this.componentMode = {
+        mode: 'editprofile',
+        submit: 'save',
+      };
+
+      this.registForm.patchValue(this.userService.identity);
+    }
   }
 
   createFormGroup(): FormGroup {
-    return new FormGroup({
+    const password = new FormControl(null, [
+      Validators.required,
+      Validator.trim(),
+      Validators.minLength(6),
+      Validators.maxLength(50),
+    ]);
+
+    const passwordConfirm = new FormControl(null, [
+      Validators.required,
+      Validator.trim(),
+      Validator.sameAs(password)
+    ]);
+
+    const formGroup = new FormGroup({
         email: new FormControl(null, [
           Validators.email,
           Validators.required,
+          Validator.trim(),
           Validators.maxLength(50),
         ]),
         role: new FormControl(null, [
           Validators.required
         ]),
-        passwords: new FormGroup({
-            password: new FormControl(null, [
-              Validators.required,
-              Validators.minLength(6),
-              Validators.maxLength(50)
-            ]),
-            passwordConfirm: new FormControl(null, [
-              Validators.required
-            ])
-          }, {
-            validators: this.passwordConfirming
-          }
-        )
+        password,
+        passwordConfirm
       },
     );
-  }
 
-  private passwordConfirming(c: AbstractControl): { invalid: boolean } {
-    if (c.get('password').value !== c.get('passwordConfirm').value) {
-        return {invalid: true};
+    if (this.isEditMode) {
+      formGroup.addControl('name', new FormControl(null, [Validators.required, Validator.trim()]));
+      formGroup.addControl('surname', new FormControl(null, [Validators.required, Validator.trim()]));
+      formGroup.removeControl('role');
     }
+
+    return formGroup;
   }
 
   onSubmit(): void {
-    this._userService.register(this.registForm.value);
+    this.registSubscription = this.userService.regist(this.registForm.value, this.isEditMode).subscribe((res) => {
+      if (!res.error) {
+        this.dialogRef.close();
+      }
+    });
+  }
 
-    // Make sure to create a deep copy of the form-model
-    // const result: ContactRequest = Object.assign({}, this.contactForm.value);
-    // result.personalData = Object.assign({}, result.personalData);
+  ngOnDestroy() {
+    if (!(this.registSubscription instanceof Subscription)) {
+      return;
+    }
 
-    // Do useful stuff with the gathered data
-    // console.log(result);
+    this.registSubscription.unsubscribe();
   }
 }

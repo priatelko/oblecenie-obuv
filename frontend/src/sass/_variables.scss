@@ -23,6 +23,7 @@ $dropdown-item-padding-x:           1rem;
 
 // Inject origins
 @import '~node_modules/bootstrap/scss/functions';
+@import '~node_modules/bootstrap/scss/mixins';
 @import '~node_modules/bootstrap/scss/variables';
 
 
@@ -32,4 +33,8 @@ $dropdown-item-padding-x:           1rem;
 
 // colors
 $text-color:                     $body-color;
-$zindex-loading-indicator:       2000;
+
+// zindex
+$zindex-middle:       5;
+$zindex-alert:        1010;
+$zindex-dropdown:     1020;

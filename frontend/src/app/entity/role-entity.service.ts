@@ -1,9 +1,8 @@
-import { Injectable, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 import { EntityInterface } from './entity-interface';
-import { GLOBAL } from '../services/global';
+import { ApiRequestService } from '../services/ApiRequest/api-request.service';
+import { Observable } from 'rxjs';
 
 export interface RoleEntity {
   id: string;
@@ -18,10 +17,10 @@ export class RoleEntityService implements EntityInterface {
   API = '/get/role';
 
   constructor(
-    private http: HttpClient
+    private apiRequestService: ApiRequestService
   ) {}
 
-  findAll(): Observable<any[]> {
-    return this.http.get<any[]>(GLOBAL.url + this.API);
+  findAll(): Observable<RoleEntity[]> {
+    return this.apiRequestService.Get<RoleEntity[]>(this.API);
   }
 }

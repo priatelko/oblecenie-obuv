@@ -1,8 +1,11 @@
 @import 'variables';
+@import 'mixins';
 @import 'fonts';
 @import 'bootstrap';
-@import '~@angular/material/theming';
+// @import '~@angular/material/theming';
+@import 'ng-material';
 @import 'layout';
 @import 'shared';
 @import 'buttons';
+@import 'form';
 @import 'helpers';

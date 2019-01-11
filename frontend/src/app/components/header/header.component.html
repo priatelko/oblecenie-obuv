@@ -20,17 +20,25 @@
       <button type="button" class="input-group-append btn btn-outline-primary btn-transparent / text-color" title="{{ 'component.header.button.advancedSearch'|translate }}"><i class="icon icon--lg" aria-hidden="true">more_vert</i></button>
       <nav class="input-group-append">
         <h2 class="sr-only">{{ 'component.header.mainNavTitle'|translate }}.</h2>
-        <button type="button" class="btn btn-outline-primary btn-transparent / text-color" title="{{ 'component.header.button.add'|translate }}"><i class="icon icon--lg" aria-hidden="true">add</i></button>
-        <div dropdown class="dropdown">
-          <button dropdownToggle type="button" class="btn btn-outline-primary btn-transparent / text-color / dropdown-toggle / h-100" title="{{ 'component.header.button.user'|translate }}" id="userAccountDropdown"><i class="icon icon--lg" aria-hidden="true">person</i></button>
-            <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" aria-labelledby="userAccountDropdown">
-              <li class="dropdown-item / pointer" (click)="openLoginModal(loginModal)"><a href="#"><i class="icon" aria-hidden="true">input</i> {{ 'component.header.user.login'|translate }}</a></li>
-              <li class="dropdown-item / pointer" (click)="openRegistModal(registModal)"><i class="icon" aria-hidden="true">person_add</i> {{ 'component.header.user.regist'|translate }}</li>
-              <li class="dropdown-divider"></li>
-              <li class="dropdown-item / pointer"><a href="#"><i class="icon" aria-hidden="true">person_outline</i> {{ 'component.header.user.forgotPassword'|translate }}</a></li>
-            </ul>
-
-        </div>
+        <button type="button"  class="btn btn-outline-primary btn-transparent / text-color" title="{{ 'component.header.button.add'|translate }}"><i class="icon icon--lg" aria-hidden="true">add</i></button>
+        <button [matMenuTriggerFor]="menu" type="button" class="btn btn-outline-primary btn-transparent / text-color" title="{{ 'component.header.button.user'|translate }}" id="userAccountDropdown"><i class="icon icon--lg" aria-hidden="true">person</i></button>
+        <mat-menu #menu="matMenu" xPosition="after" yPosition="below" aria-labelledby="userAccountDropdown">
+          <!-- Not logged -->
+          <ng-container *ngIf="!userService.logged">
+            <div class="dropdown-item / pointer" (click)="openLoginModal()"><i class="icon" aria-hidden="true">input</i> {{ 'component.header.user.login'|translate }}</div>
+            <div class="dropdown-item / pointer" (click)="openRegistModal()"><i class="icon" aria-hidden="true">person_add</i> {{ 'component.header.user.regist'|translate }}</div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item / pointer"><a href="#"><i class="icon" aria-hidden="true">person_outline</i> {{ 'component.header.user.forgotPassword'|translate }}</a></div>
+          </ng-container>
+          <!-- Logged -->
+          <ng-container *ngIf="userService.logged">
+            <div class="dropdown-header">{{ userService.role }}</div>
+            <div class="dropdown-item / pointer" (click)="openEditProfileModal()"><i class="icon" aria-hidden="true">account_circle</i> {{ 'component.header.user.editProfile'|translate }}</div>
+            <div class="dropdown-item / pointer" (click)="changeRole()"><i class="icon" aria-hidden="true">compare_arrows</i> {{ 'component.header.user.switchRole'|translate }}</div>
+            <div class="dropdown-divider"></div>
+            <div class="dropdown-item / pointer" (click)="userService.logout()"><i class="icon" aria-hidden="true">power_settings_new</i> {{ 'component.header.user.logout'|translate }}</div>
+          </ng-container>
+        </mat-menu>
       </nav>
     </div>
   </form>
@@ -41,11 +49,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #registModal>
-  <app-user-regist [modalRef]="registModalRef"></app-user-regist>
-</ng-template>
-
-<ng-template #loginModal>
-  <app-user-login [modalRef]="loginModalRef"></app-user-login>
-</ng-template>

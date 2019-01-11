@@ -1,5 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { registerLocaleData } from '@angular/common';
+import localeSk from '@angular/common/locales/sk';
 
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 // for Http import LoadingBarHttpModule:
@@ -10,12 +12,14 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 import { BaseModule } from './pages/base.module';
 import { CoreModule } from './modules/SharedModule/core.module';
 import { httpInterceptorProviders } from './http-interceptors';
 import { CacheMapService } from './services/CacheMap/cache-map.service';
 import { WaiStatusComponent } from './components/header/wai-status/wai-status.component';
+import { AppRoutingModule } from './app-routing.module';
+
+registerLocaleData(localeSk, 'sk');
 
 @NgModule({
   declarations: [
@@ -23,9 +27,8 @@ import { WaiStatusComponent } from './components/header/wai-status/wai-status.co
     WaiStatusComponent
   ],
   imports: [
-    HttpClientModule,
-    AppRoutingModule,
     BaseModule,
+    HttpClientModule,
     LoadingBarHttpClientModule,
     CoreModule,
 
@@ -36,7 +39,9 @@ import { WaiStatusComponent } from './components/header/wai-status/wai-status.co
     // for HttpClient use:
     LoadingBarHttpClientModule,
     // for Core use:
-    LoadingBarModule.forRoot()
+    LoadingBarModule.forRoot(),
+
+    AppRoutingModule,
   ],
   exports: [
     HttpClientModule
@@ -45,7 +50,9 @@ import { WaiStatusComponent } from './components/header/wai-status/wai-status.co
   providers: [
     ...httpInterceptorProviders,
     CacheMapService,
-    { provide: Cache, useClass: CacheMapService }
+    { provide: Cache, useClass: CacheMapService },
+    // { provide: LOCALE_ID, deps: [TranslateService], useFactory: (service) => service.currentLang },
+    { provide: LOCALE_ID, useValue: 'sk' },
   ],
 
   bootstrap: [AppComponent]

@@ -7,19 +7,52 @@
     "dress": "Oblečenie",
     "shoes": "Obuv",
     "choose": "Vyberte si",
-    "youNavigated": "Presmerovali ste sa na",
-    "requestLoading": "Doťahujú sa vzdialené dáta",
-    "requestLoaded": "Vzdialené dáta sa dotiahli",
-    "close": "Zavrieť",
-    "loadingData": "Načítavam dáta..."
+    "youNavigated": "Presmerovali ste sa na.",
+    "requestLoading": "Doťahujú sa vzdialené dáta. Počkajte chvíľu prosím.",
+    "requestLoaded": "Vzdialené dáta sa dotiahli. Môžete pokračovať",
+    "close": "Zavrieť.",
+    "loadingData": "Načítavam dáta.",
+    "form": {
+      "error": {
+        "required": "Políčko je povinné.",
+        "email": "Email nie je validný.",
+        "minlength": "Min počet znakov je %requiredLength.",
+        "sameAs": "Kľúčové znaky sa nezhodujú."
+      },
+      "fields": {
+        "email": "Email",
+        "password": "Heslo",
+        "confirmPassword": "Zopakuj heslo",
+        "role": "Rola",
+        "name": "Meno",
+        "surname": "Priezvisko",
+        "submit-regist": "Zaregistruj",
+        "submit-save": "Uložiť",
+        "submit-login": "Prihlásiť sa"
+      }
+    },
+    "response": {
+      "error": {
+        "1": "Nastala neočakávaná chyba. Skúste zopakovať akciu. Pokiaľ sa chyba stále opakuje, kontaktujte nás prosím.",
+        "2": "Email nie je validný.",
+        "3": "Email už je zaregistrovaný.",
+        "4": "Email alebo heslo nie je správne.",
+        "5": "Chyba autorizácie! Akcia vyžaduje aby ste boli prihlásený."
+      }
+    },
+    "user": {
+      "ROLE_SELLER": "Predavač",
+      "ROLE_BUYER": "Kupec",
+      "logout": "Boli ste úspešne odhlásený."
+    }
   },
   "page": {
     "homepage": {
       "title": "Oblečenie a obuv"
     },
     "pageNotFound": {
-      "title": "Stránka sa nenašla",
-      "body": "Pokračujte na hlavnej stránke"
+      "title": "Stránka sa nenašla.",
+      "body": "Pokračujte na hlavnej stránke."
     }
   },
   "component": {
@@ -37,48 +70,29 @@
       "user": {
         "login": "Prihlásiť sa",
         "regist": "Registrácia",
-        "forgotPassword": "Zabudol som heslo"
+        "forgotPassword": "Zabudol som heslo",
+        "editProfile": "Upraviť profil",
+        "logout": "Odhlásiť",
+        "switchRole": "Prepnúť rolu"
       }
     },
     "user-regist": {
       "title": "Registrácia profilu",
-      "perex": "Pred dokončením registrácie si vyberte rolu (predajcu alebo kupcu) pod ktorou budete chcieť práve vystupovať.",
-      "fields": {
-        "email": {
-          "label": "Email",
-          "error": "Email nie je správne vyplnený."
-        },
-        "password": {
-          "label": "Heslo",
-          "error": "Heslo musí obsahovať 6 až 50 znakov."
-        },
-        "confirmPassword": {
-          "label": "Zopakuj heslo",
-          "error": "Heslo sa nezhoduje so zopakovaným heslom."
-        },
-        "role": {
-          "label": "Rola",
-          "error": "Vyberte rolu."
-        },
-        "submit": {
-          "label": "Zaregistruj"
-        }
-      },
-      "error": {
-        "1": "Nastala naočakávaná chyba.",
-        "2": "Email nie je správne vyplnený.",
-        "3": "Email už je zaregistrovaný."
-      },
+      "perex": "Pred dokončením registrácie si vyberte rolu (predajcu alebo kupcu) pod ktorou budete následne prihlásený.",
       "success": "Boli ste úspešne zaregistrovaný a zároveň prihlásený."
+    },
+    "user-editprofile": {
+      "title": "Úprava profilu",
+      "perex": "Pri registrácií sme Vás nechceli zdržovať. Skúste prosím doplniť ostatné údaje.",
+      "success": "Profil bol úspešne upravený."
     },
     "user-login": {
       "title": "Prihlásiť sa",
       "perex": "Pred prihlásením si vyberte rolu (predajcu alebo kupcu) pod ktorou chcete práve teraz vystupovať.",
-      "fields": {
-        "submit": {
-          "label": "Prihlásiť sa"
-        }
-      }
+      "success": "Boli ste úspešne prihlásený."
+    },
+    "user-role-changed": {
+      "success": "Rola bola úspešne prepnutá"
     }
   },
 

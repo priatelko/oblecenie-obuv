@@ -3,7 +3,7 @@ import { Router, Event, NavigationEnd, NavigationError, NavigationCancel } from 
 
 import { WaiStatusService } from './components/header/wai-status/wai-status.service';
 import { TranslateService } from '@ngx-translate/core';
-import { FlashMessageService, FlashMessage } from './services/FlashMessage/flash-message.service';
+import { FlashMessageService } from './services/FlashMessage/flash-message.service';
 
 @Component({
   selector: 'app-root',
@@ -12,20 +12,14 @@ import { FlashMessageService, FlashMessage } from './services/FlashMessage/flash
 })
 
 export class AppComponent {
-  flashmessage: FlashMessage[] = [];
-
   constructor(
-    private _router: Router,
-    private _waiService: WaiStatusService,
-    private _translateService: TranslateService,
-    private _flashMessage: FlashMessageService
+    private router: Router,
+    private waiService: WaiStatusService,
+    private translateService: TranslateService,
+    public flashMessageService: FlashMessageService
   ) {
-    _router.events.subscribe((routerEvent: Event) => {
+    router.events.subscribe((routerEvent: Event) => {
       this.checkRouterEvent(routerEvent);
-    });
-
-    _flashMessage.message$.subscribe((res) => {
-      this.flashmessage.push(res);
     });
   }
 
@@ -33,13 +27,13 @@ export class AppComponent {
     if (routerEvent instanceof NavigationEnd ||
         routerEvent instanceof NavigationCancel ||
         routerEvent instanceof NavigationError) {
-      this._translateService.get('common.youNavigated').subscribe(res => {
-        this._waiService.updateMessage(res, true);
+      this.translateService.get('common.youNavigated').subscribe(res => {
+        this.waiService.updateMessage(res, true);
       });
     }
   }
 
   removeFlashmessage(i) {
-    this.flashmessage.splice(i, 1);
+    this.flashMessageService.removeFlashMessage(i);
   }
 }

@@ -16,6 +16,7 @@ export class WaiStatusService {
   constructor() {}
 
   public updateMessage(msg, assertive = false) {
+    console.log('WAI service', msg);
     this.status$.next({
       message: msg,
       assertive: assertive

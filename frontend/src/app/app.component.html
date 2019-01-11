@@ -2,10 +2,12 @@
 
 <app-wai-status></app-wai-status>
 
-<aside *ngIf="flashmessage.length" class="flash-message" role="alert" aria-live="assertive" aria-atomic="true">
-  <div *ngFor="let msg of flashmessage; let i = index; let last = last" class="shadow-lg / alert alert-{{msg.type}}" [class.mb-0]="last">
-    {{msg.message|translate}}
-    <button (click)="removeFlashmessage(i)" type="button" class="close / ml-2" [attr.aria-label]="'common.close'|translate">
+<aside *ngIf="flashMessageService.flashmessages.length" class="flash-message" role="alert" aria-live="assertive" aria-atomic="true">
+  <div *ngFor="let msg of flashMessageService.flashmessages; let last = last" class="shadow-sm / alert alert-{{msg.class}}" [class.mb-0]="last">
+    <span class="icon">{{msg.icon}}</span>
+    <span>{{msg.message|translate}}</span>
+    <time class="ml-4">{{msg.date | date:'shortTime'}}</time>
+    <button (click)="removeFlashmessage(msg)" type="button" class="close / ml-2" [attr.aria-label]="'common.close'|translate">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

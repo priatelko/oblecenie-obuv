@@ -1,136 +1,78 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router, ActivatedRoute, Params} from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { BsModalRef } from 'ngx-bootstrap/modal';
-
-import { UserService } from '../user.service';
-import { Observable } from 'rxjs';
+import { UserService } from '../../../services/User/user.service';
+import { Observable, Subscription } from 'rxjs';
 import { RoleEntity, RoleEntityService } from '../../../entity/role-entity.service';
 import { merge } from 'lodash';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-user-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-
-  @Input() modalRef: BsModalRef;
-
+export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
-
-  public user;
-  public identity;
-  public token;
+  loginSubscription: Subscription;
 
   roles$: Observable<RoleEntity[]>;
 
+  public user;
+
   constructor(
-    private _route: ActivatedRoute,
-    private _router: Router,
-    private _userService: UserService,
-    private _roleRepository: RoleEntityService,
+    private userService: UserService,
+    private roleRepository: RoleEntityService,
+    private dialogRef: MatDialogRef<LoginComponent>
   ) {
     this.loginForm = this.createFormGroup();
 
     this.user = {
       'email' : '',
-      'password' : '',
-      'getHash' : 'true'
+      'password' : ''
     };
   }
 
   ngOnInit() {
-    this.roles$ = this._roleRepository.findAll();
-
-    this.logout();
-    this.redirectIfIdentity();
+    this.roles$ = this.roleRepository.findAll();
   }
 
   createFormGroup(): FormGroup {
     return new FormGroup({
-        email: new FormControl(null, [
-          Validators.email,
-          Validators.required,
-          Validators.maxLength(50),
-        ]),
-        password: new FormControl(null, [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(50)
-        ]),
-        role: new FormControl(null, [
-          Validators.required
-        ]),
-      });
-  }
-
-  logout() {
-    this._route.params.forEach((params: Params) => {
-
-      const logout = +params['id'];
-      if (logout === 1) { // delete all session
-        localStorage.removeItem('identity');
-        localStorage.removeItem('token');
-        console.log('User logged out');
-
-        this.identity = null;
-        this.token = null;
-
-        window.location.href = '/';
-      }
+      email: new FormControl(null, [
+        Validators.email,
+        Validators.required,
+        Validators.maxLength(50),
+      ]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(50)
+      ]),
+      role: new FormControl(null, [
+        Validators.required
+      ]),
     });
   }
 
-  redirectIfIdentity() {
-    const identity = this._userService.getIdentity();
-    if (identity != null && identity.sub) {
-      this._router.navigate(['/']);
-    }
-  }
-
   onSubmit(): void {
-    this._userService.signup(merge(this.user, this.loginForm.value)).subscribe(
+    const login = this.userService.login(merge(this.user, this.loginForm.value));
+
+    this.loginSubscription = login.subscribe(
       response => {
-        this.identity = response;
-
-        if (this.identity.lenght <= 1) {
-          console.log('Server error');
-        }{
-          console.log(this.identity); return;
-
-          /*if (!this.identity.status) {
-            localStorage.setItem('identity', JSON.stringify(this.identity));
-
-            // to get token
-            this.user.getHash = null;
-            this._userService.signup(this.user).subscribe(
-              // tslint:disable-next-line:no-shadowed-variable
-              response => {
-                this.token = response;
-
-                if (this.identity.lenght <= 1) {
-                  console.log('Server error');
-                }{
-                  if (!this.identity.status) {
-                    localStorage.setItem('token', JSON.stringify(this.token));
-                    window.location.href = '/';
-                  }
-                }
-              },
-              error => {
-                console.log(<any>error);
-              }
-            );
-
-          }*/
+        if (!response.error) {
+          this.dialogRef.close();
         }
-      },
-      error => {
-        console.log(<any>error);
       }
     );
+  }
+
+  ngOnDestroy() {
+    if (!(this.loginSubscription instanceof Subscription)) {
+      return;
+    }
+
+    this.loginSubscription.unsubscribe();
   }
 
 }

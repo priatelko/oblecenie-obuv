@@ -7,13 +7,12 @@ import { TranslateModule, TranslateLoader, TranslateCompiler, MissingTranslation
 import { createTranslateLoader, MyMissingTranslationHandler } from '../Translator/translator.module';
 
 import { SelectOptionDirective } from '../../directive/select-option.directive';
-import { LoadingDirective } from '../../directive/loading.directive';
 import { LoaderModule } from '../../components/loader/loader.module';
+import { apiRequestServiceCreator, ApiRequestService } from 'src/app/services/ApiRequest/api-request.service';
 
 @NgModule({
   declarations: [
-    SelectOptionDirective,
-    LoadingDirective
+    SelectOptionDirective
   ],
   imports: [
     BrowserModule,
@@ -36,10 +35,15 @@ import { LoaderModule } from '../../components/loader/loader.module';
     BrowserModule,
     TranslateModule,
     SelectOptionDirective,
-    LoadingDirective,
     LoaderModule
   ],
-  providers: []
+  providers: [
+    {
+      provide: ApiRequestService,
+      useFactory: apiRequestServiceCreator,
+      deps: [HttpClient]
+    },
+  ]
 })
 
 export class CoreModule {}

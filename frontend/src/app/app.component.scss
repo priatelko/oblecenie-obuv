@@ -2,14 +2,29 @@
 
 .flash-message {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: showFlashmessage .2s ease;
-  z-index: $zindex-loading-indicator;
+  width: calc(100% - 4%);
+  top: 12vh;
+  right: 2%;
+  z-index: $zindex-alert;
+
+  @include media-breakpoint-up(lg) {
+    width: 60%;
+  }
 }
 
-@keyframes showFlashmessage {
-  0% {opacity: 0; transform: translate(-50%, -25%);}
-  100% {opacity: 1; transform: translate(-50%, -50%);}
+.alert {
+  display: flex;
+
+  span:first-child {
+    flex-shrink: 1;
+    padding-right: $alert-padding-x / 2;
+
+    + span {
+      flex-grow: 1;
+
+      + span {
+        white-space: nowrap;
+      }
+    }
+  }
 }

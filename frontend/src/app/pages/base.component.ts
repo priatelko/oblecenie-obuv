@@ -10,30 +10,35 @@ import { ContainerInjector } from '../modules/ContainerGetter/container-getter.m
 export class BaseComponent implements OnInit {
 
   private titleService;
-  public ngxTranslateService;
+  public translateService;
 
   constructor(
-    public _activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute
   ) {
       // Get services manually
     this.titleService = ContainerInjector.get(Title);
-    this.ngxTranslateService = ContainerInjector.get(TranslateService);
+    this.translateService = ContainerInjector.get(TranslateService);
 
       // Set translation lang
-    this.ngxTranslateService.setDefaultLang('sk');
-    this.ngxTranslateService.use('sk');
+    this.translateService.setDefaultLang('sk');
+    this.translateService.use('sk');
   }
 
   ngOnInit() {
     this.setRouteTitle();
+    this.setHTMLlangAttr();
   }
 
   protected setRouteTitle() {
-    const langKey = this._activatedRoute.snapshot.data['title'];
+    const langKey = this.activatedRoute.snapshot.data['title'];
 
-    this.ngxTranslateService.get(langKey).subscribe((res: string) => {
+    this.translateService.get(langKey).subscribe((res: string) => {
       this.titleService.setTitle(res);
     });
+  }
+
+  private setHTMLlangAttr() {
+    document.getElementsByTagName('html')[0].setAttribute('lang', this.translateService.currentLang);
   }
 
 }

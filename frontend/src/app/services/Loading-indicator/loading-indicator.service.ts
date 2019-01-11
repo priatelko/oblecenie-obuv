@@ -10,8 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class LoadingIndicatorService {
 
   constructor(
-    private _waiService: WaiStatusService,
-    private _translateService: TranslateService
+    private waiService: WaiStatusService,
+    private translateService: TranslateService
     ) {}
 
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -27,8 +27,8 @@ export class LoadingIndicatorService {
   onStarted(req: HttpRequest<any>): void {
     this.requests.push(req);
     // this.notify();
-    this._translateService.get('common.requestLoading').subscribe(res => {
-      this._waiService.updateMessage(res, true);
+    this.translateService.get('common.requestLoading').subscribe(res => {
+      this.waiService.updateMessage(res, true);
     });
   }
 
@@ -41,8 +41,8 @@ export class LoadingIndicatorService {
       this.requests.splice(index, 1);
     }
     // this.notify();
-    this._translateService.get('common.requestLoaded').subscribe(res => {
-      this._waiService.updateMessage(res, true);
+    this.translateService.get('common.requestLoaded').subscribe(res => {
+      this.waiService.updateMessage(res, true);
     });
   }
 

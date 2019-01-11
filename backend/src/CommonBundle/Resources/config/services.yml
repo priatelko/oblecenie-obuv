@@ -9,3 +9,4 @@ services:
         public: true
         arguments: 
             $manager: '@doctrine.orm.entity_manager'
+            $helpers: '@CommonBundle\Services\Helpers'

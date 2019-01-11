@@ -1,26 +1,43 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpResponse, HttpHandler } from '@angular/common/http';
 import { of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, finalize } from 'rxjs/operators';
 import { CacheMapService } from '../services/CacheMap/cache-map.service';
-
-const CACHABLE_URL = '/api/get';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CachingInterceptor implements HttpInterceptor {
   private requests: HttpRequest<any>[] = [];
+  private requestOngoingMap = new Map<string, boolean>();
 
   constructor(
-    private _cache: CacheMapService
+    private cache: CacheMapService
   ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRequestCachable(req)) {
-      return next.handle(req);
+      const requestHash = req.urlWithParams + '__' + req.method;
+
+        // ak prave prebieha request
+      if (this.requestOngoingMap.get(requestHash) === true) {
+        console.log('Request is already ongoing...');
+          // posleme dalej prazdy request
+        return of(new HttpResponse({body: ''}));
+      } else {
+          // ho ulozime do prebiehajucich requestov
+          this.requestOngoingMap.set(requestHash, true);
+      }
+
+      return next.handle(req).pipe(
+        finalize(() => {
+          console.log('Request is finished');
+          this.requestOngoingMap.delete(requestHash);
+        })
+      );
     }
-    const cachedResponse = this._cache.get(req);
+
+    const cachedResponse = this.cache.get(req);
     if (cachedResponse !== null) {
       return of(cachedResponse);
     }
@@ -28,13 +45,13 @@ export class CachingInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       tap(event => {
         if (event instanceof HttpResponse) {
-          this._cache.put(req, event);
+          this.cache.put(req, event);
         }
       })
     );
   }
 
   private isRequestCachable(req: HttpRequest<any>) {
-    return (req.method === 'GET') && (req.url.indexOf(CACHABLE_URL) > -1);
+    return Boolean(req.headers.get('X-CACHABLE'));
   }
 }

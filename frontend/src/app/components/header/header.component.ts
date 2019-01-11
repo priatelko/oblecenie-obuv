@@ -1,7 +1,10 @@
 import { Component, TemplateRef } from '@angular/core';
 import { SearchModelService } from '../../models/SearchModel/search-model.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { MatDialog } from '@angular/material';
+import { RegistComponent } from '../user/regist/regist.component';
+import { LoginComponent } from '../user/login/login.component';
+import { UserService } from 'src/app/services/User/user.service';
+import { GLOBAL } from '../../services/global';
 
 @Component({
   selector: 'app-header',
@@ -10,12 +13,10 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 })
 
 export class HeaderComponent {
-  registModalRef: BsModalRef;
-  loginModalRef: BsModalRef;
-
   constructor(
     public searchModel: SearchModelService,
-    private modalService: BsModalService
+    private dialog: MatDialog,
+    public userService: UserService
   ) {}
 
   // Filter switch
@@ -28,10 +29,25 @@ export class HeaderComponent {
   }
 
   // Modals
-  openRegistModal(template: TemplateRef<any>) {
-    this.registModalRef = this.modalService.show(template, {class: 'modal-lg'});
+  openRegistModal() {
+    this.dialog.open(RegistComponent, {
+      width: GLOBAL.dialogWidth
+    });
   }
-  openLoginModal(template: TemplateRef<any>) {
-    this.loginModalRef = this.modalService.show(template, {class: 'modal-lg'});
+  openEditProfileModal() {
+    this.dialog.open(RegistComponent, {
+      data: {editProfile: true},
+      width: GLOBAL.dialogWidth
+    });
+  }
+  openLoginModal() {
+    this.dialog.open(LoginComponent, {
+      width: GLOBAL.dialogWidth
+    });
+  }
+
+  // Actions
+  changeRole() {
+    this.userService.changeRole();
   }
 }

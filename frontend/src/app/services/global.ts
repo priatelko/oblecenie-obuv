@@ -1,3 +1,4 @@
 export const GLOBAL = {
-  url: 'http://localhost/oblecenieobuv-sf3/backend/web/app_dev.php/api'
+  url: 'http://localhost:8000/api',
+  dialogWidth: '800px'
 };

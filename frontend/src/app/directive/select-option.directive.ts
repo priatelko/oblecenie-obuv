@@ -10,7 +10,7 @@ export class SelectOptionDirective implements OnInit {
 
   constructor(
     private el: ElementRef,
-    private _translateService: TranslateService
+    private translateService: TranslateService
     ) {}
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export class SelectOptionDirective implements OnInit {
         // Default value - vyberte si
       case (typeof data.default !== 'undefined' && data.default === true):
         let transDefault = '';
-        this._translateService.get('common.choose').subscribe(res => {
+        this.translateService.get('common.choose').subscribe(res => {
           transDefault = res;
         });
         return transDefault;

@@ -14,9 +14,9 @@ export class WaiStatusComponent {
   };
 
   constructor(
-    private _waiService: WaiStatusService
+    private waiService: WaiStatusService
   ) {
-    this._waiService.status$.subscribe((res) => {
+    this.waiService.status$.subscribe((res) => {
       if (!res) {
         return;
       }

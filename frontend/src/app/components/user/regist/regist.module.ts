@@ -1,23 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { RegistComponent } from './regist.component';
 import { CoreModule } from '../../../modules/SharedModule/core.module';
 import { MaterialModule } from '../../../modules/SharedModule/material.module';
+import { FormModule } from 'src/app/modules/SharedModule/form.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     HttpModule,
-    ReactiveFormsModule,
     CoreModule,
-    MaterialModule
+    MaterialModule,
+    MatDialogModule,
+    FormModule
   ],
   declarations: [
-    RegistComponent
+    RegistComponent,
   ],
   exports: [
     RegistComponent,

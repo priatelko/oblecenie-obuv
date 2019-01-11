@@ -1,20 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { LoginComponent } from './login.component';
 import { CoreModule } from '../../../modules/SharedModule/core.module';
 import { MaterialModule } from '../../../modules/SharedModule/material.module';
+import { FormModule } from 'src/app/modules/SharedModule/form.module';
 
 
 @NgModule({
   imports: [
     CommonModule,
     HttpModule,
-    ReactiveFormsModule,
+    FormModule,
     CoreModule,
-    MaterialModule
+    MaterialModule,
+    MatDialogModule
   ],
   declarations: [
     LoginComponent

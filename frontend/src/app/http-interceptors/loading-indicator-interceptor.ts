@@ -19,7 +19,6 @@ export class LoadingIndicatorInterceptor implements HttpInterceptor {
       .pipe(
         // emit onFinished event after request execution
         finalize(() => this.loadingIndicatorService.onFinished(req))
-      )
-      ;
+      );
   }
 }

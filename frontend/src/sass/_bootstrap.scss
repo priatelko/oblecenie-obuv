@@ -6,7 +6,7 @@
 
 // Overrides
 
-// dropdown
+// Dropdown
 .dropdown-item {
   a {
     text-decoration: none;
@@ -16,6 +16,17 @@
   .icon {
     vertical-align: middle;
   }
+}
+
+// Modal
+.modal-title {
+  @extend .h4;
+}
+
+
+// Formn
+.form-group.row {
+  align-items: center;
 }
 
 

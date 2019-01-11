@@ -53,5 +53,9 @@ class Helpers {
 		return $this->manager->getRepository($entity)->findOneById($id);
 	}
 	
+	public function save($entity) {
+        $this->manager->persist($entity);
+        $this->manager->flush();
+    }
 	
 }
