@@ -39,7 +39,7 @@ export class FormControlDirective implements AfterViewInit {
     this.errEl.classList.add('alert', 'alert-danger', 'd-none');
     this.errEl.setAttribute('role', 'alert');
 
-    /* ARIA */
+    /** ARIA */
     // DescribedBy
     this.el.nativeElement.setAttribute('aria-describedby', errMsgId);
     // Required

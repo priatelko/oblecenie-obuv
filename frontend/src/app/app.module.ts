@@ -12,11 +12,11 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 
 import { AppComponent } from './app.component';
-import { BaseModule } from './pages/base.module';
-import { CoreModule } from './modules/SharedModule/core.module';
-import { httpInterceptorProviders } from './http-interceptors';
-import { CacheMapService } from './services/CacheMap/cache-map.service';
-import { WaiStatusComponent } from './components/header/wai-status/wai-status.component';
+import { BaseModule } from './page/base.module';
+import { CoreModule } from './module/SharedModule/core.module';
+import { httpInterceptorProviders } from './http-interceptor';
+import { CacheMapService } from './service/CacheMap/cache-map.service';
+import { WaiStatusComponent } from './component/header/wai-status/wai-status.component';
 import { AppRoutingModule } from './app-routing.module';
 
 registerLocaleData(localeSk, 'sk');

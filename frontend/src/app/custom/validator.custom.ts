@@ -1,14 +1,11 @@
 import { NgControl, ValidatorFn, AbstractControl, FormControl } from '@angular/forms';
 import { isUndefined, isNull } from 'lodash';
 import { TranslateService } from '@ngx-translate/core';
-import { ContainerInjector } from '../modules/ContainerGetter/container-getter.module';
+import { ContainerInjector } from '../module/ContainerGetter/container-getter.module';
 
 export class Validator {
 
-  /*
-   * Validators
-   */
-
+  /** Validators */
   static sameAs(asControl: FormControl): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
       return asControl.value !== control.value ? {sameAs: true} : null;
@@ -22,10 +19,7 @@ export class Validator {
     };
   }
 
-  /*
-   * Helper methods
-   */
-
+  /** Helper methods */
   static getErrors(control: NgControl) {
     const err = [];
 

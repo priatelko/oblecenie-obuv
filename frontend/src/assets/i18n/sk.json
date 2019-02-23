@@ -26,18 +26,33 @@
         "role": "Rola",
         "name": "Meno",
         "surname": "Priezvisko",
+        "submit": "Odoslať",
         "submit-regist": "Zaregistruj",
         "submit-save": "Uložiť",
         "submit-login": "Prihlásiť sa"
       }
     },
     "response": {
-      "error": {
+      "code": {
+        "-1": "Požiadavka sa sále načítava. Čakajte, prosím...",
         "1": "Nastala neočakávaná chyba. Skúste zopakovať akciu. Pokiaľ sa chyba stále opakuje, kontaktujte nás prosím.",
         "2": "Email nie je validný.",
         "3": "Email už je zaregistrovaný.",
         "4": "Email alebo heslo nie je správne.",
-        "5": "Chyba autorizácie! Akcia vyžaduje aby ste boli prihlásený."
+        "5": "Chyba autorizácie! Akcia vyžaduje aby ste boli prihlásený.",
+        "6": "Registrácia ešte nebola potvrdená. Skontrolujte Váš email.",
+        "7": "Registrácia s týmto emailom neexistuje.",
+        "8": "Overenie registrácie bolo odoslané na Váš email.",
+        "9": "Overenie už bolo predchvíľou odoslané. Požiadať o zaslenie môžete každú minútu.",
+        "10": "Overenie nie je platné. Buď neexistuje, alebo ste registráciu už potvrdili.",
+        "11": "Overenie prebehlo úspešne. Váš uživateľský účet je aktivovaný.",
+        "12": "Na Váš email boli odoslané pokyny k vyresetovaniu hesla.",
+        "13": "Email o vyresetovaní hesla už bol predchvíľou odoslaný. Požiadať o zaslenie môžete každú minútu.",
+        "14": "Vyresetovanie hesla nie je platné",
+        "15": "Pri posielaní nového hesla nastala chyba. Skúste zopakovať akciu. Pokiaľ sa chyba stále opakuje, kontaktujte nás prosím.",
+        "16": "Nové heslo bolo vygenerované a odoslané na Váš email.",
+        "17": "Boli ste úspešne zaregistrovaný a prihlásený. Skontrolujte Váš email a potvrďte Vašu registráciu.",
+        "18": "Profil bol úspešne upravený."
       }
     },
     "user": {
@@ -78,21 +93,25 @@
     },
     "user-regist": {
       "title": "Registrácia profilu",
-      "perex": "Pred dokončením registrácie si vyberte rolu (predajcu alebo kupcu) pod ktorou budete následne prihlásený.",
-      "success": "Boli ste úspešne zaregistrovaný a zároveň prihlásený."
+      "perex": "Pred dokončením registrácie si vyberte rolu (predajcu alebo kupcu) pod ktorou budete následne prihlásený."
     },
     "user-editprofile": {
       "title": "Úprava profilu",
-      "perex": "Pri registrácií sme Vás nechceli zdržovať. Skúste prosím doplniť ostatné údaje.",
-      "success": "Profil bol úspešne upravený."
+      "perex": "Pri registrácií sme Vás nechceli zdržovať. Skúste prosím doplniť ostatné údaje."
     },
     "user-login": {
       "title": "Prihlásiť sa",
       "perex": "Pred prihlásením si vyberte rolu (predajcu alebo kupcu) pod ktorou chcete práve teraz vystupovať.",
-      "success": "Boli ste úspešne prihlásený."
+      "success": "Boli ste úspešne prihlásený.",
+      "confirm1": "Neobdržali ste email o potvrdení registrácie?",
+      "confirm2": "Nie, poslať znova!"
     },
     "user-role-changed": {
       "success": "Rola bola úspešne prepnutá"
+    },
+    "user-forgotten": {
+      "title": "Zabudli ste heslo?",
+      "perex": "Zadajte email na ktorý ste sa zaregistrovali. Heslo vyresetujeme, a Vy si ho môžete následne upraviť vo svojom profile."
     }
   },
 

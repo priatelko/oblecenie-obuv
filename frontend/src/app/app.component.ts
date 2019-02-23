@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Router, Event, NavigationEnd, NavigationError, NavigationCancel } from '@angular/router';
+import { Router, Event, NavigationEnd, NavigationError, NavigationCancel, ActivatedRoute } from '@angular/router';
 
-import { WaiStatusService } from './components/header/wai-status/wai-status.service';
+import { WaiStatusService } from './component/header/wai-status/wai-status.service';
 import { TranslateService } from '@ngx-translate/core';
-import { FlashMessageService } from './services/FlashMessage/flash-message.service';
+import { FlashMessageService } from './service/FlashMessage/flash-message.service';
+import { QueryCommandsService } from './service/Query-commands/query-commands.service';
 
 @Component({
   selector: 'app-root',
@@ -16,13 +17,19 @@ export class AppComponent {
     private router: Router,
     private waiService: WaiStatusService,
     private translateService: TranslateService,
-    public flashMessageService: FlashMessageService
+    private flashMessageService: FlashMessageService,
+    private queryComands: QueryCommandsService
   ) {
-    router.events.subscribe((routerEvent: Event) => {
+    // Set translation lang
+    this.translateService.setDefaultLang('sk');
+    this.translateService.use('sk');
+
+    this.router.events.subscribe((routerEvent: Event) => {
       this.checkRouterEvent(routerEvent);
     });
   }
 
+  /** Methods */
   checkRouterEvent(routerEvent: Event): void {
     if (routerEvent instanceof NavigationEnd ||
         routerEvent instanceof NavigationCancel ||
@@ -35,5 +42,10 @@ export class AppComponent {
 
   removeFlashmessage(i) {
     this.flashMessageService.removeFlashMessage(i);
+  }
+
+  /** Getters */
+  get flashMessages() {
+    return this.flashMessageService.flashmessages;
   }
 }

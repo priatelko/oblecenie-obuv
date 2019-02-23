@@ -1,9 +1,9 @@
-<ngx-loading-bar [height]="'5px'" [color]="'#cc0000'"></ngx-loading-bar>
+<ngx-loading-bar color="#cc0000" [includeSpinner]="false"></ngx-loading-bar>
 
 <app-wai-status></app-wai-status>
 
-<aside *ngIf="flashMessageService.flashmessages.length" class="flash-message" role="alert" aria-live="assertive" aria-atomic="true">
-  <div *ngFor="let msg of flashMessageService.flashmessages; let last = last" class="shadow-sm / alert alert-{{msg.class}}" [class.mb-0]="last">
+<aside *ngIf="flashMessages.length" class="flash-message" role="alert" aria-live="assertive" aria-atomic="true">
+  <div *ngFor="let msg of flashMessages; let last = last" class="shadow-sm / alert alert-{{msg.class}}" [class.mb-0]="last">
     <span class="icon">{{msg.icon}}</span>
     <span>{{msg.message|translate}}</span>
     <time class="ml-4">{{msg.date | date:'shortTime'}}</time>
