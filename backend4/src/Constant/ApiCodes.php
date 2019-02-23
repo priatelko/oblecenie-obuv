@@ -5,7 +5,6 @@ namespace App\Constant;
 class ApiCodes {
 	
 	// ERRORS
-
 	CONST COMMON_ERROR								= 1;
 	CONST INVALID_EMAIL								= 2;
 	CONST EMAIL_EXISTS								= 3;
@@ -21,11 +20,11 @@ class ApiCodes {
 	CONST USER_CREATED								= 17;
 	CONST USER_UPDATED								= 18;
 
-
 	// SUCCESS
-	
 	const REGIST_CONFIRMATION_SENT					= 8;
 	const CONFIRMATION_SUCCESS						= 11;
 	const FORGOTTEN_PASSWORD_SENT					= 12;
 	const NEW_PASSWORD_RESET						= 16;
+	const CHANGE_ROLE_SUCCESS						= 19;
+	const USER_LOGGED								= 20;
 }

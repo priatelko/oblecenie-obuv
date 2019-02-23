@@ -24,11 +24,7 @@ export class QueryCommandsService {
         this.proccessCommand(query, value);
       });
 
-      if (keys(this.stableQuery).length) {
-        console.log(this.router.parseUrl, this.stableQuery);
-
-        this.router.navigate(['/'], { queryParams: this.stableQuery});
-      }
+      this.router.navigate(['/'], { queryParams: this.stableQuery});
     });
   }
 

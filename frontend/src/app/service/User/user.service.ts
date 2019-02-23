@@ -17,33 +17,38 @@ export class UserService {
   ) {}
 
   login(userToLogin) {
-    return this.apiRequestService.post<CommonResponseModel<UserModel>>('/user/login', userToLogin);
+    const request = this.apiRequestService.post<CommonResponseModel<UserModel>>('/user/login', userToLogin);
+
+    request.subscribe((res) => {
+      if (res.success) {
+        console.log('User logged in');
+        this.identityService.updateUser(res.data);
+      }
+    });
+
+    return request;
   }
 
   regist(userToRegister) {
-    /*const request =*/ return this.apiRequestService.post<CommonResponseModel<UserModel>>('/user/new', userToRegister);
+    const request = this.apiRequestService.post<CommonResponseModel<UserModel>>('/user/new', userToRegister);
 
-    // request.subscribe((res) => {
-    //   if (res.success) {
-    //     this.identityService.updateUser(res.data);
-    //   }
-    // });
+    request.subscribe((res) => {
+      if (res.success) {
+        console.log('User signed up or profil updated');
+        this.identityService.updateUser(res.data);
+      }
+    });
 
-    return request.pipe(
-      share()
-    );
+    return request;
   }
 
   changeRole() {
     const request = this.apiRequestService.get<CommonResponseModel<UserModel>>('/user/change-role', {cachable: false});
 
     request.subscribe((res) => {
-      if (res.error) {
-        this.flashmessage.error('common.response.code.' + res.error);
-      } else {
+      if (res.success) {
         console.log('User role has changed');
         this.identityService.updateUser(res.data);
-        this.flashmessage.success('component.user-role-changed.success');
       }
     });
 
@@ -55,11 +60,8 @@ export class UserService {
       '/user/send-confirmation/' + encodeURIComponent(email).replace('.', '%DOT%'), {cachable: false});
 
     request.subscribe((res) => {
-      if (res.error) {
-        this.flashmessage.error('common.response.code.' + res.error);
-      } else {
+      if (!res.error) {
         console.log('Regist confirmation sent');
-        this.flashmessage.success('common.response.code.' + res.success);
       }
     });
 
@@ -67,17 +69,12 @@ export class UserService {
   }
 
   applyConfirmation(hash) {
-    console.log('confirm');
-
     const request = this.apiRequestService.get<CommonResponseModel<UserModel>>(
       '/user/apply-confirmation/' + encodeURIComponent(hash), {cachable: false});
 
     request.subscribe((res) => {
-      if (res.error) {
-        this.flashmessage.error('common.response.code.' + res.error);
-      } else {
+      if (res.success) {
         console.log('Regist confirmed');
-        this.flashmessage.success('common.response.code.' + res.success);
       }
     });
 
@@ -89,11 +86,8 @@ export class UserService {
       '/user/forgotten-password/' + encodeURIComponent(email).replace('.', '%DOT%'), {cachable: false});
 
     request.subscribe((res) => {
-      if (res.error) {
-        this.flashmessage.error('common.response.code.' + res.error);
-      } else {
+      if (res.success) {
         console.log('Forgotten password sent');
-        this.flashmessage.success('common.response.code.' + res.success);
       }
     });
 
@@ -105,11 +99,8 @@ export class UserService {
       '/user/confirm-forgotten-password/' + hash, {cachable: false});
 
     request.subscribe((res) => {
-      if (res.error) {
-        this.flashmessage.error('common.response.code.' + res.error);
-      } else {
+      if (res.success) {
         console.log('Password was reset');
-        this.flashmessage.success('common.response.code.' + res.success);
       }
     });
 

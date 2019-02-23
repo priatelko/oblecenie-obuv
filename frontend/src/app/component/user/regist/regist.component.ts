@@ -94,10 +94,9 @@ export class RegistComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     this.registSubscription = this.userService.regist(this.registForm.value).subscribe((res) => {
-      console.log('regist', res);
 
       if (!res.error) {
-        // this.dialogRef.close();
+        this.dialogRef.close();
       }
     });
   }

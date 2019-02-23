@@ -43,8 +43,8 @@
     <div *ngIf="!isEditMode" class="form-group row">
       <label for="role" class="col-sm-3 col-form-label">{{ 'common.form.fields.role'|translate }}</label>
       <div class="col-sm-9">
-        <select appFormControl [emptyOption]="true" *ngIf="(roles$ | async); else loading" formControlName="role" class="form-control" id="role" required>
-          <option *ngFor="let role of roles$ | async" [appSelectOption]="role"></option>
+        <select appFormControl [emptyOption]="true" *ngIf="(roles$ | async) as roles; else loading" formControlName="role" class="form-control" id="role" required>
+          <option *ngFor="let role of roles" [appSelectOption]="role"></option>
         </select>
       </div>
     </div>

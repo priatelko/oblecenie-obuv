@@ -78,8 +78,6 @@ export class ApiRequestService {
     return request.pipe(
       map(res => (isEmpty(res) ? { error: -1 } : res)),
       tap((res: CommonResponseModel<T>) => {
-        console.log('hglaska', res);
-
           if (res.error) {
             this.flashmessage.error('common.response.code.' + res.error);
           } else if (res.success) {

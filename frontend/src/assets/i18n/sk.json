@@ -48,11 +48,13 @@
         "11": "Overenie prebehlo úspešne. Váš uživateľský účet je aktivovaný.",
         "12": "Na Váš email boli odoslané pokyny k vyresetovaniu hesla.",
         "13": "Email o vyresetovaní hesla už bol predchvíľou odoslaný. Požiadať o zaslenie môžete každú minútu.",
-        "14": "Vyresetovanie hesla nie je platné",
+        "14": "Vyresetovanie hesla nie je platné.",
         "15": "Pri posielaní nového hesla nastala chyba. Skúste zopakovať akciu. Pokiaľ sa chyba stále opakuje, kontaktujte nás prosím.",
         "16": "Nové heslo bolo vygenerované a odoslané na Váš email.",
         "17": "Boli ste úspešne zaregistrovaný a prihlásený. Skontrolujte Váš email a potvrďte Vašu registráciu.",
-        "18": "Profil bol úspešne upravený."
+        "18": "Profil bol úspešne upravený.",
+        "19": "Rola bola úspešne prepnutá.",
+        "20": "Boli ste úspešne prihlásený."
       }
     },
     "user": {
@@ -102,12 +104,8 @@
     "user-login": {
       "title": "Prihlásiť sa",
       "perex": "Pred prihlásením si vyberte rolu (predajcu alebo kupcu) pod ktorou chcete práve teraz vystupovať.",
-      "success": "Boli ste úspešne prihlásený.",
       "confirm1": "Neobdržali ste email o potvrdení registrácie?",
       "confirm2": "Nie, poslať znova!"
-    },
-    "user-role-changed": {
-      "success": "Rola bola úspešne prepnutá"
     },
     "user-forgotten": {
       "title": "Zabudli ste heslo?",

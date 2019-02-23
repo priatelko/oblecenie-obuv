@@ -101,7 +101,7 @@ class UserController extends BaseController {
 			$this->userManager->updateUserRole($user, $post->get('role'));
 
 			// Login in
-			return $this->respondSuccess($user->toArray());
+			return $this->respondSuccess(ApiCodes::USER_LOGGED, $user->toArray());
         }
 
         return $this->respondError(ApiCodes::COMMON_ERROR);	// Common error
@@ -200,6 +200,6 @@ class UserController extends BaseController {
 		$changeToRole = $this->getUser()->getLoginRole() == UserLoginRole::ROLE_BUYER ? UserLoginRole::ROLE_SELLER : UserLoginRole::ROLE_BUYER;
 		$this->userManager->updateUserRole($this->getUser(), $changeToRole);
 
-        return $this->respond($this->getUser()->toArray());
+        return $this->respondSuccess(ApiCodes::CHANGE_ROLE_SUCCESS, $this->getUser()->toArray());
     }
 }
