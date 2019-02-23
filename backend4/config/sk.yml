@@ -1,0 +1,9 @@
+parameters:
+    projectName: oblecobuj.sk
+    rootMailFrom: info@kreon.sk
+    registConfirmSubject: Overenie registrácie
+    registConfirmBodyTemplate: registConfirm.html
+    forgottenSubject: Vyresetovanie hesla
+    forgottenBodyTemplate: forgottenPassword.html
+    newPasswordSubject: Nové heslo
+    newPasswordBodyTemplate: newPassword.html
