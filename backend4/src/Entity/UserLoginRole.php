@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user_login_role")
  * @ORM\Entity
  */
-class UserLoginRole implements \App\Interfaces\ToStringInterface
+class UserLoginRole implements \App\Interfaces\ToStringInterface, \App\Interfaces\ToArrayObjectInterface
 {
 	const ROLE_BUYER			= 'ROLE_BUYER';
 	const ROLE_SELLER			= 'ROLE_SELLER';
@@ -67,5 +67,12 @@ class UserLoginRole implements \App\Interfaces\ToStringInterface
 	
 	public function __toString() {
 		return $this->getId();
+	}
+	
+	public function toArrayObject() {
+		return [
+			'id' => $this->getId(),
+			'description' => $this->getDescription()
+		];
 	}
 }

@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * OblecenieKategorie
  *
  * @ORM\Table(name="oblecenie_kategorie")
- * @ORM\Entity
+ * @ORM\Entity("OblecenieKategorieRepository")
  */
-class OblecenieKategorie
+class OblecenieKategorie implements \App\Interfaces\ToStringInterface, \App\Interfaces\ToArrayObjectInterface
 {
     /**
      * @var integer
@@ -125,4 +125,15 @@ class OblecenieKategorie
     {
         return $this->id;
     }
+	
+	public function __toString() {
+		return $this->getNazov();
+	}
+	
+	public function toArrayObject() {
+		return [
+			'id' => $this->getId(),
+			'nazov' => $this->getNazov()
+		];
+	}
 }

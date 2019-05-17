@@ -108,11 +108,11 @@ class UserController extends BaseController {
     }
 	
 	/**
-     * @Route("/send-confirmation/{email}", name="send-confirmation")
+     * @Route("/send-confirmation", name="send-confirmation")
 	 * @Method({"GET"})
      */
-    public function sendConfirmationAction($email) {
-		$email = str_replace('%DOT%', '.', $email);
+    public function sendConfirmationAction(Request $request) {
+		$email = urldecode($request->query->get('email'));
 		
 		/* @var $user User */
 		if (!($user = $this->userManager->getUserByEmail($email)) instanceof User) {
@@ -143,11 +143,11 @@ class UserController extends BaseController {
     }
 	
 	/**
-     * @Route("/forgotten-password/{email}", name="forgotten-password")
+     * @Route("/forgotten-password", name="forgotten-password")
 	 * @Method({"GET"})
      */
-    public function forgottenPasswordAction($email) {
-		$email = str_replace('%DOT%', '.', $email);
+    public function forgottenPasswordAction(Request $request) {
+		$email = urldecode($request->query->get('email'));
 		
 		/* @var $user User */
 		if (!($user = $this->userManager->getUserByEmail($email)) instanceof User) {

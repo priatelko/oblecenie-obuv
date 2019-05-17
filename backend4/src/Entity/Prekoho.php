@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="prekoho")
  * @ORM\Entity
  */
-class Prekoho
+class Prekoho implements \App\Interfaces\ToStringInterface, \App\Interfaces\ToArrayObjectInterface
 {
     /**
      * @var string
@@ -36,19 +36,9 @@ class Prekoho
     private $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Artikel", mappedBy="prekoho")
-     */
-    private $artikel;
-
-    /**
      * Constructor
      */
-    public function __construct()
-    {
-        $this->artikel = new \Doctrine\Common\Collections\ArrayCollection();
-    }
+    public function __construct() {}
 
 
     /**
@@ -108,38 +98,15 @@ class Prekoho
     {
         return $this->id;
     }
-
-    /**
-     * Add artikel
-     *
-     * @param \App\Entity\Artikel $artikel
-     *
-     * @return Prekoho
-     */
-    public function addArtikel(\App\Entity\Artikel $artikel)
-    {
-        $this->artikel[] = $artikel;
-
-        return $this;
-    }
-
-    /**
-     * Remove artikel
-     *
-     * @param \App\Entity\Artikel $artikel
-     */
-    public function removeArtikel(\App\Entity\Artikel $artikel)
-    {
-        $this->artikel->removeElement($artikel);
-    }
-
-    /**
-     * Get artikel
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getArtikel()
-    {
-        return $this->artikel;
-    }
+	
+	public function __toString() {
+		return $this->getNazov();
+	}
+	
+	public function toArrayObject() {
+		return [
+			'id' => $this->getId(),
+			'nazov' => $this->getNazov()
+		];
+	}
 }
