@@ -1,56 +1,51 @@
-import { NgModule } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
-import { TranslateMessageFormatCompiler } from 'ngx-translate-messageformat-compiler';
-import { TranslateModule, TranslateLoader, TranslateCompiler, MissingTranslationHandler, TranslateService } from '@ngx-translate/core';
-import { createTranslateLoader, MyMissingTranslationHandler } from '../Translator/translator.module';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 
-import { SelectOptionDirective } from '../../directive/select-option.directive';
-import { LoaderModule } from '../../component/loader/loader.module';
-import { apiRequestServiceCreator, ApiRequestService } from 'src/app/service/ApiRequest/api-request.service';
-import { VoidLinkDirective } from 'src/app/directive/void-link.directive';
-import { IdentityService } from 'src/app/service/User/identity.service';
-import { FlashMessageService } from 'src/app/service/FlashMessage/flash-message.service';
+import {MatIconModule} from '@angular/material/icon';
+
+import {SelectOptionDirective} from '../../directive/select-option.directive';
+import {LoaderModule} from '../../component/loader/loader.module';
+import {
+  apiRequestServiceCreator,
+  ApiRequestService,
+} from 'src/app/service/ApiRequest/api-request.service';
+import {VoidLinkDirective} from 'src/app/directive/void-link.directive';
+import {IdentityService} from 'src/app/service/User/identity.service';
+import {FlashMessageService} from 'src/app/service/FlashMessage/flash-message.service';
+import {CorrectMaterialDropdownDirective} from 'src/app/directive/correct-material-dropdown';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   declarations: [
     SelectOptionDirective,
-    VoidLinkDirective
+    VoidLinkDirective,
+    CorrectMaterialDropdownDirective,
   ],
-  imports: [
-    BrowserModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient],
-      },
-      missingTranslationHandler: {provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler},
-      useDefaultLang: false,
-      compiler: {
-        provide: TranslateCompiler,
-        useClass: TranslateMessageFormatCompiler
-      }
-    }),
-    LoaderModule
-  ],
+  imports: [LoaderModule, MatIconModule],
   exports: [
     // modules
-    BrowserModule,
+    CommonModule,
     TranslateModule,
     LoaderModule,
+    MatIconModule,
     // directives
     SelectOptionDirective,
-    VoidLinkDirective
+    VoidLinkDirective,
+    CorrectMaterialDropdownDirective,
   ],
   providers: [
     {
       provide: ApiRequestService,
       useFactory: apiRequestServiceCreator,
-      deps: [HttpClient, TranslateService, IdentityService, FlashMessageService]
+      deps: [
+        HttpClient,
+        TranslateService,
+        IdentityService,
+        FlashMessageService,
+      ],
     },
-  ]
+  ],
 })
-
 export class CoreModule {}

@@ -1,51 +1,155 @@
-<h1 class="sr-only">{{ 'core.portalTitle'|translate }}.</h1>
+<!-- Homepage -->
+<ng-container *ngIf="!title">
+  <h1 class="sr-only">{{ 'core.portalTitle' | translate }}.</h1>
+  <div class="container-fluid / pt-1">
+    <form role="search" id="searchForm">
+      <div class="input-group input-group-lg">
+        <div class="input-group-prepend">
+          <button
+            mat-icon-button
+            color="primary"
+            type="button"
+            color="primary"
+            class="btn btn-outline-primary btn-transparent"
+            role="checkbox"
+            [attr.aria-checked]="
+              isActiveSearchType('ARTICLE_DRESS') ? true : false
+            "
+            title="{{ 'component.header.button.filterDress' | translate }}"
+            aria-controls="searchForm"
+            (click)="setActiveSearchType('ARTICLE_DRESS')"
+            [ngClass]="{
+              'btn-primary': isActiveSearchType('ARTICLE_DRESS'),
+              'btn-outline-secondary': !isActiveSearchType('ARTICLE_DRESS')
+            }"
+          >
+            <i class="oo-icon oo-icon--dress" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="input-group-prepend">
+          <button
+            mat-icon-button
+            color="primary"
+            type="button"
+            class="btn btn-outline-primary btn-transparent"
+            role="checkbox"
+            [attr.aria-checked]="
+              isActiveSearchType('ARTICLE_SHOES') ? true : false
+            "
+            title="{{ 'component.header.button.filterShoes' | translate }}"
+            aria-controls="searchForm"
+            (click)="setActiveSearchType('ARTICLE_SHOES')"
+            [ngClass]="{
+              'btn-primary': isActiveSearchType('ARTICLE_SHOES'),
+              'btn-outline-secondary': !isActiveSearchType('ARTICLE_SHOES')
+            }"
+          >
+            <i class="oo-icon oo-icon--shoe" aria-hidden="true"></i>
+          </button>
+        </div>
+        <mat-form-field class="flex-grow-1">
+          <input
+            matInput
+            class="form-control"
+            type="search"
+            placeholder="{{ 'component.header.searchPlaceholder' | translate }}"
+            tabindex="1"
+          />
+        </mat-form-field>
 
-<div class="container-fluid / mt-2">
-  <form role="search" id="searchForm">
-    <div class="input-group input-group-lg">
-      <div class="input-group-prepend">
-        <button type="button" class="btn btn-outline-primary btn-transparent" role="checkbox" [attr.aria-checked]="isActiveSearchType('dress') ? true : false"
-          title="{{ 'component.header.button.filterDress'|translate }}" aria-controls="searchForm"
-          (click)="setActiveSearchType('dress')"
-          [ngClass]="{'btn-primary': isActiveSearchType('dress'), 'btn-outline-secondary': !isActiveSearchType('dress')}"><i class="oo-dress icon--lg" aria-hidden="true"></i></button>
+        <div class="input-group-append">
+          <button
+            mat-icon-button
+            type="button"
+            class="btn btn-outline-primary btn-transparent / text-color"
+            title="{{ 'component.header.button.advancedSearch' | translate }}"
+          >
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+        <nav class="input-group-append">
+          <h2 class="sr-only">
+            {{ 'component.header.mainNavTitle' | translate }}.
+          </h2>
+          <a
+            mat-icon-button
+            *ngIf="identityService.logged && identityService.isSeller"
+            routerLink="/add-article"
+            class="btn btn-outline-primary btn-transparent / text-color / d-flex align-items-center"
+            title="{{ 'component.header.button.add' | translate }}"
+            ><mat-icon>add</mat-icon></a
+          >
+          <button
+            mat-icon-button
+            #menuBtn
+            [matMenuTriggerFor]="menu"
+            type="button"
+            class="btn btn-outline-primary btn-transparent / text-color"
+            title="{{ 'component.header.button.user' | translate }}"
+            id="userAccountDropdown"
+          >
+            <mat-icon>person</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" aria-labelledby="userAccountDropdown">
+            <!-- Not logged -->
+            <ng-container *ngIf="!identityService.logged">
+              <div mat-menu-item (click)="openLoginModal()">
+                <mat-icon>input</mat-icon>
+                {{ 'component.header.user.login' | translate }}
+              </div>
+              <div mat-menu-item (click)="openRegistModal()">
+                <mat-icon>person_add</mat-icon>
+                {{ 'component.header.user.regist' | translate }}
+              </div>
+              <mat-divider></mat-divider>
+              <div mat-menu-item (click)="openForgottenPasswordModal()">
+                <mat-icon>person_outline</mat-icon>
+                {{ 'component.header.user.forgotPassword' | translate }}
+              </div>
+            </ng-container>
+            <!-- Logged -->
+            <ng-container *ngIf="identityService.logged">
+              <div mat-menu-item class="dropdown-header">
+                {{ identityService.roleName }}
+              </div>
+              <div mat-menu-item (click)="openEditProfileModal()">
+                <mat-icon>account_circle</mat-icon>
+                {{ 'component.header.user.editProfile' | translate }}
+              </div>
+              <div mat-menu-item (click)="changeRole()">
+                <mat-icon>compare_arrows</mat-icon>
+                {{ 'component.header.user.switchRole' | translate }}
+              </div>
+              <mat-divider></mat-divider>
+              <div mat-menu-item (click)="logout()">
+                <mat-icon>power_settings_new</mat-icon>
+                {{ 'component.header.user.logout' | translate }}
+              </div>
+            </ng-container>
+          </mat-menu>
+        </nav>
       </div>
-      <div class="input-group-prepend">
-        <button type="button" class="btn btn-outline-primary btn-transparent" role="checkbox" [attr.aria-checked]="isActiveSearchType('shoes') ? true : false"
-          title="{{ 'component.header.button.filterShoes'|translate }}" aria-controls="searchForm"
-          (click)="setActiveSearchType('shoes')"
-          [ngClass]="{'btn-primary': isActiveSearchType('shoes'), 'btn-outline-secondary': !isActiveSearchType('shoes')}"><i class="oo-shoe icon--lg" aria-hidden="true"></i></button>
-      </div>
-      <input class="form-control" type="search" placeholder="{{ 'component.header.searchPlaceholder'|translate }}" tabindex="1">
+    </form>
+  </div>
+</ng-container>
 
-      <button type="button" class="input-group-append btn btn-outline-primary btn-transparent / text-color" title="{{ 'component.header.button.advancedSearch'|translate }}"><i class="icon icon--lg" aria-hidden="true">more_vert</i></button>
-      <nav class="input-group-append">
-        <h2 class="sr-only">{{ 'component.header.mainNavTitle'|translate }}.</h2>
-        <button *ngIf="identityService.logged && identityService.isSeller" type="button"  class="btn btn-outline-primary btn-transparent / text-color" title="{{ 'component.header.button.add'|translate }}"><i class="icon icon--lg" aria-hidden="true">add</i></button>
-        <button [matMenuTriggerFor]="menu" type="button" class="btn btn-outline-primary btn-transparent / text-color" title="{{ 'component.header.button.user'|translate }}" id="userAccountDropdown"><i class="icon icon--lg" aria-hidden="true">person</i></button>
-        <mat-menu #menu="matMenu" xPosition="after" yPosition="below" aria-labelledby="userAccountDropdown">
-          <!-- Not logged -->
-          <ng-container *ngIf="!identityService.logged">
-            <div class="dropdown-item / pointer" (click)="openLoginModal()"><i class="icon" aria-hidden="true">input</i> {{ 'component.header.user.login'|translate }}</div>
-            <div class="dropdown-item / pointer" (click)="openRegistModal()"><i class="icon" aria-hidden="true">person_add</i> {{ 'component.header.user.regist'|translate }}</div>
-            <div class="dropdown-divider"></div>
-            <div class="dropdown-item / pointer" (click)="openForgottenPasswordModal()"><i class="icon" aria-hidden="true">person_outline</i> {{ 'component.header.user.forgotPassword'|translate }}</div>
-          </ng-container>
-          <!-- Logged -->
-          <ng-container *ngIf="identityService.logged">
-            <div class="dropdown-header">{{ identityService.roleName }}</div>
-            <div class="dropdown-item / pointer" (click)="openEditProfileModal()"><i class="icon" aria-hidden="true">account_circle</i> {{ 'component.header.user.editProfile'|translate }}</div>
-            <div class="dropdown-item / pointer" (click)="changeRole()"><i class="icon" aria-hidden="true">compare_arrows</i> {{ 'component.header.user.switchRole'|translate }}</div>
-            <div class="dropdown-divider"></div>
-            <div class="dropdown-item / pointer" (click)="logout()"><i class="icon" aria-hidden="true">power_settings_new</i> {{ 'component.header.user.logout'|translate }}</div>
-          </ng-container>
-        </mat-menu>
-      </nav>
-    </div>
-  </form>
-  <div class="mt1">
-    <div class="custom-control custom-checkbox">
-      <input type="checkbox" class="custom-control-input" id="customCheck1">
-      <label class="custom-control-label" for="customCheck1">Check this custom checkbox</label>
-    </div>
+<!-- Page title -->
+<div *ngIf="title" class="page-header">
+  <div>
+    <h1>
+      {{ title }}
+    </h1>
+    <p *ngIf="subtitle" class="lead">
+      {{ subtitle }}
+    </p>
+  </div>
+  <div>
+    <a
+      mat-icon-button
+      routerLink="/"
+      class="btn btn-outline-primary btn-transparent btn-home"
+      title="{{ 'core.projectTitle' | translate }}"
+      ><mat-icon>home</mat-icon></a
+    >
   </div>
 </div>

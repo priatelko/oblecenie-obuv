@@ -1,0 +1,67 @@
+@import '~src/sass/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.choose-kind {
+  display: flex;
+  width: 100%;
+  text-align: center;
+  li {
+    flex: 1 1 50%;
+    a {
+      display: inline-block;
+      text-decoration: none;
+      color: map-get($mat-indigo, 500);
+      span {
+        display: block;
+      }
+
+      &,
+      * {
+        transition: all 0.25s ease-out;
+      }
+    }
+    i {
+      font-size: 500%;
+      @include media-breakpoint-up(sm) {
+        font-size: 1250%;
+      }
+    }
+
+    &:hover {
+      a {
+        transform-origin: left;
+        span {
+          font-size: 250%;
+          font-weight: bold;
+        }
+        i {
+          font-size: 1000%;
+        }
+      }
+
+      &:first-child {
+        a {
+          transform: rotate(-5deg);
+        }
+      }
+      &:last-child {
+        a {
+          transform: rotate(5deg);
+        }
+      }
+    }
+  }
+}
+
+.modal-body {
+  overflow: hidden;
+}
+
+h4 {
+  font-weight: normal;
+}

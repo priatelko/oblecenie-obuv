@@ -1,34 +1,36 @@
-import { Directive, ElementRef, HostListener, AfterViewInit, Input } from '@angular/core';
-import { NgControl } from '@angular/forms';
-import { Validator } from '../custom/validator.custom';
+import {
+  Directive,
+  ElementRef,
+  HostListener,
+  AfterViewInit,
+  Input,
+} from '@angular/core';
+import {NgControl} from '@angular/forms';
+import {Validator} from '../custom/validator.custom';
+import {hasRequiredField} from '../custom/helpers';
 
 @Directive({
-  selector: '[appFormControl]'
+  selector: '[appFormControl]',
 })
 export class FormControlDirective implements AfterViewInit {
-
   errEl = document.createElement('div');
+  closeEl = document.createElement('button');
+  textSpan = document.createElement('span');
   errors = [];
+  closeError = false;
 
-  constructor(
-    private el: ElementRef,
-    private control: NgControl
-  ) {}
+  constructor(private el: ElementRef, private control: NgControl) {}
 
-  @Input('emptyOption') emptyOption = false;
-
-  @HostListener('input')
-  @HostListener('blur')
-  @HostListener('focus')
-  @HostListener('change')
-  onEvent() {
+  @HostListener('change', ['$event'])
+  @HostListener('blur', ['$event'])
+  onEvent(e) {
     this.errors = Validator.getErrors(this.control);
-    this.validate();
+    this.validate(e);
   }
 
   ngAfterViewInit() {
+    this.el.nativeElement.classList.add('form-control');
     this.prepareValidation();
-    this.makeEmptyOption();
   }
 
   prepareValidation() {
@@ -36,8 +38,23 @@ export class FormControlDirective implements AfterViewInit {
 
     // Construt Error message
     this.errEl.id = errMsgId;
-    this.errEl.classList.add('alert', 'alert-danger', 'd-none');
+    this.errEl.classList.add('alert', 'alert-danger', 'd-none', 'mb-0');
     this.errEl.setAttribute('role', 'alert');
+
+    this.closeEl.setAttribute('type', 'button');
+    this.closeEl.setAttribute('class', 'close');
+    this.closeEl.setAttribute('aria-label', 'Close');
+    this.closeEl.setAttribute('class', 'close');
+    const closeIcon = document.createElement('span');
+    closeIcon.setAttribute('aria-hidden', 'true');
+    closeIcon.setAttribute('class', 'mat-icon');
+    closeIcon.innerText = 'close';
+    this.closeEl.appendChild(closeIcon);
+    this.closeEl.onclick = () => {
+      this.closeError = true;
+      this.errEl.classList.add('d-none');
+    };
+    this.errEl.append(this.textSpan, this.closeEl);
 
     /** ARIA */
     // DescribedBy
@@ -49,21 +66,21 @@ export class FormControlDirective implements AfterViewInit {
     // Invalid
     this.invalid();
 
-    this.el.nativeElement.parentNode.appendChild(this.errEl);
+    this.el.nativeElement.parentNode.parentNode.parentNode.appendChild(
+      this.errEl
+    );
   }
 
-  makeEmptyOption() {
-    if (!this.emptyOption) {
+  validate(e) {
+    // Close button clicked, ignore validating
+    if (
+      e.relatedTarget &&
+      e.relatedTarget.tagName === 'BUTTON' &&
+      e.relatedTarget.classList.contains('close')
+    ) {
       return;
     }
 
-    const option = document.createElement('option');
-    option.innerHTML = '---';
-    this.el.nativeElement.insertBefore(option, this.el.nativeElement.getElementsByTagName('OPTION')[0]);
-    this.el.nativeElement.selectedIndex = 0;
-  }
-
-  validate() {
     this.invalid();
 
     if (this.errors.length === 0 || this.control.untouched) {
@@ -71,7 +88,7 @@ export class FormControlDirective implements AfterViewInit {
       return;
     }
 
-    this.errEl.innerText = this.errors[0];
+    this.textSpan.innerHTML = this.errors[0];
     this.errEl.classList.remove('d-none');
   }
 
@@ -82,5 +99,4 @@ export class FormControlDirective implements AfterViewInit {
       this.el.nativeElement.setAttribute('aria-invalid', 'true');
     }
   }
-
 }

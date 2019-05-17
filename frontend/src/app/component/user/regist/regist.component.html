@@ -1,60 +1,111 @@
 <div class="modal-header">
-  <h1 mat-dialog-title class="modal-title / pull-left">{{ 'component.user-' + componentMode.mode + '.title'|translate }}</h1>
-  <button mat-dialog-close cdkFocusInitial type="button" class="close pull-right" [attr.aria-label]="'common.close'|translate">
-    <span aria-hidden="true">&times;</span>
+  <h1 mat-dialog-title class="modal-title / pull-left">
+    {{ 'component.user-' + componentMode.mode + '.title' | translate }}
+  </h1>
+  <button mat-button mat-dialog-close class="close">
+    <mat-icon mat-dialog-close [attr.aria-label]="'common.close' | translate"
+      >close</mat-icon
+    >
   </button>
 </div>
 
-<div class="modal-body">
-  <p class="lead / mb-4">{{ 'component.user-' + componentMode.mode + '.perex'|translate }}</p>
-  <form [formGroup]="registForm" (ngSubmit)="onSubmit()" novalidate>
-    <div class="form-group row">
-      <label for="email" class="col-sm-3 col-form-label">{{ 'common.form.fields.email'|translate }}</label>
-      <div class="col-sm-9">
-        <input appFormControl formControlName="email" type="email" class="form-control" id="email" maxlength="30" required>
-      </div>
-    </div>
-    <ng-container *ngIf="isEditMode">
-      <div class="form-group row">
-        <label for="name" class="col-sm-3 col-form-label / text-nowrap">{{ 'common.form.fields.name'|translate }}</label>
-        <div class="col-sm-9">
-          <input appFormControl formControlName="name" type="text" class="form-control" id="name" maxlength="50" required>
-        </div>
-      </div>
-      <div class="form-group row">
-          <label for="surname" class="col-sm-3 col-form-label / text-nowrap">{{ 'common.form.fields.surname'|translate }}</label>
-          <div class="col-sm-9">
-            <input appFormControl formControlName="surname" type="text" class="form-control" id="surname" maxlength="50" required>
-          </div>
-        </div>
-    </ng-container>
-    <div class="form-group row">
-      <label for="password" class="col-sm-3 col-form-label">{{ 'common.form.fields.password'|translate }}</label>
-      <div class="col-sm-9">
-        <input appFormControl formControlName="password" type="password" class="form-control" id="password" maxlength="50" required>
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="confirmPassword" class="col-sm-3 col-form-label / text-nowrap">{{ 'common.form.fields.confirmPassword'|translate }}</label>
-      <div class="col-sm-9">
-        <input appFormControl formControlName="passwordConfirm" type="password" class="form-control" id="confirmPassword" maxlength="50" required>
-      </div>
-    </div>
-    <div *ngIf="!isEditMode" class="form-group row">
-      <label for="role" class="col-sm-3 col-form-label">{{ 'common.form.fields.role'|translate }}</label>
-      <div class="col-sm-9">
-        <select appFormControl [emptyOption]="true" *ngIf="(roles$ | async) as roles; else loading" formControlName="role" class="form-control" id="role" required>
-          <option *ngFor="let role of roles" [appSelectOption]="role"></option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-sm-9 offset-sm-3">
-        <input type="submit" class="btn btn-success" [value]="'common.form.fields.submit-' + componentMode.submit|translate" [disabled]="registForm.invalid">
-      </div>
-    </div>
-  </form>
-</div>
+<mat-dialog-content>
+  <div class="modal-body">
+    <p class="lead / mb-4">
+      {{ 'component.user-' + componentMode.mode + '.perex' | translate }}
+    </p>
+    <form
+      [formGroup]="registForm"
+      (ngSubmit)="onSubmit()"
+      novalidate
+      class="form-one-row"
+    >
+      <mat-form-field>
+        <input
+          appFormControl
+          matInput
+          formControlName="email"
+          type="email"
+          id="email"
+          maxlength="50"
+          required
+          [placeholder]="'common.form.fields.email' | translate"
+        />
+      </mat-form-field>
+      <ng-container *ngIf="isEditMode">
+        <mat-form-field>
+          <input
+            appFormControl
+            matInput
+            formControlName="name"
+            type="text"
+            id="name"
+            maxlength="50"
+            required
+            [placeholder]="'common.form.fields.name' | translate"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            appFormControl
+            matInput
+            formControlName="surname"
+            type="text"
+            id="surname"
+            maxlength="50"
+            required
+            [placeholder]="'common.form.fields.surname' | translate"
+          />
+        </mat-form-field>
+      </ng-container>
+
+      <mat-form-field>
+        <input
+          appFormControl
+          matInput
+          formControlName="password"
+          type="password"
+          id="password"
+          maxlength="50"
+          required
+          [placeholder]="'common.form.fields.password' | translate"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          appFormControl
+          matInput
+          formControlName="passwordConfirm"
+          type="password"
+          id="confirmPassword"
+          maxlength="50"
+          required
+          [placeholder]="'common.form.fields.confirmPassword' | translate"
+        />
+      </mat-form-field>
+
+      <ng-container *ngIf="!isEditMode">
+        <mat-form-field *ngIf="(roles$ | async) as roles; else loading">
+          <mat-label>{{ 'common.form.fields.role' | translate }}</mat-label>
+          <mat-select appFormControl formControlName="role">
+            <mat-option *ngFor="let role of roles" [value]="role.id">
+              {{ role.description }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <button
+        mat-raised-button
+        [disabled]="registForm.invalid"
+        type="submit"
+        color="primary"
+      >
+        {{ 'common.form.fields.submit-' + componentMode.submit | translate }}
+      </button>
+    </form>
+  </div>
+</mat-dialog-content>
 
 <ng-template #loading>
   <app-loader></app-loader>

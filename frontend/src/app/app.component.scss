@@ -14,17 +14,36 @@
 
 .alert {
   display: flex;
+  animation: animationAlert .3s;
 
-  span:first-child {
+  .mat-icon {
     flex-shrink: 1;
-    padding-right: $alert-padding-x / 2;
 
-    + span {
-      flex-grow: 1;
-
-      + span {
-        white-space: nowrap;
-      }
+    &.close {
+      cursor: pointer;
     }
+  }
+
+  time {
+    flex-shrink: 1;
+  }
+
+  span {
+    flex-grow: 1;
+  }
+}
+
+@keyframes animationAlert {
+  0% {
+    transform: translateY(-1rem);
+    line-height: 0;
+    opacity: 0;
+    padding: 0;
+  }
+  100% {
+    transform: translateY(0);
+    line-height: 1.5;
+    opacity: 1;
+    padding: $alert-padding-y $alert-padding-x;
   }
 }

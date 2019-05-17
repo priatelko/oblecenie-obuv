@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
+
+import { MatButtonModule } from '@angular/material/button';
 
 import { DemoComponent } from './demo.component';
 
@@ -13,8 +14,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MatButtonModule
   ],
   declarations: [
     DemoComponent

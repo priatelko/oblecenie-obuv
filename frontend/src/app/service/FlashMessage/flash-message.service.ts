@@ -2,6 +2,22 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { filter } from 'lodash';
 
+export enum FlashMessageTypes {
+  Info = 'info',
+  Success = 'success',
+  Warning = 'warning',
+  Error = 'error'
+}
+
+export interface FlashMessage {
+  message: string;
+  type: FlashMessageTypes;
+  class: string;
+  icon: string;
+  date: Date;
+  open: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,7 +41,8 @@ export class FlashMessageService {
       type: FlashMessageTypes.Info,
       class: 'info',
       icon: 'info',
-      date: new Date()
+      date: new Date(),
+      open: true
     };
     this.message.next(message);
 
@@ -38,7 +55,8 @@ export class FlashMessageService {
       type: FlashMessageTypes.Success,
       class: 'success',
       icon: 'check_circle',
-      date: new Date()
+      date: new Date(),
+      open: true
     };
     this.message.next(message);
 
@@ -51,7 +69,8 @@ export class FlashMessageService {
       type: FlashMessageTypes.Warning,
       class: 'warning',
       icon: 'warning',
-      date: new Date()
+      date: new Date(),
+      open: true
     };
     this.message.next(message);
 
@@ -64,7 +83,8 @@ export class FlashMessageService {
       type: FlashMessageTypes.Error,
       class: 'danger',
       icon: 'error',
-      date: new Date()
+      date: new Date(),
+      open: true
     };
     this.message.next(message);
 
@@ -84,19 +104,4 @@ export class FlashMessageService {
       }, this.AUTOCLOSE_MS);
     }
   }
-}
-
-export enum FlashMessageTypes {
-  Info = 'info',
-  Success = 'success',
-  Warning = 'warning',
-  Error = 'error'
-}
-
-export interface FlashMessage {
-  message: string;
-  type: FlashMessageTypes;
-  class: string;
-  icon: string;
-  date: Date;
 }

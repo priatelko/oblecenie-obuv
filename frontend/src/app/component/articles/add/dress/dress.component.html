@@ -1,0 +1,113 @@
+<form
+  *ngIf="preKoho$ | async as preKoho; else loading"
+  [formGroup]="addOblecenieForm"
+  (ngSubmit)="onSubmit()"
+  novalidate
+  class="form-one-row"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <h4>{{ 'component.article.add.preKoho' | translate }} *</h4>
+        <p class="lead text-secondary">
+          {{ 'component.article.add.preKohoDesc' | translate }}
+        </p>
+        <app-toggle-group
+          [options]="preKoho"
+          formControlName="preKoho"
+        ></app-toggle-group>
+      </div>
+      <div class="col-sm / mt-4 mt-sm-0">
+        <h4>{{ 'component.article.add.obdobie' | translate }} *</h4>
+        <p class="lead text-secondary">
+          {{ 'component.article.add.obdobieDesc' | translate }}
+        </p>
+        <app-toggle-group
+          [options]="obdobie$ | async"
+          formControlName="obdobie"
+        ></app-toggle-group>
+      </div>
+    </div>
+    <div class="row / mt-4">
+      <div class="col-sm">
+        <h4>{{ 'component.article.add.kategoria' | translate }} *</h4>
+        <p class="lead text-secondary">
+          {{ 'component.article.add.dress.kategoriaDesc' | translate }}
+        </p>
+        <mat-form-field>
+          <mat-label>{{ 'common.form.fields.category' | translate }}</mat-label>
+          <mat-select
+            appFormControl
+            formControlName="oblecenieKategoria"
+            required
+          >
+            <mat-option>
+              <ngx-mat-select-search
+                [placeholderLabel]="'common.form.fields.search' | translate"
+                [formControl]="oblecenieKategorieFilter"
+                [noEntriesFoundLabel]="
+                  'common.form.fields.noSearchEntryFound' | translate
+                "
+              ></ngx-mat-select-search>
+            </mat-option>
+            <mat-optgroup
+              *ngFor="let kategoriaGroup of oblecenieKategorieFilter$ | async"
+              [label]="kategoriaGroup.item"
+            >
+              <mat-option
+                *ngFor="let kategoria of kategoriaGroup.children"
+                [value]="kategoria.id"
+              >
+                {{ kategoria.nazov }}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm">
+        kljsadjhfnsxf
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          mat-raised-button
+          [disabled]="addOblecenieForm.invalid"
+          type="submit"
+          color="primary"
+        >
+          {{ 'common.form.fields.submit' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- <div *ngIf="chosenKind == articleKind.shoes" class="modal-body">
+  <form
+    [formGroup]="addForm"
+    (ngSubmit)="onSubmit()"
+    novalidate
+    class="form-one-row"
+  >
+    <mat-form-field>
+      <input
+        appFormControl
+        matInput
+        formControlName="email"
+        type="email"
+        id="email"
+        maxlength="50"
+        [placeholder]="'common.form.fields.email' | translate"
+      />
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      [disabled]="addForm.invalid"
+      type="submit"
+      color="primary"
+    >
+      {{ 'common.form.fields.submit' | translate }}
+    </button>
+  </form>
+</div> -->

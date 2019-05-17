@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+
+  header {
+    flex-shrink: 1;
+  }
+  article {
+    flex-grow: 1;
+  }
+}

@@ -1,48 +1,79 @@
 <div class="modal-header">
-  <h1 mat-dialog-title class="modal-title / pull-left">{{ 'component.user-login.title'|translate }}</h1>
-  <button mat-dialog-close type="button" class="close pull-right" [attr.aria-label]="'common.close'|translate">
-    <span aria-hidden="true">&times;</span>
+  <h1 mat-dialog-title class="modal-title / pull-left">
+    {{ 'component.user-login.title' | translate }}
+  </h1>
+  <button mat-button mat-dialog-close class="close">
+    <mat-icon mat-dialog-close [attr.aria-label]="'common.close' | translate"
+      >close</mat-icon
+    >
   </button>
 </div>
 
-<div class="modal-body">
-  <p class="lead / mb-4">{{ 'component.user-login.perex'|translate }}</p>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
-    <div class="form-group row">
-      <label for="email" class="col-sm-2 col-form-label">{{ 'common.form.fields.email'|translate }}</label>
-      <div class="col-sm-10">
-        <input appFormControl formControlName="email" type="email" class="form-control" id="email" maxlength="30" required>
+<mat-dialog-content>
+  <div class="modal-body">
+    <p class="lead / mb-4">{{ 'component.user-login.perex' | translate }}</p>
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="onSubmit()"
+      novalidate
+      class="form-one-row"
+    >
+      <mat-form-field>
+        <input
+          appFormControl
+          matInput
+          formControlName="email"
+          type="email"
+          id="email"
+          maxlength="50"
+          required
+          [placeholder]="'common.form.fields.email' | translate"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          appFormControl
+          matInput
+          formControlName="password"
+          type="password"
+          id="password"
+          maxlength="50"
+          required
+          [placeholder]="'common.form.fields.password' | translate"
+        />
+      </mat-form-field>
+      <mat-form-field *ngIf="(roles$ | async) as roles; else loading">
+        <mat-label>{{ 'common.form.fields.role' | translate }}</mat-label>
+        <mat-select appFormControl formControlName="role" required>
+          <mat-option *ngFor="let role of roles" [value]="role.id">
+            {{ role.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="confirmationError" class="alert alert-info">
+        <mat-icon>info</mat-icon>
+        {{ 'component.user-login.confirm1' | translate }}
+        <a appVoidLink (click)="sendConfirmation()">{{
+          'component.user-login.confirm2' | translate
+        }}</a>
       </div>
-    </div>
-    <div class="form-group row">
-      <label for="password" class="col-sm-2 col-form-label">{{ 'common.form.fields.password'|translate }}</label>
-      <div class="col-sm-10">
-        <input appFormControl formControlName="password" type="password" class="form-control" id="password" maxlength="50" required>
+      <div *ngIf="badCredentials" class="alert alert-info">
+        <mat-icon class="mr-1">info</mat-icon>
+        <a appVoidLink (click)="forgotPassword()">{{
+          'component.user-forgotten.title' | translate
+        }}</a>
       </div>
-    </div>
-    <div class="form-group row">
-      <label for="role" class="col-sm-2 col-form-label">{{ 'common.form.fields.role'|translate }}</label>
-      <div class="col-sm-10">
-        <select *ngIf="(roles$ | async) as roles; else loading" appFormControl [emptyOption]="true" formControlName="role" class="form-control" id="role" required>
-          <option *ngFor="let role of roles" [appSelectOption]="role"></option>
-        </select>
-      </div>
-    </div>
-    <div *ngIf="confirmationError" class="form-group row">
-      <div class="col-sm-10 offset-sm-2">
-        <div class="alert alert-info">
-          <i class="icon">info</i>
-          {{ 'component.user-login.confirm1'|translate }} <a appVoidLink (click)="sendConfirmation()">{{ 'component.user-login.confirm2'|translate }}</a>
-        </div>
-      </div>
-    </div>
-    <div class="form-group row">
-      <div class="col-sm-10 offset-sm-2">
-        <input [disabled]="loginForm.invalid" type="submit" class="btn btn-success" [value]="'common.form.fields.submit-login'|translate">
-      </div>
-    </div>
-  </form>
-</div>
+      <button
+        mat-raised-button
+        [disabled]="loginForm.invalid"
+        type="submit"
+        color="primary"
+      >
+        {{ 'common.form.fields.submit-login' | translate }}
+      </button>
+    </form>
+  </div>
+</mat-dialog-content>
 
 <ng-template #loading>
   <mat-spinner [diameter]="'22'"></mat-spinner>

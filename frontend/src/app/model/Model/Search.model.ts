@@ -1,14 +1,13 @@
-import { Injectable } from '@angular/core';
-import { indexOf, remove } from 'lodash';
+import {Injectable} from '@angular/core';
+import {indexOf, remove} from 'lodash';
+import {ArtikelTyp} from '../Entity/Article.entity';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class SearchModelService {
-
   private searchModel: SearchModelInterface = {
-    type: ['dress', 'shoes']
+    type: [ArtikelTyp.dress, ArtikelTyp.shoes],
   };
 
   /** Getters */
@@ -26,16 +25,13 @@ export class SearchModelService {
 
   setActiveType(type): void {
     if (this.isActiveType(type)) {
-      this.searchModel.type = remove(this.searchModel.type, (n) => n === type);
+      this.searchModel.type = remove(this.searchModel.type, n => n === type);
     } else {
       this.searchModel.type.push(type);
     }
   }
-
 }
 
-type Kind = 'dress'|'shoes';
-
 interface SearchModelInterface {
-  type: Kind[];
+  type: ArtikelTyp[];
 }

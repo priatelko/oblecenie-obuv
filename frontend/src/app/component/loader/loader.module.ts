@@ -1,23 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
 
-import { TranslateModule } from '@ngx-translate/core';
+import {TranslateModule} from '@ngx-translate/core';
 
-import { LoaderComponent } from './loader.component';
-import { MaterialModule } from '../../module/SharedModule/material.module';
+import {LoaderComponent} from './loader.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MaterialModule,
-    TranslateModule
-  ],
-  declarations: [
-    LoaderComponent
-  ],
-  exports: [
-    LoaderComponent,
-    MaterialModule
-  ]
+  imports: [TranslateModule, MatProgressSpinnerModule],
+  declarations: [LoaderComponent],
+  exports: [LoaderComponent],
 })
-export class LoaderModule { }
+export class LoaderModule {}

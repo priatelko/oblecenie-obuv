@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { FlashMessageService } from '../FlashMessage/flash-message.service';
-import { ApiRequestService } from '../ApiRequest/api-request.service';
-import { UserModel } from 'src/app/model/Entity/User.model';
-import { share } from 'rxjs/operators';
-import { CommonResponseModel } from 'src/app/model/Entity/CommonResponse.model';
-import { IdentityService } from './identity.service';
+import {Injectable} from '@angular/core';
+import {FlashMessageService} from '../FlashMessage/flash-message.service';
+import {ApiRequestService} from '../ApiRequest/api-request.service';
+import {UserModel} from 'src/app/model/Model/User.model';
+import {IdentityService} from './identity.service';
+import {HttpParams} from '@angular/common/http';
+import {ApiResponseModel} from '../../model/Model/ApiResponse.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   constructor(
@@ -17,9 +17,12 @@ export class UserService {
   ) {}
 
   login(userToLogin) {
-    const request = this.apiRequestService.post<CommonResponseModel<UserModel>>('/user/login', userToLogin);
+    const request = this.apiRequestService.post<ApiResponseModel<UserModel>>(
+      '/user/login',
+      userToLogin
+    );
 
-    request.subscribe((res) => {
+    request.subscribe(res => {
       if (res.success) {
         console.log('User logged in');
         this.identityService.updateUser(res.data);
@@ -30,9 +33,12 @@ export class UserService {
   }
 
   regist(userToRegister) {
-    const request = this.apiRequestService.post<CommonResponseModel<UserModel>>('/user/new', userToRegister);
+    const request = this.apiRequestService.post<ApiResponseModel<UserModel>>(
+      '/user/new',
+      userToRegister
+    );
 
-    request.subscribe((res) => {
+    request.subscribe(res => {
       if (res.success) {
         console.log('User signed up or profil updated');
         this.identityService.updateUser(res.data);
@@ -43,9 +49,12 @@ export class UserService {
   }
 
   changeRole() {
-    const request = this.apiRequestService.get<CommonResponseModel<UserModel>>('/user/change-role', {cachable: false});
+    const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
+      '/user/change-role',
+      {cachable: false}
+    );
 
-    request.subscribe((res) => {
+    request.subscribe(res => {
       if (res.success) {
         console.log('User role has changed');
         this.identityService.updateUser(res.data);
@@ -56,10 +65,15 @@ export class UserService {
   }
 
   sendConfirmation(email) {
-    const request = this.apiRequestService.get<CommonResponseModel<UserModel>>(
-      '/user/send-confirmation/' + encodeURIComponent(email).replace('.', '%DOT%'), {cachable: false});
+    let params = new HttpParams();
+    params = params.append('email', encodeURIComponent(email));
 
-    request.subscribe((res) => {
+    const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
+      '/user/send-confirmation',
+      {params, cachable: false}
+    );
+
+    request.subscribe(res => {
       if (!res.error) {
         console.log('Regist confirmation sent');
       }
@@ -69,10 +83,12 @@ export class UserService {
   }
 
   applyConfirmation(hash) {
-    const request = this.apiRequestService.get<CommonResponseModel<UserModel>>(
-      '/user/apply-confirmation/' + encodeURIComponent(hash), {cachable: false});
+    const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
+      '/user/apply-confirmation/' + encodeURIComponent(hash),
+      {cachable: false}
+    );
 
-    request.subscribe((res) => {
+    request.subscribe(res => {
       if (res.success) {
         console.log('Regist confirmed');
       }
@@ -82,10 +98,15 @@ export class UserService {
   }
 
   forgottenPassword(email) {
-    const request = this.apiRequestService.get<CommonResponseModel<UserModel>>(
-      '/user/forgotten-password/' + encodeURIComponent(email).replace('.', '%DOT%'), {cachable: false});
+    let params = new HttpParams();
+    params = params.append('email', encodeURIComponent(email));
 
-    request.subscribe((res) => {
+    const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
+      '/user/forgotten-password',
+      {params, cachable: false}
+    );
+
+    request.subscribe(res => {
       if (res.success) {
         console.log('Forgotten password sent');
       }
@@ -95,10 +116,12 @@ export class UserService {
   }
 
   confirmForgottenPassword(hash) {
-    const request = this.apiRequestService.get<CommonResponseModel<UserModel>>(
-      '/user/confirm-forgotten-password/' + hash, {cachable: false});
+    const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
+      '/user/confirm-forgotten-password/' + hash,
+      {cachable: false}
+    );
 
-    request.subscribe((res) => {
+    request.subscribe(res => {
       if (res.success) {
         console.log('Password was reset');
       }

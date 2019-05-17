@@ -7,7 +7,7 @@
     "dress": "Oblečenie",
     "shoes": "Obuv",
     "choose": "Vyberte si",
-    "youNavigated": "Presmerovali ste sa na.",
+    "youNavigated": "Presmerovali ste sa na",
     "requestLoading": "Doťahujú sa vzdialené dáta. Počkajte chvíľu prosím.",
     "requestLoaded": "Vzdialené dáta sa dotiahli. Môžete pokračovať",
     "close": "Zavrieť.",
@@ -26,10 +26,14 @@
         "role": "Rola",
         "name": "Meno",
         "surname": "Priezvisko",
+        "category": "Kategória",
         "submit": "Odoslať",
         "submit-regist": "Zaregistruj",
         "submit-save": "Uložiť",
-        "submit-login": "Prihlásiť sa"
+        "submit-login": "Prihlásiť sa",
+        "submit-add": "Pridať",
+        "search": "hľadaj...",
+        "noSearchEntryFound": "Vyhľadávaný reťazec sa nenašiel."
       }
     },
     "response": {
@@ -65,11 +69,16 @@
   },
   "page": {
     "homepage": {
-      "title": "Oblečenie a obuv"
+      "title": "Predaj a kúpa oblečenia a obuvy"
     },
     "pageNotFound": {
       "title": "Stránka sa nenašla.",
       "body": "Pokračujte na hlavnej stránke."
+    },
+    "add-article": {
+      "title": "Pridaj oblečenie alebo obuv",
+      "dress-title": "Pridaj oblečenie",
+      "shoes-title": "Pridaj obuv"
     }
   },
   "component": {
@@ -83,7 +92,7 @@
         "advancedSearch": "Rozšírené vyhľadávanie",
         "user": "Užívateľský účet"
       },
-      "searchPlaceholder": "hľadaj...",
+      "searchPlaceholder": "Oblečenie a obuv, zadaj názov...",
       "user": {
         "login": "Prihlásiť sa",
         "regist": "Registrácia",
@@ -103,16 +112,31 @@
     },
     "user-login": {
       "title": "Prihlásiť sa",
-      "perex": "Pred prihlásením si vyberte rolu (predajcu alebo kupcu) pod ktorou chcete práve teraz vystupovať.",
+      "perex": "Pred prihlásením si vyberte rolu (predajcu alebo kupcu) pod ktorou budete chciet vystupovať.",
       "confirm1": "Neobdržali ste email o potvrdení registrácie?",
       "confirm2": "Nie, poslať znova!"
     },
     "user-forgotten": {
       "title": "Zabudli ste heslo?",
       "perex": "Zadajte email na ktorý ste sa zaregistrovali. Heslo vyresetujeme, a Vy si ho môžete následne upraviť vo svojom profile."
+    },
+    "article": {
+      "choose": "Vyberte si, čo idete predávať? Oblečenie alebo obuv?",
+      "add": {
+        "title": "Pridať artikel",
+        "preKoho": "Pre koho",
+        "preKohoDesc": "Komu je oblečenie určené.",
+        "obdobie": "Kedy",
+        "obdobieDesc": "Pre aké ročné obdobie je oblečenie šité (ak oblečenie nie je na von, označte indoorové).",
+        "kategoria": "Čo (kategória)",
+        "dress": {
+          "title": "Pridať oblečenie",
+          "perex": "Údaje zadávajte pravdivo a presne vyplnené.",
+          "kategoriaDesc": "Zkrátené rukávy, nohavice, sukne nastavte v časti „Zostrih“."
+        }
+      }
     }
   },
-
 
   "things": "SK There {count, plural, =0{is} one{is} other{are}} {count, plural, =0{} one{a} other{several}} {count, plural, =0{nothing} one{thing} other{things}}",
   "people": "{gender, select, male{He is} female{She is} other{They are}} {how}"

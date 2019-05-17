@@ -1,10 +1,14 @@
-import { NgControl, ValidatorFn, AbstractControl, FormControl } from '@angular/forms';
-import { isUndefined, isNull } from 'lodash';
-import { TranslateService } from '@ngx-translate/core';
-import { ContainerInjector } from '../module/ContainerGetter/container-getter.module';
+import {
+  ValidatorFn,
+  AbstractControl,
+  FormControl,
+  NgControl,
+} from '@angular/forms';
+import {isUndefined, isNull} from 'lodash';
+import {TranslateService} from '@ngx-translate/core';
+import {ContainerInjector} from '../module/ContainerGetter/container-getter.module';
 
 export class Validator {
-
   /** Validators */
   static sameAs(asControl: FormControl): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
@@ -20,7 +24,7 @@ export class Validator {
   }
 
   /** Helper methods */
-  static getErrors(control: NgControl) {
+  static getErrors(control: NgControl | FormControl) {
     const err = [];
 
     if (isNull(control.errors)) {
@@ -39,7 +43,12 @@ export class Validator {
 
     // Minlength
     if (!isUndefined(control.errors.minlength)) {
-      err.push(this.translate('common.form.error.minlength').replace('%requiredLength', control.errors.minlength.requiredLength));
+      err.push(
+        this.translate('common.form.error.minlength').replace(
+          '%requiredLength',
+          control.errors.minlength.requiredLength
+        )
+      );
     }
 
     // Same As
@@ -55,7 +64,7 @@ export class Validator {
 
     let translated;
 
-    translateService.get(key).subscribe((res) => {
+    translateService.get(key).subscribe(res => {
       translated = res;
     });
 

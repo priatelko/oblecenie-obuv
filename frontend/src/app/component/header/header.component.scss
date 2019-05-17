@@ -1,1 +1,35 @@
 @import '~src/sass/variables';
+
+.page-header {
+  display: flex;
+  width: 100%;
+  background-color: map-get($mat-indigo, 800);
+  padding: 2rem;
+  color: white;
+  box-shadow: inset 0 14px 14px -10px rgba(0, 0, 0, 0.45);
+  h1 {
+    font-size: $h2-font-size;
+  }
+  p {
+    margin-bottom: 0;
+  }
+  div {
+    &:first-of-type {
+      flex-grow: 1;
+    }
+    &:last-of-type {
+      flex-shrink: 1;
+    }
+  }
+}
+
+.btn-home {
+  position: relative;
+  top: -0.35rem;
+  width: auto;
+
+  .mat-icon {
+    font-size: 4rem;
+    width: auto;
+  }
+}

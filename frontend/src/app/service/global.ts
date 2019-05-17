@@ -1,4 +1,8 @@
 export const GLOBAL = {
-  url: 'http://localhost:8000/api',
-  dialogWidth: '800px'
+  url: 'http://localhost:4200/api',
+  dialogWidth: {
+    sm: '500px',
+    md: '800px',
+    lg: '1200px'
+  }
 };

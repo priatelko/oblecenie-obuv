@@ -1,22 +1,25 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {Component, OnInit, OnDestroy, Inject} from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 
-import { Observable, Subscription } from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { UserService } from '../../../service/User/user.service';
-import { LoginRoleEntityService, LoginRoleEntity } from '../../../repository/login-role.entity.service';
-import { Validator } from 'src/app/custom/validator.custom';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { IdentityService } from 'src/app/service/User/identity.service';
+import {UserService} from '../../../service/User/user.service';
+import {LoginRoleRepositoryService} from '../../../model/Repository/LoginRole.repository';
+
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
+import {untilDestroyed} from 'ngx-take-until-destroy';
+import {LoginRoleEntity} from '../../../model/Entity/LoginRole.entity';
+import {IdentityService} from '../../../service/User/identity.service';
+import {Validator} from '../../../custom/validator.custom';
 
 @Component({
   selector: 'app-user-regist',
   templateUrl: './regist.component.html',
-  styleUrls: ['./regist.component.scss']
+  styleUrls: ['./regist.component.scss'],
 })
 export class RegistComponent implements OnInit, OnDestroy {
   registForm: FormGroup;
-  registSubscription: Subscription;
 
   roles$: Observable<LoginRoleEntity[]>;
 
@@ -33,7 +36,7 @@ export class RegistComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private identityService: IdentityService,
-    private roleRepository: LoginRoleEntityService,
+    private loginRoleRepository: LoginRoleRepositoryService,
     private dialogRef: MatDialogRef<RegistComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any
   ) {
@@ -41,9 +44,9 @@ export class RegistComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.roles$ = this.roleRepository.findAll();
+    this.roles$ = this.loginRoleRepository.getRoles();
 
-      // Edit mode
+    // Edit mode
     if (this.isEditMode) {
       this.componentMode = {
         mode: 'editprofile',
@@ -65,27 +68,30 @@ export class RegistComponent implements OnInit, OnDestroy {
     const passwordConfirm = new FormControl(null, [
       Validators.required,
       Validator.trim(),
-      Validator.sameAs(password)
+      Validator.sameAs(password),
     ]);
 
     const formGroup = new FormGroup({
-        email: new FormControl(null, [
-          Validators.email,
-          Validators.required,
-          Validator.trim(),
-          Validators.maxLength(50),
-        ]),
-        role: new FormControl(null, [
-          Validators.required
-        ]),
-        password,
-        passwordConfirm
-      },
-    );
+      email: new FormControl(null, [
+        Validators.email,
+        Validators.required,
+        Validator.trim(),
+        Validators.maxLength(50),
+      ]),
+      role: new FormControl(null, [Validators.required]),
+      password,
+      passwordConfirm,
+    });
 
     if (this.isEditMode) {
-      formGroup.addControl('name', new FormControl(null, [Validators.required, Validator.trim()]));
-      formGroup.addControl('surname', new FormControl(null, [Validators.required, Validator.trim()]));
+      formGroup.addControl(
+        'name',
+        new FormControl(null, [Validators.required, Validator.trim()])
+      );
+      formGroup.addControl(
+        'surname',
+        new FormControl(null, [Validators.required, Validator.trim()])
+      );
       formGroup.removeControl('role');
     }
 
@@ -93,19 +99,15 @@ export class RegistComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    this.registSubscription = this.userService.regist(this.registForm.value).subscribe((res) => {
-
-      if (!res.error) {
-        this.dialogRef.close();
-      }
-    });
+    this.userService
+      .regist(this.registForm.value)
+      .pipe(untilDestroyed(this))
+      .subscribe(res => {
+        if (!res.error) {
+          this.dialogRef.close();
+        }
+      });
   }
 
-  ngOnDestroy() {
-    if (!(this.registSubscription instanceof Subscription)) {
-      return;
-    }
-
-    this.registSubscription.unsubscribe();
-  }
+  ngOnDestroy() {}
 }

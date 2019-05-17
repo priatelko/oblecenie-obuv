@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { UserModel, UserLoginRoleModel } from '../../model/Entity/User.model';
+import {Injectable} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
+import {UserModel, UserLoginRoleModel} from '../../model/Model/User.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IdentityService {
   constructor(private translateService: TranslateService) {}

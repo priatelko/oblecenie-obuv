@@ -1,32 +1,23 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpModule } from '@angular/http';
-import { MatDialogModule } from '@angular/material/dialog';
+import {NgModule} from '@angular/core';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 
-import { LoginComponent } from './login/login.component';
-import { CoreModule } from '../../module/SharedModule/core.module';
-import { MaterialModule } from '../../module/SharedModule/material.module';
-import { FormModule } from 'src/app/module/SharedModule/form.module';
-import { RegistComponent } from './regist/regist.component';
-import { ForgottenComponent } from './forgotten/forgotten.component';
-
+import {LoginComponent} from './login/login.component';
+import {CoreModule} from '../../module/SharedModule/core.module';
+import {FormModule} from 'src/app/module/SharedModule/form.module';
+import {RegistComponent} from './regist/regist.component';
+import {ForgottenComponent} from './forgotten/forgotten.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
-    CommonModule,
-    HttpModule,
     FormModule,
     CoreModule,
-    MaterialModule,
-    MatDialogModule
+    MatDialogModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
   ],
-  declarations: [
-    LoginComponent,
-    RegistComponent,
-    ForgottenComponent
-  ],
-  exports: [
-
-  ]
+  declarations: [LoginComponent, RegistComponent, ForgottenComponent],
+  exports: [],
 })
-export class UserModule { }
+export class UserModule {}
