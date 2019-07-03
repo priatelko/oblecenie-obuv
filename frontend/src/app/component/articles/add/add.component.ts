@@ -1,24 +1,43 @@
-import {Component, OnInit, OnDestroy, Input} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {ToggleOption} from 'src/app/form-control/toggle-group/toggle-group.interface';
 import {ArtikelTyp} from '../../../model/Entity/Article.entity';
 import {AddArticleDressRepositoryService} from '../../../model/Repository/AddArticleDress.repository';
 import {untilDestroyed} from 'ngx-take-until-destroy';
-import {ActivatedRoute} from '@angular/router';
+import {LoaderSize} from '../../loader/loader.component';
+import {MatDialog} from '@angular/material';
+import {ModalFilterComponent} from '../../modal-filter/modal-filter.component';
+import {GLOBAL} from 'src/app/variables/global';
+import {
+  ModalFilterOptions,
+  ModalFilterService,
+} from '../../modal-filter/modal-filter.service';
+import {
+  OblecenieKategorie,
+  OblecenieKategorieChildren,
+} from 'src/app/model/Entity/AddArticleDress.entity';
+import {MultiSelectOption} from 'src/app/custom/interfaces';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddComponent implements OnInit, OnDestroy {
   articleKind = ArtikelTyp;
+  loaderSize = LoaderSize;
 
   addOblecenieForm: FormGroup;
 
-  preKoho$: Observable<ToggleOption[]>;
-  obdobie$: Observable<ToggleOption[]>;
+  preKoho$: Observable<MultiSelectOption[]>;
+  obdobie$: Observable<MultiSelectOption[]>;
 
   @Input() addKind: ArtikelTyp;
 
@@ -31,7 +50,8 @@ export class AddComponent implements OnInit, OnDestroy {
 
   constructor(
     private addArticleDressRepository: AddArticleDressRepositoryService,
-    protected activatedRoute: ActivatedRoute
+    private dialog: MatDialog,
+    private modalFilterService: ModalFilterService
   ) {
     this.addOblecenieForm = this.createOblecenieFormGroup();
   }
@@ -56,7 +76,7 @@ export class AddComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.preKoho$ = this.addArticleDressRepository.getPreKohoOptions();
     this.obdobie$ = this.addArticleDressRepository.getObdobieOptions();
-    this.addArticleDressRepository.getDressCategoriesInit();
+    this.addArticleDressRepository.dressCategoriesInit();
 
     this.oblecenieKategorieFilter.valueChanges
       .pipe(untilDestroyed(this))
@@ -104,4 +124,35 @@ export class AddComponent implements OnInit, OnDestroy {
   //   this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
   // );
   // }
+
+  openCategoryFilterDialog() {
+    const data: ModalFilterOptions = {
+      header: 'component.article.add.kategoria',
+      multiselect: false,
+      items: this.modalFilterService.transformItems<
+        OblecenieKategorie,
+        OblecenieKategorieChildren
+      >(
+        this.addArticleDressRepository.oblecenieCategories,
+        (item): MultiSelectOption => {
+          return {
+            id: null,
+            label: item.item,
+          };
+        },
+        'children',
+        (item): MultiSelectOption => {
+          return {
+            id: item.id,
+            label: item.nazov,
+          };
+        }
+      ),
+    };
+
+    this.dialog.open(ModalFilterComponent, {
+      width: GLOBAL.dialogWidth.lg,
+      data,
+    });
+  }
 }

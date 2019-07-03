@@ -1,9 +1,8 @@
 @import '~src/sass/variables';
 
 :host {
-  display: flex;
-  align-items: center;
-  height: 100%;
+  display: block;
+  width: 100%;
 }
 
 .choose-kind {
@@ -15,14 +14,14 @@
     a {
       display: inline-block;
       text-decoration: none;
-      color: map-get($mat-indigo, 500);
+      color: $body-color;
       span {
         display: block;
       }
 
       &,
       * {
-        transition: all 0.25s ease-out;
+        transition: all 0.15s ease-out;
       }
     }
     i {
@@ -35,6 +34,7 @@
     &:hover {
       a {
         transform-origin: left;
+        color: map-get($mat-indigo, 800);
         span {
           font-size: 250%;
           font-weight: bold;

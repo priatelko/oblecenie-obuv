@@ -6,6 +6,9 @@ import {ToggleGroupModule} from 'src/app/form-control/toggle-group/toggle-group.
 import {AddComponent} from './add.component';
 import {DressComponent} from './dress/dress.component';
 import {RouterModule} from '@angular/router';
+import {LoaderModule} from '../../loader/loader.module';
+import {ModalFilterModule} from '../../modal-filter/modal-filter.module';
+import {ModalFilterComponent} from '../../modal-filter/modal-filter.component';
 
 @NgModule({
   imports: [
@@ -16,8 +19,11 @@ import {RouterModule} from '@angular/router';
     FormModule,
     ToggleGroupModule,
     MatProgressSpinnerModule,
+    LoaderModule,
+    ModalFilterModule,
   ],
   declarations: [AddComponent, DressComponent],
+  entryComponents: [ModalFilterComponent],
   exports: [AddComponent],
 })
 export class AddModule {}

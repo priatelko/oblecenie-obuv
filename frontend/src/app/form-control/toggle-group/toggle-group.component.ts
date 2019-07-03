@@ -4,9 +4,8 @@ import {
   Input,
   OnDestroy,
   Injector,
-  AfterViewInit,
   AfterContentInit,
-  HostListener,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -17,15 +16,13 @@ import {
 import {BindObservable} from 'bind-observable';
 import {Observable} from 'rxjs';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
-import {
-  ToggleOption,
-  ToggleOptionId,
-  ToggleType,
-} from './toggle-group.interface';
+import {ToggleType} from './toggle-group.interface';
 import {filter} from 'lodash';
+import {MultiSelectOption, SelectOptionId} from 'src/app/custom/interfaces';
 
 @Component({
   selector: 'app-toggle-group',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -44,14 +41,14 @@ import {filter} from 'lodash';
         [disabled]="disabled"
         [checked]="toggle.checked"
         (change)="toggleEvent($event, toggle.id)"
-        >{{ toggle.name }}</mat-slide-toggle
+        >{{ toggle.label }}</mat-slide-toggle
       >
       <mat-checkbox
         *ngIf="(type$ | async) == toggleType.Checkbox"
         [disabled]="disabled"
         [checked]="toggle.checked"
         (change)="toggleEvent($event, toggle.id)"
-        >{{ toggle.name }}</mat-checkbox
+        >{{ toggle.label }}</mat-checkbox
       >
     </div>
   `,
@@ -59,17 +56,17 @@ import {filter} from 'lodash';
 })
 export class ToggleGroupComponent
   implements OnInit, AfterContentInit, ControlValueAccessor, OnDestroy {
-  toggleOptions: ToggleOption[];
+  MultiSelectOptions: MultiSelectOption[];
   disabled: boolean;
-  value: ToggleOptionId[] = [];
+  value: SelectOptionId[] = [];
   toggleType = ToggleType;
 
   formControlRef: FormControl = new FormControl();
 
   @Input()
   @BindObservable()
-  options: ToggleOption[];
-  options$: Observable<ToggleOption[]>;
+  options: MultiSelectOption[];
+  options$: Observable<MultiSelectOption[]>;
   @Input()
   @BindObservable()
   type: ToggleType = ToggleType.Checkbox;
@@ -94,7 +91,7 @@ export class ToggleGroupComponent
 
   ngOnDestroy() {}
 
-  toggleEvent($event: MatSlideToggleChange, toggleId: ToggleOptionId) {
+  toggleEvent($event: MatSlideToggleChange, toggleId: SelectOptionId) {
     if ($event.checked) {
       this.value.push(toggleId);
     } else {
@@ -109,10 +106,10 @@ export class ToggleGroupComponent
   }
 
   // API
-  onChange = (value: ToggleOptionId[]) => {};
+  onChange = (value: SelectOptionId[]) => {};
   onTouched = () => {};
 
-  writeValue(value: ToggleOptionId[]): void {
+  writeValue(value: SelectOptionId[]): void {
     value = value || [];
     this.value = value;
 
@@ -121,7 +118,7 @@ export class ToggleGroupComponent
     });
   }
 
-  registerOnChange(fn: (value: ToggleOptionId[]) => void): void {
+  registerOnChange(fn: (value: SelectOptionId[]) => void): void {
     this.onChange = fn;
   }
 

@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 import {LoginRoleRepositoryService} from '../../../model/Repository/LoginRole.repository';
 import {MatDialogRef, MatDialog} from '@angular/material';
 import {ForgottenComponent} from '../forgotten/forgotten.component';
-import {GLOBAL} from '../../../service/global';
+import {GLOBAL} from '../../../variables/global';
 import {LoginRoleEntity} from '../../../model/Entity/LoginRole.entity';
 
 @Component({

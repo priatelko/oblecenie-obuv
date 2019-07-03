@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, AfterViewInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Validator} from 'src/app/custom/validator.custom';
 import {head} from 'lodash';

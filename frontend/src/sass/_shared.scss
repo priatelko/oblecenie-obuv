@@ -1,3 +1,10 @@
 .mat-icon.close {
   min-width: auto;
 }
+
+.big-loading {
+  text-align: center;
+  .mat-progress-spinner {
+    display: inline-block;
+  }
+}

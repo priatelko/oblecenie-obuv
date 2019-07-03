@@ -51,4 +51,18 @@ class ApiController extends BaseController {
 
 		return $result;
 	}
+	
+	/**
+     * @Route("/generate-feed/{code}")
+	 * @Method({"GET"})
+     */
+    public function generateFeedAction($code) {
+		switch($code) {
+			case 'Shopingujsk':
+				\App\Services\GeneratorShopingujSk::generate();
+				break;
+			default:
+				throw new \InvalidArgumentException('Feed doesnt exists!');
+		}
+	}
 }

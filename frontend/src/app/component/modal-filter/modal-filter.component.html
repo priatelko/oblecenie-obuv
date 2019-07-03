@@ -1,0 +1,30 @@
+<ng-container *ngIf="data; else loading">
+  <div class="modal-header">
+    <h1 mat-dialog-title class="modal-title / pull-left">
+      {{ 'component.modalFilter.title' | translate
+      }}<ng-container *ngIf="data.header"
+        >: {{ data.header | translate }}</ng-container
+      >
+    </h1>
+    <button mat-button mat-dialog-close class="close">
+      <mat-icon mat-dialog-close [attr.aria-label]="'common.close' | translate"
+        >close</mat-icon
+      >
+    </button>
+  </div>
+
+  <mat-dialog-content>
+    <div class="modal-body">
+      <form (ngSubmit)="onSubmit()" novalidate>
+        <app-toggle-group
+          [options]="data.items"
+          [formControl]="filterControl"
+        ></app-toggle-group>
+      </form>
+    </div>
+  </mat-dialog-content>
+</ng-container>
+
+<ng-template #loading>
+  <app-loader [size]="loaderSize.Large"></app-loader>
+</ng-template>

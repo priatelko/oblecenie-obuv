@@ -1,18 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HttpRequest } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
-import { WaiStatusService } from '../../component/header/wai-status/wai-status.service';
-import { TranslateService } from '@ngx-translate/core';
+import {Injectable} from '@angular/core';
+import {HttpRequest} from '@angular/common/http';
+import {BehaviorSubject} from 'rxjs';
+import {WaiStatusService} from '../../component/header/wai-status/wai-status.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoadingIndicatorService {
-
   constructor(
     private waiService: WaiStatusService,
     private translateService: TranslateService
-    ) {}
+  ) {}
 
   loading$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -46,5 +45,4 @@ export class LoadingIndicatorService {
       this.loading$.next(this.requests.length !== 0);
     });
   }
-
 }

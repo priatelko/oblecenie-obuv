@@ -1,16 +1,17 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {SearchModelService} from '../../model/Model/Search.model';
 import {MatDialog} from '@angular/material';
 import {RegistComponent} from '../user/regist/regist.component';
 import {LoginComponent} from '../user/login/login.component';
 import {ForgottenComponent} from '../user/forgotten/forgotten.component';
 import {UserService} from 'src/app/service/User/user.service';
-import {GLOBAL} from '../../service/global';
+import {GLOBAL} from '../../variables/global';
 import {IdentityService} from 'src/app/service/User/identity.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
@@ -22,7 +23,8 @@ export class HeaderComponent {
   ) {}
 
   @Input() title: string;
-  @Input() subtitle: string;
+  @Input() subTitle: string;
+  @Input() backLink: string;
 
   /** Filter switch */
   isActiveSearchType(type): boolean {

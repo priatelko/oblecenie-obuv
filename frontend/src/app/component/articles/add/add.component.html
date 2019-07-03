@@ -1,148 +1,219 @@
-<div *ngIf="!addKind" class="container-fluid">
-  <ul class="choose-kind / list-unstyled">
-    <li [title]="'common.dress' | translate">
-      <a routerLink="/add-article/dress">
-        <i class="oo-icon oo-icon--dress" aria-hidden="true"></i>
-        <span>{{ 'common.dress' | translate }}</span>
-      </a>
-    </li>
-    <li [title]="'common.shoes' | translate">
-      <a routerLink="/add-article/shoes">
-        <i class="oo-icon oo-icon--shoe" aria-hidden="true"></i>
-        <span>{{ 'common.shoes' | translate }}</span>
-      </a>
-    </li>
-  </ul>
-</div>
-
-<!-- Pridat oblecenie -->
-<ng-container *ngIf="addKind == articleKind.dress">
-  <div class="page-header">
-    <h1>
-      {{ 'component.article.add.dress.title' | translate }}
-    </h1>
-    <p>
-      {{ 'component.article.add.dress.perex' | translate }}
-    </p>
+<div class="page-content">
+  <div *ngIf="!addKind" class="container-fluid">
+    <ul class="choose-kind / list-unstyled">
+      <li [title]="'common.dress' | translate">
+        <a routerLink="/add-article/dress">
+          <i class="oo-icon oo-icon--dress" aria-hidden="true"></i>
+          <span>{{ 'common.dress' | translate }}</span>
+        </a>
+      </li>
+      <li [title]="'common.shoes' | translate">
+        <a routerLink="/add-article/shoes">
+          <i class="oo-icon oo-icon--shoe" aria-hidden="true"></i>
+          <span>{{ 'common.shoes' | translate }}</span>
+        </a>
+      </li>
+    </ul>
   </div>
 
-  <form
-    *ngIf="preKoho$ | async as preKoho; else loading"
-    [formGroup]="addOblecenieForm"
-    (ngSubmit)="onSubmit()"
-    novalidate
-    class="form-one-row"
-  >
-    <div class="container">
-      <div class="row">
-        <div class="col-sm">
-          <h4>{{ 'component.article.add.preKoho' | translate }} *</h4>
-          <p class="lead text-secondary">
-            {{ 'component.article.add.preKohoDesc' | translate }}
-          </p>
-          <app-toggle-group
-            [options]="preKoho"
-            formControlName="preKoho"
-          ></app-toggle-group>
-        </div>
-        <div class="col-sm / mt-4 mt-sm-0">
-          <h4>{{ 'component.article.add.obdobie' | translate }} *</h4>
-          <p class="lead text-secondary">
-            {{ 'component.article.add.obdobieDesc' | translate }}
-          </p>
-          <app-toggle-group
-            [options]="obdobie$ | async"
-            formControlName="obdobie"
-          ></app-toggle-group>
-        </div>
-      </div>
-      <div class="row / mt-4">
-        <div class="col-sm">
-          <h4>{{ 'component.article.add.kategoria' | translate }} *</h4>
-          <p class="lead text-secondary">
-            {{ 'component.article.add.dress.kategoriaDesc' | translate }}
-          </p>
-          <mat-form-field>
-            <mat-label>{{
-              'common.form.fields.category' | translate
-            }}</mat-label>
-            <mat-select
-              appFormControl
-              formControlName="oblecenieKategoria"
-              required
-            >
-              <mat-option>
-                <ngx-mat-select-search
-                  [placeholderLabel]="'common.form.fields.search' | translate"
-                  [formControl]="oblecenieKategorieFilter"
-                  [noEntriesFoundLabel]="
-                    'common.form.fields.noSearchEntryFound' | translate
-                  "
-                ></ngx-mat-select-search>
-              </mat-option>
-              <mat-optgroup
-                *ngFor="let kategoriaGroup of oblecenieKategorieFilter$ | async"
-                [label]="kategoriaGroup.item"
-              >
-                <mat-option
-                  *ngFor="let kategoria of kategoriaGroup.children"
-                  [value]="kategoria.id"
-                >
-                  {{ kategoria.nazov }}
-                </mat-option>
-              </mat-optgroup>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-sm">
-          kljsadjhfnsxf
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <button
-            mat-raised-button
-            [disabled]="addOblecenieForm.invalid"
-            type="submit"
-            color="primary"
-          >
-            {{ 'common.form.fields.submit' | translate }}
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
-  <!-- <div *ngIf="addKind == articleKind.shoes" class="modal-body">
+  <!-- Pridat oblecenie -->
+  <ng-container *ngIf="addKind == articleKind.dress">
     <form
-      [formGroup]="addForm"
+      *ngIf="preKoho$ | async as preKoho; else loading"
+      [formGroup]="addOblecenieForm"
       (ngSubmit)="onSubmit()"
       novalidate
-      class="form-one-row"
+      class="form-one-column"
     >
-      <mat-form-field>
-        <input
-          appFormControl
-          matInput
-          formControlName="email"
-          type="email"
-          id="email"
-          maxlength="50"
-          [placeholder]="'common.form.fields.email' | translate"
-        />
-      </mat-form-field>
-
-      <button
-        mat-raised-button
-        [disabled]="addForm.invalid"
-        type="submit"
-        color="primary"
-      >
-        {{ 'common.form.fields.submit' | translate }}
-      </button>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <h4>
+              {{ 'component.article.add.preKoho' | translate }}
+              <span class="error-color">*</span>
+            </h4>
+            <p class="lead text-secondary">
+              {{ 'component.article.add.preKohoDesc' | translate }}
+            </p>
+            <app-toggle-group
+              [options]="preKoho"
+              formControlName="preKoho"
+            ></app-toggle-group>
+          </div>
+          <div class="col-sm / mt-4 mt-sm-0">
+            <h4>
+              {{ 'component.article.add.obdobie' | translate }}
+              <span class="error-color">*</span>
+            </h4>
+            <p class="lead text-secondary">
+              {{ 'component.article.add.obdobieDesc' | translate }}
+            </p>
+            <app-toggle-group
+              [options]="obdobie$ | async"
+              formControlName="obdobie"
+            ></app-toggle-group>
+          </div>
+        </div>
+        <div class="row / mt-4">
+          <div class="col-sm">
+            <h4>
+              {{ 'component.article.add.kategoria' | translate }}
+              <span class="error-color">*</span>
+            </h4>
+            <p class="lead text-secondary">
+              {{ 'component.article.add.dress.kategoriaDesc' | translate }}
+            </p>
+            <div class="field-dialog-select">
+              <mat-form-field class="asdasd">
+                <mat-label>{{
+                  'common.form.fields.category' | translate
+                }}</mat-label>
+                <mat-select
+                  appFormControl
+                  formControlName="oblecenieKategoria"
+                  required
+                >
+                  <mat-option>
+                    <ngx-mat-select-search
+                      [placeholderLabel]="
+                        'common.form.fields.search' | translate
+                      "
+                      [formControl]="oblecenieKategorieFilter"
+                      [noEntriesFoundLabel]="
+                        'common.form.fields.noSearchEntryFound' | translate
+                      "
+                    ></ngx-mat-select-search>
+                  </mat-option>
+                  <mat-optgroup
+                    *ngFor="
+                      let kategoriaGroup of oblecenieKategorieFilter$ | async
+                    "
+                    [label]="kategoriaGroup.item"
+                  >
+                    <mat-option
+                      *ngFor="let kategoria of kategoriaGroup.children"
+                      [value]="kategoria.id"
+                    >
+                      {{ kategoria.nazov }}
+                    </mat-option>
+                  </mat-optgroup>
+                </mat-select>
+              </mat-form-field>
+              <button
+                mat-button
+                (click)="openCategoryFilterDialog()"
+                [title]="'common.modalFilter' | translate"
+              >
+                <mat-icon>view_list</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="col-sm">
+            <h4>
+              {{ 'component.article.add.znacka' | translate }}
+              <span class="error-color">*</span>
+            </h4>
+            <p class="lead text-secondary">
+              {{ 'component.article.add.dress.znackaDesc' | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="row / mt-4">
+          <div class="col-sm">
+            <h4>
+              {{ 'component.article.add.dress.prilezitost' | translate }}
+              <span class="error-color">*</span>
+            </h4>
+            <p class="lead text-secondary">
+              {{ 'component.article.add.dress.prilezitostDesc' | translate }}
+            </p>
+          </div>
+          <div class="col-sm">
+            <h4>
+              {{ 'component.article.add.dress.zostrih' | translate }}
+              <span class="error-color">*</span>
+            </h4>
+            <p class="lead text-secondary">
+              {{ 'component.article.add.dress.zostrihDesc' | translate }}
+            </p>
+            <h4>
+              {{ 'component.article.add.velkost' | translate }}
+              <span class="error-color">*</span>
+            </h4>
+          </div>
+        </div>
+        <div class="row / mt-4">
+          <div class="col-sm">
+            <h4>
+              {{ 'component.article.add.dress.styl' | translate }}
+              <span class="error-color">*</span>
+            </h4>
+          </div>
+          <div class="col-sm">
+            <h4>
+              {{ 'component.article.add.dress.zapinanie' | translate }}
+              <span class="error-color">*</span>
+            </h4>
+            <h4>
+              {{ 'component.article.add.stav' | translate }}
+              <span class="error-color">*</span>
+            </h4>
+          </div>
+        </div>
+        <div class="row / mt-4">
+          <div class="col-sm">
+            <h4>
+              {{ 'component.article.add.material' | translate }}
+              <span class="error-color">*</span>
+            </h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button
+              mat-raised-button
+              [disabled]="addOblecenieForm.invalid"
+              type="submit"
+              color="primary"
+            >
+              {{ 'common.form.fields.submit' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
     </form>
-  </div> -->
-</ng-container>
+    <!-- <div *ngIf="addKind == articleKind.shoes" class="modal-body">
+      <form
+        [formGroup]="addForm"
+        (ngSubmit)="onSubmit()"
+        novalidate
+        class="form-one-column"
+      >
+        <mat-form-field>
+          <input
+            appFormControl
+            matInput
+            formControlName="email"
+            type="email"
+            id="email"
+            maxlength="50"
+            [placeholder]="'common.form.fields.email' | translate"
+          />
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          [disabled]="addForm.invalid"
+          type="submit"
+          color="primary"
+        >
+          {{ 'common.form.fields.submit' | translate }}
+        </button>
+      </form>
+    </div> -->
+  </ng-container>
+</div>
 
 <ng-template #loading>
-  <mat-spinner [diameter]="'22'"></mat-spinner>
+  <app-loader [size]="loaderSize.Large"></app-loader>
 </ng-template>

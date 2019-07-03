@@ -31,7 +31,7 @@ export class AddArticleDressRepositoryService
   private oblecenieCategoriesFilter$ = new BehaviorSubject<
     OblecenieKategorie[]
   >([]);
-  private oblecenieCategories: OblecenieKategorie[];
+  oblecenieCategories: OblecenieKategorie[];
 
   constructor(
     private apiRequestService: ApiRequestService,
@@ -69,7 +69,7 @@ export class AddArticleDressRepositoryService
     );
   }
 
-  getDressCategoriesInit() {
+  dressCategoriesInit() {
     this.oblecenieCategories$ = this.dataStreamFinal.pipe(
       map(res => res.kategorie)
     );

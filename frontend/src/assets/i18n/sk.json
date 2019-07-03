@@ -7,11 +7,13 @@
     "dress": "Oblečenie",
     "shoes": "Obuv",
     "choose": "Vyberte si",
+    "back": "Späť",
     "youNavigated": "Presmerovali ste sa na",
     "requestLoading": "Doťahujú sa vzdialené dáta. Počkajte chvíľu prosím.",
     "requestLoaded": "Vzdialené dáta sa dotiahli. Môžete pokračovať",
     "close": "Zavrieť.",
     "loadingData": "Načítavam dáta.",
+    "modalFilter": "Zobraziť veľký filter",
     "form": {
       "error": {
         "required": "Políčko je povinné.",
@@ -121,20 +123,37 @@
       "perex": "Zadajte email na ktorý ste sa zaregistrovali. Heslo vyresetujeme, a Vy si ho môžete následne upraviť vo svojom profile."
     },
     "article": {
-      "choose": "Vyberte si, čo idete predávať? Oblečenie alebo obuv?",
       "add": {
         "title": "Pridať artikel",
+        "perex": "Vyberte si, čo idete predávať? Oblečenie alebo obuv?",
         "preKoho": "Pre koho",
         "preKohoDesc": "Komu je oblečenie určené.",
         "obdobie": "Kedy",
         "obdobieDesc": "Pre aké ročné obdobie je oblečenie šité (ak oblečenie nie je na von, označte indoorové).",
         "kategoria": "Čo (kategória)",
+        "znacka": "Značka",
+        "velkost": "Veľkosť",
+        "stav": "Stav, závada",
+        "material": "Materiál šitia",
+        "shoes": {
+          "title": "Pridať obuv",
+          "perex": "Údaje zadávajte pravdivo a presne vyplnené."
+        },
         "dress": {
           "title": "Pridať oblečenie",
-          "perex": "Údaje zadávajte pravdivo a presne vyplnené.",
-          "kategoriaDesc": "Zkrátené rukávy, nohavice, sukne nastavte v časti „Zostrih“."
+          "kategoriaDesc": "Zkrátené rukávy, nohavice, sukne nastavte v časti „Zostrih“.",
+          "znackaDesc": "Sadu oblečenia zadávajte pod „Rôzne značky“. Keď neviete značku, zadajte „Neznáma značka“",
+          "prilezitost": "Príležitosť",
+          "prilezitostDesc": "Na akú príležitosť sa oblečenie hodí.",
+          "zostrih": "Zostrih",
+          "zostrihDesc": "Krátke / dlhé rukávy, nohavice, sukňa.",
+          "styl": "Štýl",
+          "zapinanie": "Zapínanie"
         }
       }
+    },
+    "modalFilter": {
+      "title": "Možnosť výberu"
     }
   },
 

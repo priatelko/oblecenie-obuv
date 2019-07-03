@@ -2,24 +2,37 @@
  * Bootstrap redeclare variables
  */
 
+$body-bg: #fafafa;
+$input-bg: $body-bg;
+$input-border-width: 0px;
+$input-border-color: transparent;
+$modal-header-padding: 0 1rem;
+$headings-font-weight: normal;
+
 // border
-$border-radius:               0;
-$border-radius-lg:            0;
-$border-radius-sm:            0;
+$border-radius: 0;
+$border-radius-lg: 0;
+$border-radius-sm: 0;
 
 // button
-$btn-padding-x-lg:               3rem;
+$btn-padding-x-lg: 3rem;
 
 // utility spaces
 $spacer: 1rem;
 $spacers: (
-  5: ($spacer * 2.5),
-  6: ($spacer * 4),
-  7: ($spacer * 6)
+  5: (
+    $spacer * 2.5,
+  ),
+  6: (
+    $spacer * 4,
+  ),
+  7: (
+    $spacer * 6,
+  ),
 );
 
 // dropdown
-$dropdown-item-padding-x:           1rem;
+$dropdown-item-padding-x: 1rem;
 
 // Inject origins
 @import '~node_modules/bootstrap/scss/functions';
@@ -28,15 +41,15 @@ $dropdown-item-padding-x:           1rem;
 
 @import '~@angular/material/theming';
 
-
 /**
  * Custom
  */
 
 // colors
-$text-color:                     $body-color;
+$text-color: $body-color;
+$border-light: #ccc;
 
 // zindex
-$zindex-middle:       5;
-$zindex-alert:        1010;
-$zindex-dropdown:     1020;
+$zindex-middle: 5;
+$zindex-alert: 1010;
+$zindex-dropdown: 1020;

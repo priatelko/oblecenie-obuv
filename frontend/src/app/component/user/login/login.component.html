@@ -16,7 +16,7 @@
       [formGroup]="loginForm"
       (ngSubmit)="onSubmit()"
       novalidate
-      class="form-one-row"
+      class="form-one-column"
     >
       <mat-form-field>
         <input
@@ -42,7 +42,7 @@
           [placeholder]="'common.form.fields.password' | translate"
         />
       </mat-form-field>
-      <mat-form-field *ngIf="(roles$ | async) as roles; else loading">
+      <mat-form-field *ngIf="roles$ | async as roles; else loading">
         <mat-label>{{ 'common.form.fields.role' | translate }}</mat-label>
         <mat-select appFormControl formControlName="role" required>
           <mat-option *ngFor="let role of roles" [value]="role.id">
@@ -76,5 +76,5 @@
 </mat-dialog-content>
 
 <ng-template #loading>
-  <mat-spinner [diameter]="'22'"></mat-spinner>
+  <app-loader></app-loader>
 </ng-template>

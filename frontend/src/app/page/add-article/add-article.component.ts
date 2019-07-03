@@ -10,6 +10,9 @@ import {ArtikelTyp} from 'src/app/model/Entity/Article.entity';
 })
 export class AddArticleComponent extends BaseComponent implements OnInit {
   addKind: ArtikelTyp;
+  title: string;
+  subTitle: string;
+  backLink: string;
 
   constructor(protected activatedRoute: ActivatedRoute) {
     super(activatedRoute);
@@ -17,5 +20,22 @@ export class AddArticleComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     super.ngOnInit();
     this.addKind = this.activatedRoute.snapshot.data.sub;
+
+    switch (this.addKind) {
+      default:
+        this.title = 'component.article.add.title';
+        this.subTitle = 'component.article.add.perex';
+        break;
+      case ArtikelTyp.dress:
+        this.title = 'component.article.add.dress.title';
+        this.subTitle = 'component.article.add.shoes.perex';
+        this.backLink = '../';
+        break;
+      case ArtikelTyp.shoes:
+        this.title = 'component.article.add.shoes.title';
+        this.subTitle = 'component.article.add.shoes.perex';
+        this.backLink = '../';
+        break;
+    }
   }
 }

@@ -139,11 +139,20 @@
     <h1>
       {{ title }}
     </h1>
-    <p *ngIf="subtitle" class="lead">
-      {{ subtitle }}
+    <p *ngIf="subTitle" class="lead">
+      {{ subTitle }}
     </p>
   </div>
   <div>
+    <a
+      *ngIf="backLink"
+      mat-icon-button
+      [routerLink]="backLink"
+      class="btn btn-outline-primary btn-transparent btn-home"
+      title="{{ 'common.back' | translate }}"
+    >
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </a>
     <a
       mat-icon-button
       routerLink="/"

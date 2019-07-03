@@ -3,12 +3,14 @@
 .page-header {
   display: flex;
   width: 100%;
-  background-color: map-get($mat-indigo, 800);
+  //background-color: map-get($mat-indigo, 800);
   padding: 2rem;
-  color: white;
-  box-shadow: inset 0 14px 14px -10px rgba(0, 0, 0, 0.45);
+  //color: white;
+  border-bottom: 1px solid $border-light;
+  // box-shadow: inset 0 14px 14px -10px rgba(0, 0, 0, 0.45);
   h1 {
     font-size: $h2-font-size;
+    color: map-get($mat-indigo, 800);
   }
   p {
     margin-bottom: 0;
@@ -29,7 +31,7 @@
   width: auto;
 
   .mat-icon {
-    font-size: 4rem;
+    font-size: 3rem;
     width: auto;
   }
 }

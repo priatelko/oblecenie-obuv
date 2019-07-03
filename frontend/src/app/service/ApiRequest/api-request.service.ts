@@ -2,7 +2,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
-import {GLOBAL} from '../global';
+import {GLOBAL} from '../../variables/global';
 import {isUndefined, isEmpty} from 'lodash';
 import {TranslateService} from '@ngx-translate/core';
 import {IdentityService} from '../User/identity.service';

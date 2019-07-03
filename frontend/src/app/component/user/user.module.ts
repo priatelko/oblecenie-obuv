@@ -8,6 +8,7 @@ import {FormModule} from 'src/app/module/SharedModule/form.module';
 import {RegistComponent} from './regist/regist.component';
 import {ForgottenComponent} from './forgotten/forgotten.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {LoaderModule} from '../loader/loader.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatDialogModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    LoaderModule,
   ],
   declarations: [LoginComponent, RegistComponent, ForgottenComponent],
   exports: [],
