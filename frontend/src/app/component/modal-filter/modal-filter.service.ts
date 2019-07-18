@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {has} from 'lodash';
 import {MultiSelectOption} from 'src/app/custom/interfaces';
+import {SelectType} from 'src/app/form-control/select/select.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -44,6 +45,8 @@ export class ModalFilterService {
 
 export interface ModalFilterOptions {
   header: string;
-  multiselect: boolean;
+  checkType?: SelectType;
+  multiselect?: boolean;
   items: MultiSelectOption[];
+  search?: boolean;
 }

@@ -1,28 +1,60 @@
 <ng-container *ngIf="data; else loading">
-  <div class="modal-header">
-    <h1 mat-dialog-title class="modal-title / pull-left">
-      {{ 'component.modalFilter.title' | translate
-      }}<ng-container *ngIf="data.header"
-        >: {{ data.header | translate }}</ng-container
-      >
-    </h1>
-    <button mat-button mat-dialog-close class="close">
-      <mat-icon mat-dialog-close [attr.aria-label]="'common.close' | translate"
-        >close</mat-icon
-      >
-    </button>
+  <div class="modal-header / d-block">
+    <div class="d-flex">
+      <h1 mat-dialog-title class="modal-title / flex-grow-1">
+        {{ 'component.modalFilter.title' | translate
+        }}<ng-container *ngIf="data.header"
+          >: {{ data.header | translate }}</ng-container
+        >
+      </h1>
+      <button mat-button mat-dialog-close class="close">
+        <mat-icon
+          mat-dialog-close
+          [attr.aria-label]="'common.close' | translate"
+          (click)="cancelSearch()"
+          >close</mat-icon
+        >
+      </button>
+    </div>
+    <div class="input-group" *ngIf="data.search">
+      <mat-form-field class="flex-grow-1" appearance="outline">
+        <mat-label>{{ 'common.form.fields.search' | translate }}</mat-label>
+        <input
+          matInput
+          type="search"
+          cdkFocusInitial
+          [formControl]="filterSearchControl"
+        />
+      </mat-form-field>
+    </div>
   </div>
 
   <mat-dialog-content>
     <div class="modal-body">
       <form (ngSubmit)="onSubmit()" novalidate>
-        <app-toggle-group
-          [options]="data.items"
+        <app-select
+          [options]="dataFinal"
+          [multiselect]="data.multiselect"
+          [type]="data.checkType"
           [formControl]="filterControl"
-        ></app-toggle-group>
+        ></app-select>
       </form>
     </div>
   </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button
+      mat-raised-button
+      color="primary"
+      [mat-dialog-close]="true"
+      class="text-capitalize"
+    >
+      {{ 'common.accept' | translate }}
+    </button>
+    <button mat-raised-button mat-dialog-close class="text-capitalize">
+      {{ 'common.cancel' | translate }}
+    </button>
+  </mat-dialog-actions>
 </ng-container>
 
 <ng-template #loading>

@@ -20,7 +20,8 @@
       novalidate
       class="form-one-column"
     >
-      <mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'common.form.fields.email' | translate }}</mat-label>
         <input
           appFormControl
           matInput
@@ -29,7 +30,6 @@
           id="email"
           required
           maxlength="50"
-          [placeholder]="'common.form.fields.email' | translate"
         />
       </mat-form-field>
 

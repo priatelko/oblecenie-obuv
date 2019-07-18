@@ -23,6 +23,7 @@ import {
   OblecenieKategorieChildren,
 } from 'src/app/model/Entity/AddArticleDress.entity';
 import {MultiSelectOption} from 'src/app/custom/interfaces';
+import {SelectType} from 'src/app/form-control/select/select.interface';
 
 @Component({
   selector: 'app-add',
@@ -129,6 +130,7 @@ export class AddComponent implements OnInit, OnDestroy {
     const data: ModalFilterOptions = {
       header: 'component.article.add.kategoria',
       multiselect: false,
+      checkType: SelectType.Radio,
       items: this.modalFilterService.transformItems<
         OblecenieKategorie,
         OblecenieKategorieChildren

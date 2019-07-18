@@ -6,6 +6,8 @@ import {
   Injector,
   AfterContentInit,
   ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -15,62 +17,47 @@ import {
 } from '@angular/forms';
 import {BindObservable} from 'bind-observable';
 import {Observable} from 'rxjs';
-import {MatSlideToggleChange} from '@angular/material/slide-toggle';
-import {ToggleType} from './toggle-group.interface';
+import {SelectType} from './select.interface';
 import {filter} from 'lodash';
 import {MultiSelectOption, SelectOptionId} from 'src/app/custom/interfaces';
+import {traverseNode} from 'src/app/custom/helpers';
 
 @Component({
-  selector: 'app-toggle-group',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-select',
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: ToggleGroupComponent,
+      useExisting: SelectComponent,
       multi: true,
     },
   ],
-  template: `
-    <app-validation
-      *ngIf="formControlRef"
-      [formControlRef]="formControlRef"
-    ></app-validation>
-    <div *ngFor="let toggle of options$ | async">
-      <mat-slide-toggle
-        *ngIf="(type$ | async) == toggleType.Toggle"
-        [disabled]="disabled"
-        [checked]="toggle.checked"
-        (change)="toggleEvent($event, toggle.id)"
-        >{{ toggle.label }}</mat-slide-toggle
-      >
-      <mat-checkbox
-        *ngIf="(type$ | async) == toggleType.Checkbox"
-        [disabled]="disabled"
-        [checked]="toggle.checked"
-        (change)="toggleEvent($event, toggle.id)"
-        >{{ toggle.label }}</mat-checkbox
-      >
-    </div>
-  `,
-  styleUrls: ['./toggle-group.component.scss'],
+  templateUrl: './select.component.html',
+  styleUrls: ['./select.component.scss'],
 })
-export class ToggleGroupComponent
+export class SelectComponent
   implements OnInit, AfterContentInit, ControlValueAccessor, OnDestroy {
   MultiSelectOptions: MultiSelectOption[];
   disabled: boolean;
   value: SelectOptionId[] = [];
-  toggleType = ToggleType;
+  selectType = SelectType;
 
   formControlRef: FormControl = new FormControl();
 
   @Input()
   @BindObservable()
-  options: MultiSelectOption[];
+  options: MultiSelectOption[] = [];
   options$: Observable<MultiSelectOption[]>;
   @Input()
   @BindObservable()
-  type: ToggleType = ToggleType.Checkbox;
-  type$: Observable<ToggleType>;
+  type: SelectType = SelectType.CheckList;
+  type$: Observable<SelectType>;
+  @Input()
+  @BindObservable()
+  multiselect = true;
+  multiselect$: Observable<boolean>;
+
+  @Output() valueChange = new EventEmitter<SelectOptionId[]>();
 
   // Prekaza to zavretiu erroru ktory pendluje na is touched
   // @HostListener('click')
@@ -91,39 +78,50 @@ export class ToggleGroupComponent
 
   ngOnDestroy() {}
 
-  toggleEvent($event: MatSlideToggleChange, toggleId: SelectOptionId) {
-    if ($event.checked) {
-      this.value.push(toggleId);
+  toggleEvent(selectId: SelectOptionId, checked: boolean) {
+    if (!checked) {
+      if (this.multiselect) {
+        this.value.push(selectId);
+      } else {
+        this.value = [selectId];
+      }
     } else {
       this.value = filter(this.value, id => {
-        return id !== toggleId;
+        return id !== selectId;
       });
     }
 
+    this.syncOptions();
     this.writeValue(this.value);
-    this.onTouched();
-    this.onChange(this.value);
+    this.CVA_ON_TOUCHED();
+    this.CVA_ON_CHANGE(this.value);
+    this.valueChange.emit(this.value);
+  }
+
+  private syncOptions() {
+    traverseNode<MultiSelectOption>(this.options, item => {
+      item.checked = this.value.indexOf(item.id) >= 0;
+    });
   }
 
   // API
-  onChange = (value: SelectOptionId[]) => {};
-  onTouched = () => {};
+  CVA_ON_CHANGE = (value: SelectOptionId[]) => {};
+  CVA_ON_TOUCHED = () => {};
 
   writeValue(value: SelectOptionId[]): void {
-    value = value || [];
-    this.value = value;
+    this.value = value || [];
 
     this.options.forEach(opt => {
-      opt.checked = value.indexOf(opt.id) >= 0 ? true : false;
+      opt.checked = this.value.indexOf(opt.id) >= 0 ? true : false;
     });
   }
 
   registerOnChange(fn: (value: SelectOptionId[]) => void): void {
-    this.onChange = fn;
+    this.CVA_ON_CHANGE = fn;
   }
 
   registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
+    this.CVA_ON_TOUCHED = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {

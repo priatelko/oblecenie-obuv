@@ -20,7 +20,8 @@
       novalidate
       class="form-one-column"
     >
-      <mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'common.form.fields.email' | translate }}</mat-label>
         <input
           appFormControl
           matInput
@@ -29,11 +30,11 @@
           id="email"
           maxlength="50"
           required
-          [placeholder]="'common.form.fields.email' | translate"
         />
       </mat-form-field>
       <ng-container *ngIf="isEditMode">
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'common.form.fields.name' | translate }}</mat-label>
           <input
             appFormControl
             matInput
@@ -42,10 +43,10 @@
             id="name"
             maxlength="50"
             required
-            [placeholder]="'common.form.fields.name' | translate"
           />
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{ 'common.form.fields.surname' | translate }}</mat-label>
           <input
             appFormControl
             matInput
@@ -54,12 +55,12 @@
             id="surname"
             maxlength="50"
             required
-            [placeholder]="'common.form.fields.surname' | translate"
           />
         </mat-form-field>
       </ng-container>
 
-      <mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'common.form.fields.password' | translate }}</mat-label>
         <input
           appFormControl
           matInput
@@ -68,10 +69,12 @@
           id="password"
           maxlength="50"
           required
-          [placeholder]="'common.form.fields.password' | translate"
         />
       </mat-form-field>
-      <mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{
+          'common.form.fields.confirmPassword' | translate
+        }}</mat-label>
         <input
           appFormControl
           matInput
@@ -80,12 +83,14 @@
           id="confirmPassword"
           maxlength="50"
           required
-          [placeholder]="'common.form.fields.confirmPassword' | translate"
         />
       </mat-form-field>
 
       <ng-container *ngIf="!isEditMode">
-        <mat-form-field *ngIf="(roles$ | async) as roles; else loading">
+        <mat-form-field
+          appearance="outline"
+          *ngIf="roles$ | async as roles; else loading"
+        >
           <mat-label>{{ 'common.form.fields.role' | translate }}</mat-label>
           <mat-select appFormControl formControlName="role">
             <mat-option *ngFor="let role of roles" [value]="role.id">

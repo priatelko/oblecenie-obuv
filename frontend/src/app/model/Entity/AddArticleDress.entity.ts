@@ -1,4 +1,5 @@
 import {PreKoho, Obdobie} from './Article.entity';
+import {NoDiaNode} from 'src/app/custom/interfaces';
 
 export interface AddArticleDressEntity {
   preKoho: PreKoho[];
@@ -11,8 +12,7 @@ export interface OblecenieKategorie {
   children: OblecenieKategorieChildren[];
 }
 
-export interface OblecenieKategorieChildren {
+export interface OblecenieKategorieChildren extends NoDiaNode {
   id: number;
   nazov: string;
-  nazovNoDia: string;
 }

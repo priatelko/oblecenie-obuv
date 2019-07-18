@@ -1,4 +1,6 @@
-import { AbstractControl } from '@angular/forms';
+import {AbstractControl} from '@angular/forms';
+import {has, deburr} from 'lodash';
+import {ChildrenNode} from './interfaces';
 
 export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
   if (abstractControl.validator) {
@@ -18,3 +20,26 @@ export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
   }
   return false;
 };
+
+export function traverseNode<T>(
+  items: ChildrenNode<T>[],
+  iterater: (item) => void
+) {
+  items.forEach(i => {
+    iterater(i);
+    if (has(i, 'children')) {
+      traverseNode<T>(i.children, iterater);
+    }
+  });
+}
+
+export function appendNoDiacritics(items, propertyName = 'label') {
+  items.forEach(rootNode => {
+    rootNode.noDiaNode = deburr(rootNode[propertyName]);
+    if (has(rootNode, 'children')) {
+      appendNoDiacritics(rootNode.children, propertyName);
+    }
+  });
+
+  return items;
+}

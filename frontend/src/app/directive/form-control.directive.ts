@@ -29,7 +29,7 @@ export class FormControlDirective implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.el.nativeElement.classList.add('form-control');
+    // this.el.nativeElement.classList.add('form-control');
     this.prepareValidation();
   }
 

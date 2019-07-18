@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 import {ApiRequestService} from '../../service/ApiRequest/api-request.service';
 import {Observable, BehaviorSubject} from 'rxjs';
-import {map, share, first} from 'rxjs/operators';
+import {map, share} from 'rxjs/operators';
 import {
   BaseRepositoryService,
   BaseRepositoryInterface,
@@ -12,10 +12,11 @@ import {
   OblecenieKategorie,
   OblecenieKategorieChildren,
 } from '../Entity/AddArticleDress.entity';
-import {ToggleGroupService} from 'src/app/form-control/toggle-group/toggle-group.service';
+import {SelectService} from 'src/app/form-control/select/select.service';
 import {PreKoho, Obdobie} from '../Entity/Article.entity';
 import FuzzySearch from 'fuzzy-search';
-import {assign, deburr} from 'lodash';
+import {assign} from 'lodash';
+import {appendNoDiacritics} from 'src/app/custom/helpers';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +36,7 @@ export class AddArticleDressRepositoryService
 
   constructor(
     private apiRequestService: ApiRequestService,
-    private toggleGroupService: ToggleGroupService
+    private selectService: SelectService
   ) {
     super();
     this.getApi();
@@ -58,13 +59,13 @@ export class AddArticleDressRepositoryService
   }
 
   getPreKohoOptions() {
-    return this.toggleGroupService.mapToOptions<PreKoho>(
+    return this.selectService.mapToOptions<PreKoho>(
       this.dataStreamFinal.pipe(map(res => res.preKoho))
     );
   }
 
   getObdobieOptions() {
-    return this.toggleGroupService.mapToOptions<Obdobie>(
+    return this.selectService.mapToOptions<Obdobie>(
       this.dataStreamFinal.pipe(map(res => res.obdobie))
     );
   }
@@ -75,21 +76,9 @@ export class AddArticleDressRepositoryService
     );
 
     this.oblecenieCategories$.pipe(share()).subscribe(res => {
-      this.oblecenieCategories = this.appendNoDiacriticsCategories(res);
+      this.oblecenieCategories = appendNoDiacritics(res, 'nazov');
       this.oblecenieCategoriesFilter$.next(res);
     });
-  }
-
-  private appendNoDiacriticsCategories(
-    categories: OblecenieKategorie[]
-  ): OblecenieKategorie[] {
-    categories.forEach(rootCategory => {
-      rootCategory.children.forEach(child => {
-        child.nazovNoDia = deburr(child.nazov);
-      });
-    });
-
-    return categories;
   }
 
   getDressCategoriesFilter() {
@@ -104,7 +93,7 @@ export class AddArticleDressRepositoryService
 
     let newTree: OblecenieKategorie[] = [];
     this.oblecenieCategories.forEach(rootCategory => {
-      const searcher = new FuzzySearch(rootCategory.children, ['nazovNoDia']);
+      const searcher = new FuzzySearch(rootCategory.children, ['noDiaNode']);
       const result: OblecenieKategorieChildren[] = searcher.search(string);
       if (result.length) {
         const newRoot = assign([], rootCategory);

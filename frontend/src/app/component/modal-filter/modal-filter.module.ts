@@ -4,8 +4,9 @@ import {ModalFilterComponent} from './modal-filter.component';
 import {CoreModule} from 'src/app/module/SharedModule/core.module';
 import {MatDialogModule} from '@angular/material/dialog';
 import {FormModule} from 'src/app/module/SharedModule/form.module';
-import {ToggleGroupModule} from 'src/app/form-control/toggle-group/toggle-group.module';
+import {SelectModule} from 'src/app/form-control/select/select.module';
 import {LoaderModule} from '../loader/loader.module';
+import {MatButtonModule} from '@angular/material';
 
 @NgModule({
   declarations: [ModalFilterComponent],
@@ -13,8 +14,9 @@ import {LoaderModule} from '../loader/loader.module';
     CoreModule,
     CommonModule,
     MatDialogModule,
+    MatButtonModule,
     FormModule,
-    ToggleGroupModule,
+    SelectModule,
     LoaderModule,
   ],
 })

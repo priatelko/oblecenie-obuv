@@ -8,12 +8,14 @@
     "shoes": "Obuv",
     "choose": "Vyberte si",
     "back": "Späť",
-    "youNavigated": "Presmerovali ste sa na",
+    "youNavigated": "Presmerovali ste sa na stránku",
     "requestLoading": "Doťahujú sa vzdialené dáta. Počkajte chvíľu prosím.",
     "requestLoaded": "Vzdialené dáta sa dotiahli. Môžete pokračovať",
     "close": "Zavrieť.",
     "loadingData": "Načítavam dáta.",
     "modalFilter": "Zobraziť veľký filter",
+    "cancel": "zrušiť",
+    "accept": "potvrdiť",
     "form": {
       "error": {
         "required": "Políčko je povinné.",

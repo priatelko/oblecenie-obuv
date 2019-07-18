@@ -6,7 +6,7 @@ import {MultiSelectOption} from 'src/app/custom/interfaces';
 @Injectable({
   providedIn: 'root',
 })
-export class ToggleGroupService {
+export class SelectService {
   mapToOptions<T>(
     dataStream$: Observable<T[]>,
     idProp: number | string = 'id',

@@ -47,14 +47,11 @@
             <i class="oo-icon oo-icon--shoe" aria-hidden="true"></i>
           </button>
         </div>
-        <mat-form-field class="flex-grow-1">
-          <input
-            matInput
-            class="form-control"
-            type="search"
-            placeholder="{{ 'component.header.searchPlaceholder' | translate }}"
-            tabindex="1"
-          />
+        <mat-form-field class="flex-grow-1" appearance="outline">
+          <mat-label>{{
+            'component.header.searchPlaceholder' | translate
+          }}</mat-label>
+          <input matInput type="search" tabindex="1" />
         </mat-form-field>
 
         <div class="input-group-append">

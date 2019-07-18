@@ -1,0 +1,26 @@
+@import 'variables';
+
+:host {
+  display: block;
+}
+
+.mat-slide-toggle {
+  margin: 0.25rem 0;
+}
+
+/*.toggle-content {
+  @include media-breakpoint-up(md) {
+    column-count: 2;
+  }
+  @include media-breakpoint-up(lg) {
+    column-count: 3;
+  }
+  @include media-breakpoint-up(xl) {
+    column-count: 5;
+  }
+}*/
+
+.mat-selection-list {
+  outline: none;
+  padding: 0;
+}

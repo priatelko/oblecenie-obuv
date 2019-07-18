@@ -35,10 +35,10 @@
             <p class="lead text-secondary">
               {{ 'component.article.add.preKohoDesc' | translate }}
             </p>
-            <app-toggle-group
+            <app-select
               [options]="preKoho"
               formControlName="preKoho"
-            ></app-toggle-group>
+            ></app-select>
           </div>
           <div class="col-sm / mt-4 mt-sm-0">
             <h4>
@@ -48,10 +48,10 @@
             <p class="lead text-secondary">
               {{ 'component.article.add.obdobieDesc' | translate }}
             </p>
-            <app-toggle-group
+            <app-select
               [options]="obdobie$ | async"
               formControlName="obdobie"
-            ></app-toggle-group>
+            ></app-select>
           </div>
         </div>
         <div class="row / mt-4">
@@ -64,7 +64,7 @@
               {{ 'component.article.add.dress.kategoriaDesc' | translate }}
             </p>
             <div class="field-dialog-select">
-              <mat-form-field class="asdasd">
+              <mat-form-field appearance="outline">
                 <mat-label>{{
                   'common.form.fields.category' | translate
                 }}</mat-label>
