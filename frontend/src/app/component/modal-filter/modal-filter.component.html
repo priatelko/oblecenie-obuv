@@ -11,14 +11,16 @@
         <mat-icon
           mat-dialog-close
           [attr.aria-label]="'common.close' | translate"
-          (click)="cancelSearch()"
           >close</mat-icon
         >
       </button>
     </div>
     <div class="input-group" *ngIf="data.search">
       <mat-form-field class="flex-grow-1" appearance="outline">
-        <mat-label>{{ 'common.form.fields.search' | translate }}</mat-label>
+        <mat-label>{{
+          'common.form.fields.search'
+            | translate: {number: data.minSearchLength}
+        }}</mat-label>
         <input
           matInput
           type="search"
@@ -31,7 +33,7 @@
 
   <mat-dialog-content>
     <div class="modal-body">
-      <form (ngSubmit)="onSubmit()" novalidate>
+      <form *ngIf="isAnyData" (ngSubmit)="onSubmit()" novalidate>
         <app-select
           [options]="dataFinal"
           [multiselect]="data.multiselect"
@@ -39,6 +41,11 @@
           [formControl]="filterControl"
         ></app-select>
       </form>
+      <p
+        class="text-muted"
+        *ngIf="!isAnyData"
+        [innerHTML]="'common.noResult' | translate: {query: searchValue}"
+      ></p>
     </div>
   </mat-dialog-content>
 
@@ -46,7 +53,8 @@
     <button
       mat-raised-button
       color="primary"
-      [mat-dialog-close]="true"
+      [mat-dialog-close]="filterControl.value"
+      [disabled]="!filterControl.valid"
       class="text-capitalize"
     >
       {{ 'common.accept' | translate }}

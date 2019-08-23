@@ -5,6 +5,8 @@ namespace App\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use App\Services\Helpers;
+
 /**
 * @Route("/api")
 */
@@ -20,49 +22,23 @@ class ApiController extends BaseController {
 		
 		switch($code) {
 			case 'role':
-				return $this->respond($this->entityToArray($em->getRepository('\App\Entity\UserLoginRole')->findAll()));
+				return $this->respond(Helpers::entityToArray($em->getRepository('\App\Entity\UserLoginRole')->findAll()));
 
 			case 'add-dress-article':
-				$preKoho = $this->entityToArray($em->getRepository('\App\Entity\Prekoho')->findBy([], ['zorad' => 'ASC']));
-				$obdobie = $this->entityToArray($em->getRepository('\App\Entity\Obdobie')->findBy([], ['zorad' => 'ASC']));
+				//die('what?');
+				$preKoho = Helpers::entityToArray($em->getRepository('\App\Entity\Prekoho')->findBy([], ['zorad' => 'ASC']));
+				$obdobie = Helpers::entityToArray($em->getRepository('\App\Entity\Obdobie')->findBy([], ['zorad' => 'ASC']));
 				$kategorie = $em->getRepository('\App\Entity\OblecenieKategorie')->getDataToSelectForm();
+				$znacka = Helpers::entityToArray($em->getRepository('\App\Entity\Znacka')->findBy([], ['nazov' => 'ASC']));
 				
 				return $this->respond([
 					'preKoho' => $preKoho,
 					'obdobie' => $obdobie,
-					'kategorie' => $kategorie
+					'kategorie' => $kategorie,
+					'znacka' => $znacka
 				]);
 			default:
 				throw new \InvalidArgumentException( 'Code is not valid' );
 		}
     }
-	
-	private function entityToArray(array $entityItems) {
-		$result = [];
-		
-		/* @var $item \App\Entity\UserLoginRole */
-		foreach ($entityItems as $item) {
-			if (!$item instanceof \App\Interfaces\ToArrayObjectInterface) {
-				throw new \InvalidArgumentException( 'Entity is not a right interface of toArray' );
-			}
-
-			$result[] = $item->toArrayObject();
-		}
-
-		return $result;
-	}
-	
-	/**
-     * @Route("/generate-feed/{code}")
-	 * @Method({"GET"})
-     */
-    public function generateFeedAction($code) {
-		switch($code) {
-			case 'Shopingujsk':
-				\App\Services\GeneratorShopingujSk::generate();
-				break;
-			default:
-				throw new \InvalidArgumentException('Feed doesnt exists!');
-		}
-	}
 }

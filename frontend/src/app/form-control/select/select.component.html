@@ -24,66 +24,68 @@
 </ng-template>
 
 <ng-template #itemList let-items="items" let-child="child">
-  <div *ngFor="let toggle of items" [title]="toggle.label">
-    <!-- Group name -->
-    <div class="h4 mt-3" *ngIf="toggle.id === null">
-      {{ toggle.label }}
-    </div>
-
-    <!-- Inputs -->
-    <ng-container *ngIf="toggle.id !== null">
-      <!-- Radio -->
-      <mat-radio-button
-        *ngIf="(type$ | async) == selectType.Radio"
-        [value]="toggle.id"
-        [disabled]="disabled || toggle.disabled"
-        (change)="toggleEvent(toggle.id, toggle.checked)"
-      >
+  <ng-container *ngFor="let toggle of items">
+    <div *ngIf="!toggle.hidden" [title]="toggle.label">
+      <!-- Group name -->
+      <div class="h4 mt-3" *ngIf="toggle.id === null">
         {{ toggle.label }}
-      </mat-radio-button>
+      </div>
 
-      <!-- Toggle -->
-      <mat-slide-toggle
-        *ngIf="(type$ | async) == selectType.Toggle"
-        [disabled]="disabled || toggle.disabled"
-        [checked]="toggle.checked"
-        (change)="toggleEvent(toggle.id, toggle.checked)"
-        >{{ toggle.label }}</mat-slide-toggle
-      >
-
-      <!-- List check -->
-      <mat-selection-list
-        *ngIf="(type$ | async) == selectType.CheckList"
-        (selectionChange)="toggleEvent(toggle.id, toggle.checked)"
-      >
-        <mat-list-option
+      <!-- Inputs -->
+      <ng-container *ngIf="toggle.id !== null">
+        <!-- Radio -->
+        <mat-radio-button
+          *ngIf="(type$ | async) == selectType.Radio"
+          [value]="toggle.id"
           [disabled]="disabled || toggle.disabled"
-          [selected]="toggle.checked"
+          (change)="toggleEvent(toggle.id, toggle.checked)"
         >
           {{ toggle.label }}
-        </mat-list-option>
-      </mat-selection-list>
+        </mat-radio-button>
 
-      <!-- Checkbox -->
-      <mat-checkbox
-        *ngIf="(type$ | async) == selectType.Checkbox"
-        [disabled]="disabled || toggle.disabled"
-        [checked]="toggle.checked"
-        (change)="toggleEvent(toggle.id, toggle.checked)"
-        >{{ toggle.label }}</mat-checkbox
-      >
-    </ng-container>
+        <!-- Toggle -->
+        <mat-slide-toggle
+          *ngIf="(type$ | async) == selectType.Toggle"
+          [disabled]="disabled || toggle.disabled"
+          [checked]="toggle.checked"
+          (change)="toggleEvent(toggle.id, toggle.checked)"
+          >{{ toggle.label }}</mat-slide-toggle
+        >
 
-    <!-- Children -->
-    <div *ngIf="toggle.children && toggle.children.length > 0">
-      <ng-container
-        *ngTemplateOutlet="
-          itemList;
-          context: {items: toggle.children, child: 'ANOOO'}
-        "
-      ></ng-container>
+        <!-- List check -->
+        <mat-selection-list
+          *ngIf="(type$ | async) == selectType.CheckList"
+          (selectionChange)="toggleEvent(toggle.id, toggle.checked)"
+        >
+          <mat-list-option
+            [disabled]="disabled || toggle.disabled"
+            [selected]="toggle.checked"
+          >
+            {{ toggle.label }}
+          </mat-list-option>
+        </mat-selection-list>
+
+        <!-- Checkbox -->
+        <mat-checkbox
+          *ngIf="(type$ | async) == selectType.Checkbox"
+          [disabled]="disabled || toggle.disabled"
+          [checked]="toggle.checked"
+          (change)="toggleEvent(toggle.id, toggle.checked)"
+          >{{ toggle.label }}</mat-checkbox
+        >
+      </ng-container>
+
+      <!-- Children -->
+      <div *ngIf="toggle.children && toggle.children.length > 0">
+        <ng-container
+          *ngTemplateOutlet="
+            itemList;
+            context: {items: toggle.children, child: 'ANOOO'}
+          "
+        ></ng-container>
+      </div>
     </div>
-  </div>
+  </ng-container>
 </ng-template>
 
 <ng-container

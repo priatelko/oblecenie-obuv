@@ -13,7 +13,7 @@ import {
   OblecenieKategorieChildren,
 } from '../Entity/AddArticleDress.entity';
 import {SelectService} from 'src/app/form-control/select/select.service';
-import {PreKoho, Obdobie} from '../Entity/Article.entity';
+import {PreKoho, Obdobie, Znacka} from '../Entity/Article.entity';
 import FuzzySearch from 'fuzzy-search';
 import {assign} from 'lodash';
 import {appendNoDiacritics} from 'src/app/custom/helpers';
@@ -33,6 +33,10 @@ export class AddArticleDressRepositoryService
     OblecenieKategorie[]
   >([]);
   oblecenieCategories: OblecenieKategorie[];
+
+  private znacka$: Observable<Znacka[]>;
+  private znackaFilter$ = new BehaviorSubject<Znacka[]>([]);
+  znacka: Znacka[];
 
   constructor(
     private apiRequestService: ApiRequestService,
@@ -80,11 +84,9 @@ export class AddArticleDressRepositoryService
       this.oblecenieCategoriesFilter$.next(res);
     });
   }
-
   getDressCategoriesFilter() {
     return this.oblecenieCategoriesFilter$.asObservable();
   }
-
   filterDressCategories(string: string) {
     if (string.length < 3) {
       this.oblecenieCategoriesFilter$.next(this.oblecenieCategories);
@@ -103,5 +105,30 @@ export class AddArticleDressRepositoryService
     });
 
     this.oblecenieCategoriesFilter$.next(newTree);
+  }
+
+  znackaInit() {
+    this.znacka$ = this.dataStreamFinal.pipe(map(res => res.znacka));
+
+    this.znacka$.pipe(share()).subscribe(res => {
+      this.znacka = appendNoDiacritics(res, 'nazov');
+      this.znackaFilter$.next(res);
+    });
+  }
+  getZnackaFilter() {
+    return this.znackaFilter$.asObservable();
+  }
+  filterZnacka(string: string) {
+    if (string.length < 2) {
+      this.znackaFilter$.next(this.znacka);
+      return;
+    }
+
+    const searcher = new FuzzySearch(this.znacka, ['noDiaNode']);
+    const result: OblecenieKategorieChildren[] = searcher.search(string);
+
+    console.log('znacka seaqrch', result);
+
+    this.znackaFilter$.next(result);
   }
 }

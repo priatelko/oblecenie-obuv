@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {ArtikelTyp} from '../../../model/Entity/Article.entity';
+import {ArtikelTyp, Znacka} from '../../../model/Entity/Article.entity';
 import {AddArticleDressRepositoryService} from '../../../model/Repository/AddArticleDress.repository';
 import {untilDestroyed} from 'ngx-take-until-destroy';
 import {LoaderSize} from '../../loader/loader.component';
@@ -24,6 +24,7 @@ import {
 } from 'src/app/model/Entity/AddArticleDress.entity';
 import {MultiSelectOption} from 'src/app/custom/interfaces';
 import {SelectType} from 'src/app/form-control/select/select.interface';
+import {first} from 'lodash';
 
 @Component({
   selector: 'app-add',
@@ -39,22 +40,32 @@ export class AddComponent implements OnInit, OnDestroy {
 
   preKoho$: Observable<MultiSelectOption[]>;
   obdobie$: Observable<MultiSelectOption[]>;
+  znacka$: Observable<MultiSelectOption[]>;
 
   @Input() addKind: ArtikelTyp;
 
   // Dress
   oblecenieKategorieFilter: FormControl = new FormControl();
+  oblecenieZnackaFilter: FormControl = new FormControl();
 
   get oblecenieKategorieFilter$() {
     return this.addArticleDressRepository.getDressCategoriesFilter();
+  }
+  get oblecenieZnackaFilter$() {
+    return this.addArticleDressRepository.getZnackaFilter();
   }
 
   constructor(
     private addArticleDressRepository: AddArticleDressRepositoryService,
     private dialog: MatDialog,
     private modalFilterService: ModalFilterService
-  ) {
-    this.addOblecenieForm = this.createOblecenieFormGroup();
+  ) {}
+
+  trackByFn(index, item: OblecenieKategorie) {
+    return item.item;
+  }
+  trackByIdFn(index, item: OblecenieKategorieChildren) {
+    return item.id;
   }
 
   createOblecenieFormGroup(): FormGroup {
@@ -63,7 +74,7 @@ export class AddComponent implements OnInit, OnDestroy {
       preKoho: new FormControl(null, [Validators.required]),
       obdobie: new FormControl(null, [Validators.required]),
       oblecenieKategoria: new FormControl(null, [Validators.required]),
-      znacka: new FormControl(null, []),
+      znacka: new FormControl(null, [Validators.required]),
       stav: new FormControl(null, []),
       material: new FormControl(null, []),
       titulok: new FormControl(null, []),
@@ -75,20 +86,38 @@ export class AddComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.addOblecenieForm = this.createOblecenieFormGroup();
+
     this.preKoho$ = this.addArticleDressRepository.getPreKohoOptions();
     this.obdobie$ = this.addArticleDressRepository.getObdobieOptions();
     this.addArticleDressRepository.dressCategoriesInit();
+    this.addArticleDressRepository.znackaInit();
 
     this.oblecenieKategorieFilter.valueChanges
       .pipe(untilDestroyed(this))
       .subscribe(string => {
         this.addArticleDressRepository.filterDressCategories(string);
       });
+    this.oblecenieZnackaFilter.valueChanges
+      .pipe(untilDestroyed(this))
+      .subscribe(string => {
+        this.addArticleDressRepository.filterZnacka(string);
+      });
 
     // chooseKind(kind: ArtikelTyp) {
     //   this.chosenKind = kind;
     //   this.addOblecenieForm.get('typ').patchValue(kind);
     // }
+
+    // setTimeout(() => {
+    //   this.addOblecenieForm.get('material').setValue('niexo');
+
+    //   this.oblecenieKategorieFilter$.subscribe(res => {
+    //     console.log(res);
+
+    //     this.addOblecenieForm.get('oblecenieKategoria').setValue(8);
+    //   });
+    // }, 2000);
   }
 
   ngOnDestroy() {}
@@ -107,28 +136,10 @@ export class AddComponent implements OnInit, OnDestroy {
   }
 
   /** Helpers */
-  // protected filterKategorie(string) {
-  // this.addArticleDressRepository.filterDressCategories(string);
-  // if (!this.banks) {
-  //   return;
-  // }
-  // // get the search keyword
-  // let search = this.bankFilterCtrl.value;
-  // if (!search) {
-  //   this.filteredBanks.next(this.banks.slice());
-  //   return;
-  // } else {
-  //   search = search.toLowerCase();
-  // }
-  // // filter the banks
-  // this.filteredBanks.next(
-  //   this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
-  // );
-  // }
-
   openCategoryFilterDialog() {
     const data: ModalFilterOptions = {
       header: 'component.article.add.kategoria',
+      required: true,
       multiselect: false,
       checkType: SelectType.Radio,
       items: this.modalFilterService.transformItems<
@@ -152,9 +163,49 @@ export class AddComponent implements OnInit, OnDestroy {
       ),
     };
 
-    this.dialog.open(ModalFilterComponent, {
-      width: GLOBAL.dialogWidth.lg,
-      data,
-    });
+    this.dialog
+      .open(ModalFilterComponent, {
+        width: GLOBAL.dialogWidth.lg,
+        data,
+      })
+      .beforeClose()
+      .subscribe(res => {
+        const value = first(res);
+        if (value) {
+          this.addOblecenieForm.get('oblecenieKategoria').setValue(value);
+        }
+      });
+  }
+
+  openZnackaFilterDialog() {
+    const data: ModalFilterOptions = {
+      header: 'component.article.add.znacka',
+      required: true,
+      multiselect: false,
+      minSearchLength: 2,
+      checkType: SelectType.Radio,
+      items: this.modalFilterService.transformItems<Znacka, Znacka>(
+        this.addArticleDressRepository.znacka,
+        (item): MultiSelectOption => {
+          return {
+            id: item.id,
+            label: item.nazov,
+          };
+        }
+      ),
+    };
+
+    this.dialog
+      .open(ModalFilterComponent, {
+        width: GLOBAL.dialogWidth.lg,
+        data,
+      })
+      .beforeClose()
+      .subscribe(res => {
+        const value = first(res);
+        if (value) {
+          this.addOblecenieForm.get('znacka').setValue(value);
+        }
+      });
   }
 }

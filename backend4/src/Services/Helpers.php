@@ -24,4 +24,19 @@ class Helpers {
 
 		return $string;
    }
+   
+   public static function entityToArray(array $entityItems) {
+		$result = [];
+		
+		/* @var $item \App\Entity\UserLoginRole */
+		foreach ($entityItems as $item) {
+			if (!$item instanceof \App\Interfaces\ToArrayObjectInterface) {
+				throw new \InvalidArgumentException( 'Entity is not a right interface of ToArrayObjectInterface' );
+			}
+
+			$result[] = $item->toArrayObject();
+		}
+
+		return $result;
+	}
 }

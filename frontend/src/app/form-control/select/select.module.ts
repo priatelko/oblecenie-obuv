@@ -5,6 +5,7 @@ import {FormModule} from 'src/app/module/SharedModule/form.module';
 import {ValidationModule} from 'src/app/component/form/validation/validation.module';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatListModule} from '@angular/material/list';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   declarations: [SelectComponent],
@@ -14,6 +15,7 @@ import {MatListModule} from '@angular/material/list';
     ValidationModule,
     MatListModule,
     MatRadioModule,
+    TranslateModule,
   ],
   exports: [SelectComponent],
 })

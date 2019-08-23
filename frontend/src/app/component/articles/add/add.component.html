@@ -76,7 +76,7 @@
                   <mat-option>
                     <ngx-mat-select-search
                       [placeholderLabel]="
-                        'common.form.fields.search' | translate
+                        'common.form.fields.search' | translate: {number: 3}
                       "
                       [formControl]="oblecenieKategorieFilter"
                       [noEntriesFoundLabel]="
@@ -86,16 +86,21 @@
                   </mat-option>
                   <mat-optgroup
                     *ngFor="
-                      let kategoriaGroup of oblecenieKategorieFilter$ | async
+                      let kategoriaGroup of oblecenieKategorieFilter$ | async;
+                      trackBy: trackByFn
                     "
                     [label]="kategoriaGroup.item"
                   >
-                    <mat-option
-                      *ngFor="let kategoria of kategoriaGroup.children"
-                      [value]="kategoria.id"
+                    <ng-container
+                      *ngFor="
+                        let kategoria of kategoriaGroup.children;
+                        trackBy: trackByIdFn
+                      "
                     >
-                      {{ kategoria.nazov }}
-                    </mat-option>
+                      <mat-option [value]="kategoria.id">
+                        {{ kategoria.nazov }}
+                      </mat-option>
+                    </ng-container>
                   </mat-optgroup>
                 </mat-select>
               </mat-form-field>
@@ -104,7 +109,7 @@
                 (click)="openCategoryFilterDialog()"
                 [title]="'common.modalFilter' | translate"
               >
-                <mat-icon>view_list</mat-icon>
+                <mat-icon>list</mat-icon>
               </button>
             </div>
           </div>
@@ -116,6 +121,43 @@
             <p class="lead text-secondary">
               {{ 'component.article.add.dress.znackaDesc' | translate }}
             </p>
+            <div class="field-dialog-select">
+              <mat-form-field appearance="outline">
+                <mat-label>{{
+                  'component.article.add.znacka' | translate
+                }}</mat-label>
+                <mat-select appFormControl formControlName="znacka" required>
+                  <mat-option>
+                    <ngx-mat-select-search
+                      [placeholderLabel]="
+                        'common.form.fields.search' | translate: {number: 2}
+                      "
+                      [formControl]="oblecenieZnackaFilter"
+                      [noEntriesFoundLabel]="
+                        'common.form.fields.noSearchEntryFound' | translate
+                      "
+                    ></ngx-mat-select-search>
+                  </mat-option>
+                  <ng-container
+                    *ngFor="
+                      let znacka of oblecenieZnackaFilter$ | async;
+                      trackBy: trackByIdFn
+                    "
+                  >
+                    <mat-option [value]="znacka.id">
+                      {{ znacka.nazov }}
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
+              <button
+                mat-button
+                (click)="openZnackaFilterDialog()"
+                [title]="'common.modalFilter' | translate"
+              >
+                <mat-icon>list</mat-icon>
+              </button>
+            </div>
           </div>
         </div>
         <div class="row / mt-4">
@@ -166,6 +208,9 @@
               {{ 'component.article.add.material' | translate }}
               <span class="error-color">*</span>
             </h4>
+            <p>
+              <input type="text" formControlName="material" />
+            </p>
           </div>
         </div>
         <div class="row">

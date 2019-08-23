@@ -49,4 +49,6 @@ export interface ModalFilterOptions {
   multiselect?: boolean;
   items: MultiSelectOption[];
   search?: boolean;
+  required?: boolean;
+  minSearchLength?: number;
 }

@@ -5,6 +5,7 @@
 		}
 	],
 	"settings": {
-		"prettier.eslintIntegration": true
+		"prettier.eslintIntegration": true,
+		"workbench.colorCustomizations": {}
 	}
 }

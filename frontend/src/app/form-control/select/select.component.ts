@@ -37,7 +37,6 @@ import {traverseNode} from 'src/app/custom/helpers';
 })
 export class SelectComponent
   implements OnInit, AfterContentInit, ControlValueAccessor, OnDestroy {
-  MultiSelectOptions: MultiSelectOption[];
   disabled: boolean;
   value: SelectOptionId[] = [];
   selectType = SelectType;
@@ -99,7 +98,7 @@ export class SelectComponent
   }
 
   private syncOptions() {
-    traverseNode<MultiSelectOption>(this.options, item => {
+    traverseNode(this.options, item => {
       item.checked = this.value.indexOf(item.id) >= 0;
     });
   }

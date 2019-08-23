@@ -7,11 +7,15 @@ import {
 import {MAT_DIALOG_DATA} from '@angular/material';
 import {ModalFilterOptions} from './modal-filter.service';
 import {LoaderSize} from '../loader/loader.component';
-import {FormControl} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import {SelectType} from 'src/app/form-control/select/select.interface';
-import {merge} from 'lodash';
-import {MultiSelectOption} from 'src/app/custom/interfaces';
-import {appendNoDiacritics} from 'src/app/custom/helpers';
+import {merge, some} from 'lodash';
+import {MultiSelectOption, BreakException} from 'src/app/custom/interfaces';
+import {
+  appendNoDiacritics,
+  searchInModel,
+  traverseNode,
+} from 'src/app/custom/helpers';
 
 @Component({
   selector: 'app-modal-filter',
@@ -22,6 +26,7 @@ import {appendNoDiacritics} from 'src/app/custom/helpers';
 export class ModalFilterComponent implements OnInit {
   defaultData: Partial<ModalFilterOptions> = {
     search: true,
+    minSearchLength: 3,
     checkType: SelectType.CheckList,
     multiselect: true,
   };
@@ -33,21 +38,41 @@ export class ModalFilterComponent implements OnInit {
 
   filterControl = new FormControl();
   filterSearchControl = new FormControl();
+  searchValue = '';
+
+  get isAnyData() {
+    let notAnyHidden = false;
+
+    traverseNode(this.dataFinal, item => {
+      if (!item.hidden) {
+        notAnyHidden = true;
+        return false;
+      }
+    });
+
+    return notAnyHidden;
+  }
 
   constructor(@Inject(MAT_DIALOG_DATA) public dialogData: ModalFilterOptions) {
     this.data = merge(this.defaultData, this.dialogData);
-    this.dataFinal = appendNoDiacritics(this.data.items);
+    this.data.items = appendNoDiacritics(this.data.items);
+    this.dataFinal = this.data.items;
   }
 
   onSubmit() {}
 
-  cancelSearch() {
-    console.log('cancedl search');
-  }
-
   ngOnInit() {
+    if (this.data.required) {
+      this.filterControl.setValidators([Validators.required]);
+    }
+
     this.filterSearchControl.valueChanges.subscribe(val => {
-      console.log(this.dataFinal);
+      this.searchValue = val;
+      this.dataFinal = searchInModel(
+        this.data.items,
+        val,
+        this.data.minSearchLength
+      );
     });
   }
 }

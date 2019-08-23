@@ -66,3 +66,7 @@ $candy-app-theme: mat-light-theme(
   font-weight: normal;
   color: map-get($mat-indigo, 800);
 }
+
+.mat-form-field-wrapper {
+  padding-bottom: 0;
+}

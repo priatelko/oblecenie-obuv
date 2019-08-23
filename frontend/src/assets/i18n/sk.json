@@ -16,6 +16,7 @@
     "modalFilter": "Zobraziť veľký filter",
     "cancel": "zrušiť",
     "accept": "potvrdiť",
+    "noResult": "Žiadny výraz <b><i>`{query}`</i></b> nebol nájdený.",
     "form": {
       "error": {
         "required": "Políčko je povinné.",
@@ -36,8 +37,9 @@
         "submit-save": "Uložiť",
         "submit-login": "Prihlásiť sa",
         "submit-add": "Pridať",
-        "search": "hľadaj...",
-        "noSearchEntryFound": "Vyhľadávaný reťazec sa nenašiel."
+        "search": "hľadaj (min {number}. znaky)...",
+        "noSearchEntryFound": "Vyhľadávaný reťazec sa nenašiel.",
+        "autocompletePlaceholder": "Začnite písať, vyberte zo zoznamu, alebo dopíšte"
       }
     },
     "response": {

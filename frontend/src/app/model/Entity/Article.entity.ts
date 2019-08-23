@@ -22,3 +22,8 @@ export interface Material {
   id: number;
   nazov: string;
 }
+
+export interface Znacka {
+  id: number;
+  nazov: string;
+}
