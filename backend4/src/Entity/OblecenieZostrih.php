@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="oblecenie_zostrih")
  * @ORM\Entity
  */
-class OblecenieZostrih
+class OblecenieZostrih implements \App\Interfaces\ToStringInterface, \App\Interfaces\ToArrayObjectInterface
 {
     /**
      * @var string
@@ -94,4 +94,15 @@ class OblecenieZostrih
     {
         return $this->id;
     }
+    
+    public function __toString() {
+		return $this->getNazov();
+	}
+	
+	public function toArrayObject() {
+		return [
+			'id' => $this->getId(),
+			'nazov' => $this->getNazov()
+		];
+	}
 }

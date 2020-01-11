@@ -13,7 +13,7 @@ import {
   OblecenieKategorieChildren,
 } from '../Entity/AddArticleDress.entity';
 import {SelectService} from 'src/app/form-control/select/select.service';
-import {PreKoho, Obdobie, Znacka} from '../Entity/Article.entity';
+import {PreKoho, Obdobie, Znacka, Prilezitost, Zostrih, Velkost} from '../Entity/Article.entity';
 import FuzzySearch from 'fuzzy-search';
 import {assign} from 'lodash';
 import {appendNoDiacritics} from 'src/app/custom/helpers';
@@ -50,7 +50,6 @@ export class AddArticleDressRepositoryService
     this.dataStream = this.apiRequestService
       .get<AddArticleDressEntity>(this.API)
       .pipe(map(d => d.data as AddArticleDressEntity));
-
     return this;
   }
 
@@ -71,6 +70,24 @@ export class AddArticleDressRepositoryService
   getObdobieOptions() {
     return this.selectService.mapToOptions<Obdobie>(
       this.dataStreamFinal.pipe(map(res => res.obdobie))
+    );
+  }
+
+  getPrilezitostOptions() {
+    return this.selectService.mapToOptions<Prilezitost>(
+      this.dataStreamFinal.pipe(map(res => res.prilezitost))
+    );
+  }
+
+  getZostrihOptions() {
+    return this.selectService.mapToOptions<Zostrih>(
+      this.dataStreamFinal.pipe(map(res => res.zostrih))
+    );
+  }
+
+  getVelkostOptions() {
+    return this.selectService.mapToOptions<Velkost>(
+      this.dataStreamFinal.pipe(map(res => res.velkost))
     );
   }
 
@@ -126,8 +143,6 @@ export class AddArticleDressRepositoryService
 
     const searcher = new FuzzySearch(this.znacka, ['noDiaNode']);
     const result: OblecenieKategorieChildren[] = searcher.search(string);
-
-    console.log('znacka seaqrch', result);
 
     this.znackaFilter$.next(result);
   }

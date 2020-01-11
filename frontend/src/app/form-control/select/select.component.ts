@@ -110,6 +110,10 @@ export class SelectComponent
   writeValue(value: SelectOptionId[]): void {
     this.value = value || [];
 
+    if (!this.options) {
+      return;
+    }
+
     this.options.forEach(opt => {
       opt.checked = this.value.indexOf(opt.id) >= 0 ? true : false;
     });

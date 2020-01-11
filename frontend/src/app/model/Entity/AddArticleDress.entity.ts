@@ -1,4 +1,4 @@
-import {PreKoho, Obdobie, Znacka} from './Article.entity';
+import {PreKoho, Obdobie, Znacka, Prilezitost, Zostrih, Velkost} from './Article.entity';
 import {NoDiaNode} from 'src/app/custom/interfaces';
 
 export interface AddArticleDressEntity {
@@ -6,6 +6,10 @@ export interface AddArticleDressEntity {
   obdobie: Obdobie[];
   kategorie: OblecenieKategorie[];
   znacka: Znacka[];
+  prilezitost: Prilezitost[];
+  zostrih: Zostrih[];
+  velkost: Velkost[];
+  velkostCislo: number;
 }
 
 export interface OblecenieKategorie {

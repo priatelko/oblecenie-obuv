@@ -8,6 +8,7 @@ import {
 import {of} from 'rxjs';
 import {tap, finalize} from 'rxjs/operators';
 import {CacheMapService} from '../service/CacheMap/cache-map.service';
+import { LogService } from '../service/Admin/log.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ import {CacheMapService} from '../service/CacheMap/cache-map.service';
 export class CachingInterceptor implements HttpInterceptor {
   private requestOngoingMap = new Map<string, boolean>();
 
-  constructor(private cacheService: CacheMapService) {}
+  constructor(private cacheService: CacheMapService, private debug: LogService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRequestCachable(req)) {
@@ -23,7 +24,7 @@ export class CachingInterceptor implements HttpInterceptor {
 
       // ak prave prebieha request
       if (this.requestOngoingMap.get(requestHash) === true) {
-        console.log('Request is already ongoing...');
+        this.debug.log('Request is already ongoing...');
         // posleme dalej prazdy request
         return of(new HttpResponse({body: ''}));
       } else {
@@ -33,7 +34,7 @@ export class CachingInterceptor implements HttpInterceptor {
 
       return next.handle(req).pipe(
         finalize(() => {
-          console.log('Request is finished');
+          this.debug.log('Request is finished');
           this.requestOngoingMap.delete(requestHash);
         })
       );
@@ -41,9 +42,12 @@ export class CachingInterceptor implements HttpInterceptor {
 
     const cachedResponse = this.cacheService.get(req);
     if (cachedResponse !== null) {
-      console.log('cached response', cachedResponse);
-
+      this.debug.log('Cached response', cachedResponse);
       return of(cachedResponse);
+    } else if(this.cacheService.getCachedResponse(req.urlWithParams)) {
+      const craftedCachedResponse = new HttpResponse({body: this.cacheService.getCachedResponse(req.urlWithParams)});
+      this.debug.log('Cached response from localstore', craftedCachedResponse);
+      return of(craftedCachedResponse);
     }
 
     return next.handle(req).pipe(

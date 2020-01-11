@@ -34,7 +34,7 @@
     &:hover {
       a {
         transform-origin: left;
-        color: map-get($mat-indigo, 800);
+        color: map-get($custom-primary, 800);
         span {
           font-size: 250%;
           font-weight: bold;

@@ -3,10 +3,11 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpResponse } from '@angula
 import { finalize, tap } from 'rxjs/operators';
 import { isUndefined } from 'lodash';
 import { FlashMessageService } from '../service/FlashMessage/flash-message.service';
+import { LogService } from '../service/Admin/log.service';
 
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {
-  constructor (private flashmessage: FlashMessageService) {}
+  constructor (private flashmessage: FlashMessageService, private debug: LogService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const startTime = Date.now();
@@ -37,7 +38,7 @@ export class LoggingInterceptor implements HttpInterceptor {
           const message = req.method + ' ' + req.urlWithParams + ' ' + status
           + ' in ' + elapsedTime + 'ms';
 
-          console.log(message);
+          this.debug.log(message);
 
           if (responseStatus !== 200) {
             this.flashmessage.error('common.response.code.1');

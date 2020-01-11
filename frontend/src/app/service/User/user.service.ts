@@ -5,6 +5,7 @@ import {UserModel} from 'src/app/model/Model/User.model';
 import {IdentityService} from './identity.service';
 import {HttpParams} from '@angular/common/http';
 import {ApiResponseModel} from '../../model/Model/ApiResponse.model';
+import { LogService } from '../Admin/log.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,8 @@ export class UserService {
   constructor(
     private flashmessage: FlashMessageService,
     private apiRequestService: ApiRequestService,
-    private identityService: IdentityService
+    private identityService: IdentityService,
+    private debug: LogService
   ) {}
 
   login(userToLogin) {
@@ -24,7 +26,7 @@ export class UserService {
 
     request.subscribe(res => {
       if (res.success) {
-        console.log('User logged in');
+        this.debug.log('User logged in');
         this.identityService.updateUser(res.data);
       }
     });
@@ -40,7 +42,7 @@ export class UserService {
 
     request.subscribe(res => {
       if (res.success) {
-        console.log('User signed up or profil updated');
+        this.debug.log('User signed up or profil updated');
         this.identityService.updateUser(res.data);
       }
     });
@@ -56,7 +58,7 @@ export class UserService {
 
     request.subscribe(res => {
       if (res.success) {
-        console.log('User role has changed');
+        this.debug.log('User role has changed');
         this.identityService.updateUser(res.data);
       }
     });
@@ -75,7 +77,7 @@ export class UserService {
 
     request.subscribe(res => {
       if (!res.error) {
-        console.log('Regist confirmation sent');
+        this.debug.log('Regist confirmation sent');
       }
     });
 
@@ -90,7 +92,7 @@ export class UserService {
 
     request.subscribe(res => {
       if (res.success) {
-        console.log('Regist confirmed');
+        this.debug.log('Regist confirmed');
       }
     });
 
@@ -108,7 +110,7 @@ export class UserService {
 
     request.subscribe(res => {
       if (res.success) {
-        console.log('Forgotten password sent');
+        this.debug.log('Forgotten password sent');
       }
     });
 
@@ -123,7 +125,7 @@ export class UserService {
 
     request.subscribe(res => {
       if (res.success) {
-        console.log('Password was reset');
+        this.debug.log('Password was reset');
       }
     });
 
@@ -133,6 +135,6 @@ export class UserService {
   logout() {
     this.identityService.logout();
     this.flashmessage.success('common.user.logout');
-    console.log('User logged out');
+    this.debug.log('User logged out');
   }
 }

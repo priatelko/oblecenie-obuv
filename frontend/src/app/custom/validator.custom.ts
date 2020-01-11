@@ -3,8 +3,9 @@ import {
   AbstractControl,
   FormControl,
   NgControl,
+  FormGroup,
 } from '@angular/forms';
-import {isUndefined, isNull} from 'lodash';
+import {isUndefined, isNull, forEach} from 'lodash';
 import {TranslateService} from '@ngx-translate/core';
 import {ContainerInjector} from '../module/ContainerGetter/container-getter.module';
 
@@ -23,8 +24,23 @@ export class Validator {
     };
   }
 
+  static oneOfGroup(): ValidatorFn {
+    return (group: FormGroup): {[key: string]: any} | null => {
+      let valid = false;
+      forEach(group.controls, (control) => {
+        console.log(control, group.touched);
+
+        if (group.touched && control.valid) {
+          valid = true;
+        }
+      });
+
+      return !valid ? {requiredOneOfGroup: true} : null;
+    };
+  }
+
   /** Helper methods */
-  static getErrors(control: NgControl | FormControl) {
+  static getErrors(control: NgControl | FormControl | FormGroup) {
     const err = [];
 
     if (isNull(control.errors)) {
@@ -54,6 +70,11 @@ export class Validator {
     // Same As
     if (!isUndefined(control.errors.sameAs)) {
       err.push(this.translate('common.form.error.sameAs'));
+    }
+
+    // One of group
+    if (!isUndefined(control.errors.requiredOneOfGroup)) {
+      err.push(this.translate('common.form.error.requiredOneOfGroup'));
     }
 
     return err;

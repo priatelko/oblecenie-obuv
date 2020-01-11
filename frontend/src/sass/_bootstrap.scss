@@ -79,12 +79,12 @@ a {
     position: absolute;
     top: 0;
     left: 0;
-    transform: translateY(-100%);
+    transform: translateY(-125%);
     display: flex;
     align-items: center;
 
-    animation-name: alert-animation;
-    animation-duration: 1s;
+    animation-name: formcontrol-alert-animation;
+    animation-duration: .25s;
     animation-timing-function: ease-in-out;
     animation-iteration-count: 1;
 

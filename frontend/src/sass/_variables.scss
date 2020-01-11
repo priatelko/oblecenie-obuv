@@ -8,6 +8,7 @@ $input-border-width: 0px;
 $input-border-color: transparent;
 $modal-header-padding: 0 1rem;
 $headings-font-weight: normal;
+$headings-margin-bottom: .75rem;
 
 // border
 $border-radius: 0;
@@ -53,3 +54,37 @@ $border-light: #ccc;
 $zindex-middle: 5;
 $zindex-alert: 1010;
 $zindex-dropdown: 1020;
+
+// Color pallette
+$custom-primary: (
+    50 : #e0f1ff,
+    100 : #b3ddfe,
+    200 : #80c6fe,
+    300 : #4daffe,
+    400 : #269dfd,
+    500 : #008cfd,
+    600 : #0084fd,
+    700 : #0079fc,
+    800 : #006ffc,
+    900 : #005cfc,
+    A100 : #ffffff,
+    A200 : #eff4ff,
+    A400 : #bcd0ff,
+    A700 : #a2beff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);

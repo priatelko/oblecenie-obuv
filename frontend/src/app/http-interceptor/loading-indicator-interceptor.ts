@@ -12,14 +12,14 @@ import {finalize} from 'rxjs/operators';
 
 @Injectable()
 export class LoadingIndicatorInterceptor implements HttpInterceptor {
-  constructor(private loadingIndicatorService: LoadingIndicatorService) {}
+  constructor(
+    private loadingIndicatorService: LoadingIndicatorService
+  ) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log('loading intercept');
-
     // emit onStarted event before request execution
     this.loadingIndicatorService.onStarted(req);
 

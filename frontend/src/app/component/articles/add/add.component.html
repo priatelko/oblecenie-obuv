@@ -27,7 +27,7 @@
     >
       <div class="container">
         <div class="row">
-          <div class="col-sm">
+          <div class="col-md">
             <h4>
               {{ 'component.article.add.preKoho' | translate }}
               <span class="error-color">*</span>
@@ -40,7 +40,7 @@
               formControlName="preKoho"
             ></app-select>
           </div>
-          <div class="col-sm / mt-4 mt-sm-0">
+          <div class="col-md / mt-4 mt-md-0">
             <h4>
               {{ 'component.article.add.obdobie' | translate }}
               <span class="error-color">*</span>
@@ -55,7 +55,7 @@
           </div>
         </div>
         <div class="row / mt-4">
-          <div class="col-sm">
+          <div class="col-md">
             <h4>
               {{ 'component.article.add.kategoria' | translate }}
               <span class="error-color">*</span>
@@ -113,7 +113,7 @@
               </button>
             </div>
           </div>
-          <div class="col-sm">
+          <div class="col-md">
             <h4>
               {{ 'component.article.add.znacka' | translate }}
               <span class="error-color">*</span>
@@ -161,7 +161,7 @@
           </div>
         </div>
         <div class="row / mt-4">
-          <div class="col-sm">
+          <div class="col-md">
             <h4>
               {{ 'component.article.add.dress.prilezitost' | translate }}
               <span class="error-color">*</span>
@@ -169,8 +169,12 @@
             <p class="lead text-secondary">
               {{ 'component.article.add.dress.prilezitostDesc' | translate }}
             </p>
+            <app-select
+              [options]="prilezitost$ | async"
+              formControlName="prilezitost"
+            ></app-select>
           </div>
-          <div class="col-sm">
+          <div class="col-md">
             <h4>
               {{ 'component.article.add.dress.zostrih' | translate }}
               <span class="error-color">*</span>
@@ -178,20 +182,64 @@
             <p class="lead text-secondary">
               {{ 'component.article.add.dress.zostrihDesc' | translate }}
             </p>
-            <h4>
+            <app-select
+              [options]="zostrih$ | async"
+              [multiselect]="false"
+              formControlName="zostrih"
+            ></app-select>
+            <h4 class="mt-4">
               {{ 'component.article.add.velkost' | translate }}
               <span class="error-color">*</span>
             </h4>
+            <p class="lead text-secondary">
+              {{ 'component.article.add.dress.velkostDesc' | translate }}
+            </p>
+            <div class="row" formGroupName="velkost">
+              <app-validation
+                [formGroupRef]="addOblecenieForm.get('velkost')"
+              ></app-validation>
+              <div class="col-md">
+                <mat-form-field appearance="outline">
+                <mat-label>{{
+                  'component.article.add.velkost' | translate
+                }}</mat-label>
+                <mat-select formControlName="velkost">
+                  <mat-option [value]="0">
+                    -{{ 'common.choose' | translate }}-
+                  </mat-option>
+                  <ng-container
+                    *ngFor="
+                      let velkost of velkost$ | async;
+                      trackBy: trackByIdFn
+                    "
+                  >
+                    <mat-option [value]="velkost.id">
+                      {{ velkost.label }}
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
+              </div>
+              <div class="col-md">
+                  <mat-form-field appearance="outline">
+                      <mat-label>{{
+                        'component.article.add.velkostCislo' | translate
+                      }}</mat-label>
+                    <input matInput type="number" formControlName="velkostCislo" step="0.1" min="0" max="500" />
+                  </mat-form-field>
+              </div>
+            </div>
+
           </div>
         </div>
         <div class="row / mt-4">
-          <div class="col-sm">
+          <div class="col-md">
             <h4>
               {{ 'component.article.add.dress.styl' | translate }}
               <span class="error-color">*</span>
             </h4>
           </div>
-          <div class="col-sm">
+          <div class="col-md">
             <h4>
               {{ 'component.article.add.dress.zapinanie' | translate }}
               <span class="error-color">*</span>
@@ -203,7 +251,7 @@
           </div>
         </div>
         <div class="row / mt-4">
-          <div class="col-sm">
+          <div class="col-md">
             <h4>
               {{ 'component.article.add.material' | translate }}
               <span class="error-color">*</span>

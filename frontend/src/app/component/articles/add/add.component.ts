@@ -22,15 +22,17 @@ import {
   OblecenieKategorie,
   OblecenieKategorieChildren,
 } from 'src/app/model/Entity/AddArticleDress.entity';
-import {MultiSelectOption} from 'src/app/custom/interfaces';
+import {MultiSelectOption, SelectOption} from 'src/app/custom/interfaces';
 import {SelectType} from 'src/app/form-control/select/select.interface';
 import {first} from 'lodash';
+import { AddArticleFormTypeService } from './form-type.service';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [AddArticleFormTypeService]
 })
 export class AddComponent implements OnInit, OnDestroy {
   articleKind = ArtikelTyp;
@@ -41,6 +43,9 @@ export class AddComponent implements OnInit, OnDestroy {
   preKoho$: Observable<MultiSelectOption[]>;
   obdobie$: Observable<MultiSelectOption[]>;
   znacka$: Observable<MultiSelectOption[]>;
+  prilezitost$: Observable<MultiSelectOption[]>;
+  zostrih$: Observable<SelectOption[]>;
+  velkost$: Observable<SelectOption[]>;
 
   @Input() addKind: ArtikelTyp;
 
@@ -58,7 +63,8 @@ export class AddComponent implements OnInit, OnDestroy {
   constructor(
     private addArticleDressRepository: AddArticleDressRepositoryService,
     private dialog: MatDialog,
-    private modalFilterService: ModalFilterService
+    private modalFilterService: ModalFilterService,
+    private formType: AddArticleFormTypeService
   ) {}
 
   trackByFn(index, item: OblecenieKategorie) {
@@ -68,28 +74,15 @@ export class AddComponent implements OnInit, OnDestroy {
     return item.id;
   }
 
-  createOblecenieFormGroup(): FormGroup {
-    return new FormGroup({
-      typ: new FormControl(null, []),
-      preKoho: new FormControl(null, [Validators.required]),
-      obdobie: new FormControl(null, [Validators.required]),
-      oblecenieKategoria: new FormControl(null, [Validators.required]),
-      znacka: new FormControl(null, [Validators.required]),
-      stav: new FormControl(null, []),
-      material: new FormControl(null, []),
-      titulok: new FormControl(null, []),
-      popis: new FormControl(null, []),
-      cena: new FormControl(null, []),
-      url: new FormControl(null, []),
-      expiracia: new FormControl(null, []),
-    });
-  }
-
   ngOnInit() {
-    this.addOblecenieForm = this.createOblecenieFormGroup();
+    this.addOblecenieForm = this.formType.getDress();
 
     this.preKoho$ = this.addArticleDressRepository.getPreKohoOptions();
     this.obdobie$ = this.addArticleDressRepository.getObdobieOptions();
+    this.prilezitost$ = this.addArticleDressRepository.getPrilezitostOptions();
+    this.zostrih$ = this.addArticleDressRepository.getZostrihOptions();
+    this.velkost$ = this.addArticleDressRepository.getVelkostOptions();
+    this.addArticleDressRepository.dressCategoriesInit();
     this.addArticleDressRepository.dressCategoriesInit();
     this.addArticleDressRepository.znackaInit();
 

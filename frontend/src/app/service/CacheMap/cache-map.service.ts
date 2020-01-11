@@ -6,15 +6,13 @@ import {
   MAX_CACHE_AGE,
   LOCALSTORE_CACHED_REQUEST_KEY,
 } from './cache-entry';
-import {has, forEach} from 'lodash';
+import {forEach} from 'lodash';
 
 @Injectable()
 export class CacheMapService implements Cache {
   cacheMap = new Map<string, CacheEntry>();
 
   get(req: HttpRequest<any>): HttpResponse<any> | null {
-    console.log('see cache map', this.cacheMap);
-
     const entry = this.cacheMap.get(req.urlWithParams);
     if (!entry) {
       return null;
@@ -30,7 +28,7 @@ export class CacheMapService implements Cache {
     };
     this.cacheMap.set(req.urlWithParams, entry);
 
-    this.setToStorage(req.urlWithParams, res.body.data);
+    this.setToStorage(req.urlWithParams, res.body);
     this.deleteExpiredCache();
   }
   private deleteExpiredCache() {
@@ -44,13 +42,11 @@ export class CacheMapService implements Cache {
   /**
    * Local storage requests
    */
-  parseFromCache() {
-    forEach(this.getParsedCachedStorage(), (item, key) => {
-      console.log('ulozime', key, JSON.parse(item));
-      this.cacheMap.set(key, JSON.parse(item));
-      console.log(this.cacheMap);
-    });
-  }
+  // parseFromCache() {
+  //   forEach(this.getParsedCachedStorage(), (item, key) => {
+  //     this.cacheMap.set(key, JSON.parse(item));
+  //   });
+  // }
 
   setToStorage(key: string, data) {
     const cachedStorageReq = this.getParsedCachedStorage();
@@ -60,6 +56,14 @@ export class CacheMapService implements Cache {
       LOCALSTORE_CACHED_REQUEST_KEY,
       JSON.stringify(cachedStorageReq)
     );
+  }
+
+  getCachedResponse(key) {
+    const parsedStorage = this.getParsedCachedStorage();
+    if (parsedStorage[key]) {
+      return JSON.parse(parsedStorage[key]);
+    }
+    return false;
   }
 
   getParsedCachedStorage() {

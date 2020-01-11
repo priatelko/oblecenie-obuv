@@ -13,9 +13,9 @@ use App\Services\Helpers;
 
 class ApiController extends BaseController {
 	
-	/**
+    /**
      * @Route("/get/{code}")
-	 * @Method({"GET"})
+     * @Method({"GET"})
      */
     public function indexAction($code) {
 		$em = $this->getDoctrine();
@@ -30,12 +30,18 @@ class ApiController extends BaseController {
 				$obdobie = Helpers::entityToArray($em->getRepository('\App\Entity\Obdobie')->findBy([], ['zorad' => 'ASC']));
 				$kategorie = $em->getRepository('\App\Entity\OblecenieKategorie')->getDataToSelectForm();
 				$znacka = Helpers::entityToArray($em->getRepository('\App\Entity\Znacka')->findBy([], ['nazov' => 'ASC']));
+                $prilezitost = Helpers::entityToArray($em->getRepository('\App\Entity\ObleceniePrilezitost')->findBy([], ['zorad' => 'ASC']));
+                $zostrih = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieZostrih')->findBy([], ['zorad' => 'ASC']));
+                $velkost = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieVelkost')->findBy([], ['zorad' => 'ASC']));
 				
 				return $this->respond([
 					'preKoho' => $preKoho,
 					'obdobie' => $obdobie,
 					'kategorie' => $kategorie,
-					'znacka' => $znacka
+					'znacka' => $znacka,
+                    'prilezitost' => $prilezitost,
+                    'zostrih' => $zostrih,
+                    'velkost' => $velkost,
 				]);
 			default:
 				throw new \InvalidArgumentException( 'Code is not valid' );

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
-import {UserModel, UserLoginRoleModel} from '../../model/Model/User.model';
+import {UserModel, UserLoginRoleModel, UserRoleModel} from '../../model/Model/User.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,13 @@ export class IdentityService {
 
   /** Getters */
   get identity(): UserModel {
-    return JSON.parse(localStorage.getItem('identity')) as UserModel;
+    const identity = JSON.parse(localStorage.getItem('identity'));
+
+    if (identity && identity.roles) {
+      identity.roles = JSON.parse(identity.roles) || [];
+    }
+
+    return identity as UserModel;
   }
   get isBuyer() {
     return this.identity.loginRole === UserLoginRoleModel.Buyer;
@@ -27,6 +33,10 @@ export class IdentityService {
 
   get isSeller() {
     return this.identity.loginRole === UserLoginRoleModel.Seller;
+  }
+
+  get isAdmin() {
+    return this.identity && this.identity.roles.indexOf(UserRoleModel.Admin) > -1;
   }
 
   get logged() {

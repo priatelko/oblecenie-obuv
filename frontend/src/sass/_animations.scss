@@ -1,30 +1,30 @@
-@keyframes alert-animation {
+@keyframes formcontrol-alert-animation {
   0% {
     opacity: 0;
   }
 
   16.65% {
-    transform: translate(8px, calc(-100% - 8px));
+    transform: translate(8px, calc(-125% - 8px));
   }
 
   33.3% {
-    transform: translate(-6px, calc(-100% - -6px));
+    transform: translate(-6px, calc(-125% - -6px));
   }
 
   49.95% {
-    transform: translate(4px, calc(-100% - 4px));
+    transform: translate(4px, calc(-125% - 4px));
   }
 
   66.6% {
-    transform: translate(-2px, calc(-100% - -2px));
+    transform: translate(-2px, calc(-125% - -2px));
   }
 
   83.25% {
-    transform: translate(1px, calc(-100% - 1px));
+    transform: translate(1px, calc(-125% - 1px));
   }
 
   100% {
-    transform: translate(0, calc(-100% - 0));
+    transform: translate(0, calc(-125% - 0));
     opacity: 1;
   }
 }

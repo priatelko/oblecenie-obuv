@@ -4,11 +4,11 @@ import {CoreModule} from 'src/app/module/SharedModule/core.module';
 import {FormModule} from 'src/app/module/SharedModule/form.module';
 import {SelectModule} from 'src/app/form-control/select/select.module';
 import {AddComponent} from './add.component';
-import {DressComponent} from './dress/dress.component';
 import {RouterModule} from '@angular/router';
 import {LoaderModule} from '../../loader/loader.module';
 import {ModalFilterModule} from '../../modal-filter/modal-filter.module';
 import {ModalFilterComponent} from '../../modal-filter/modal-filter.component';
+import { ValidationModule } from '../../form/validation/validation.module';
 
 @NgModule({
   imports: [
@@ -21,8 +21,9 @@ import {ModalFilterComponent} from '../../modal-filter/modal-filter.component';
     MatProgressSpinnerModule,
     LoaderModule,
     ModalFilterModule,
+    ValidationModule
   ],
-  declarations: [AddComponent, DressComponent],
+  declarations: [AddComponent],
   entryComponents: [ModalFilterComponent],
   exports: [AddComponent],
 })

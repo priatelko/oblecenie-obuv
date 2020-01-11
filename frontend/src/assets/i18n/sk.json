@@ -22,7 +22,8 @@
         "required": "Políčko je povinné.",
         "email": "Email nie je validný.",
         "minlength": "Min počet znakov je %requiredLength.",
-        "sameAs": "Kľúčové znaky sa nezhodujú."
+        "sameAs": "Kľúčové znaky sa nezhodujú.",
+        "requiredOneOfGroup": "Jedno z políčok je povinné."
       },
       "fields": {
         "email": "Email",
@@ -137,22 +138,24 @@
         "kategoria": "Čo (kategória)",
         "znacka": "Značka",
         "velkost": "Veľkosť",
+        "velkostCislo": "Veľkosť číslo",
         "stav": "Stav, závada",
         "material": "Materiál šitia",
         "shoes": {
           "title": "Pridať obuv",
-          "perex": "Údaje zadávajte pravdivo a presne vyplnené."
+          "perex": "Údaje zadajte pravdivo a presne vyplnené."
         },
         "dress": {
           "title": "Pridať oblečenie",
           "kategoriaDesc": "Zkrátené rukávy, nohavice, sukne nastavte v časti „Zostrih“.",
-          "znackaDesc": "Sadu oblečenia zadávajte pod „Rôzne značky“. Keď neviete značku, zadajte „Neznáma značka“",
+          "znackaDesc": "Sadu oblečenia zadajte pod „Rôzne značky“. Keď neviete značku, vyberte „Neznáma značka“.",
           "prilezitost": "Príležitosť",
           "prilezitostDesc": "Na akú príležitosť sa oblečenie hodí.",
           "zostrih": "Zostrih",
           "zostrihDesc": "Krátke / dlhé rukávy, nohavice, sukňa.",
           "styl": "Štýl",
-          "zapinanie": "Zapínanie"
+          "zapinanie": "Zapínanie",
+          "velkostDesc": "Sadu oblečenia zadajte pod „Rôzne veľkosti“."
         }
       }
     },

@@ -6,9 +6,7 @@ import { MultiplePreventInterceptor } from './multiple-prevent-interceptor';
 
 export const httpInterceptorProviders = [
   // { provide: HTTP_INTERCEPTORS, useClass: MultiplePreventInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoadingIndicatorInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
-
-
 ];

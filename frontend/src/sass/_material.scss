@@ -26,7 +26,7 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$candy-app-primary: mat-palette($mat-indigo);
+$candy-app-primary: mat-palette($custom-primary);
 $candy-app-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
@@ -64,7 +64,7 @@ $candy-app-theme: mat-light-theme(
 .mat-dialog-title {
   font-size: 2rem;
   font-weight: normal;
-  color: map-get($mat-indigo, 800);
+  color: map-get($custom-primary, 800);
 }
 
 .mat-form-field-wrapper {
