@@ -3,7 +3,7 @@ import {
   FormGroup,
   FormControl,
   Validators,
-  AbstractControl
+  AbstractControl,
 } from '@angular/forms';
 import { merge } from 'lodash';
 import { Validator } from '../../../custom/validator.custom';
@@ -19,23 +19,34 @@ export class AddArticleFormTypeService {
       preKoho: new FormControl(null, [Validators.required]),
       obdobie: new FormControl(null, [Validators.required]),
       znacka: new FormControl(null, [Validators.required]),
-      stav: new FormControl(null, []),
+      stav: new FormControl(null, [Validators.required]),
       material: new FormControl(null, []),
       titulok: new FormControl(null, []),
       popis: new FormControl(null, []),
       cena: new FormControl(null, []),
       url: new FormControl(null, []),
-      expiracia: new FormControl(null, [])
+      expiracia: new FormControl(null, []),
     };
 
     this.dressFields = {
       oblecenieKategoria: new FormControl(null, [Validators.required]),
       prilezitost: new FormControl(null, [Validators.required]),
       zostrih: new FormControl(null, [Validators.required]),
-      velkost: new FormGroup({
-        velkost: new FormControl(null, [Validators.required, Validators.min(1)]),
-        velkostCislo: new FormControl(null, [Validators.required, Validators.min(1)])
-      }, [Validator.oneOfGroup()])
+      velkost: new FormGroup(
+        {
+          velkost: new FormControl(null, [
+            Validators.required,
+            Validators.min(1),
+          ]),
+          velkostCislo: new FormControl(null, [
+            Validators.required,
+            Validators.min(1),
+          ]),
+        },
+        [Validator.oneOfGroup()]
+      ),
+      styl: new FormControl(null, [Validators.required]),
+      zapinanie: new FormControl(null, [Validators.required]),
     };
   }
 

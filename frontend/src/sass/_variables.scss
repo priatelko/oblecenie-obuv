@@ -8,7 +8,7 @@ $input-border-width: 0px;
 $input-border-color: transparent;
 $modal-header-padding: 0 1rem;
 $headings-font-weight: normal;
-$headings-margin-bottom: .75rem;
+$headings-margin-bottom: 0.75rem;
 
 // border
 $border-radius: 0;
@@ -47,44 +47,45 @@ $dropdown-item-padding-x: 1rem;
  */
 
 // colors
-$text-color: $body-color;
-$border-light: #ccc;
+$mat-custom: (
+  50: #e3f2fd,
+  100: #bbdefb,
+  200: #90caf9,
+  300: #64b5f6,
+  400: #42a5f5,
+  500: #4284f3,
+  600: #1e88e5,
+  700: #1976d2,
+  800: #1565c0,
+  900: #0d47a1,
+  A100: #82b1ff,
+  A200: #448aff,
+  A400: #2979ff,
+  A700: #2962ff,
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  ),
+);
+
+// $text-color: $body-color;
+$color-primary: map-get($mat-custom, 500);
+$color-border-light: #d8d7d7;
+$color-container: #f6f6f6;
 
 // zindex
 $zindex-middle: 5;
 $zindex-alert: 1010;
 $zindex-dropdown: 1020;
-
-// Color pallette
-$custom-primary: (
-    50 : #e0f1ff,
-    100 : #b3ddfe,
-    200 : #80c6fe,
-    300 : #4daffe,
-    400 : #269dfd,
-    500 : #008cfd,
-    600 : #0084fd,
-    700 : #0079fc,
-    800 : #006ffc,
-    900 : #005cfc,
-    A100 : #ffffff,
-    A200 : #eff4ff,
-    A400 : #bcd0ff,
-    A700 : #a2beff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #ffffff,
-        600 : #ffffff,
-        700 : #ffffff,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
-);

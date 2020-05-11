@@ -17,6 +17,7 @@
     "cancel": "zrušiť",
     "accept": "potvrdiť",
     "noResult": "Žiadny výraz <b><i>`{query}`</i></b> nebol nájdený.",
+    "tooltipAria": "Tlačítko, ktoré zobrazuje nápovedu (tooltip).",
     "form": {
       "error": {
         "required": "Políčko je povinné.",
@@ -130,7 +131,7 @@
     "article": {
       "add": {
         "title": "Pridať artikel",
-        "perex": "Vyberte si, čo idete predávať? Oblečenie alebo obuv?",
+        "perex": "Vyberte si, čo idete predávať. Oblečenie alebo obuv?",
         "preKoho": "Pre koho",
         "preKohoDesc": "Komu je oblečenie určené.",
         "obdobie": "Kedy",

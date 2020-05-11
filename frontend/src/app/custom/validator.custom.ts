@@ -28,8 +28,6 @@ export class Validator {
     return (group: FormGroup): {[key: string]: any} | null => {
       let valid = false;
       forEach(group.controls, (control) => {
-        console.log(control, group.touched);
-
         if (group.touched && control.valid) {
           valid = true;
         }

@@ -5,9 +5,9 @@ import {
   AfterViewInit,
   Input,
 } from '@angular/core';
-import {NgControl} from '@angular/forms';
-import {Validator} from '../custom/validator.custom';
-import {hasRequiredField} from '../custom/helpers';
+import { NgControl } from '@angular/forms';
+import { Validator } from '../custom/validator.custom';
+import { hasRequiredField } from '../custom/helpers';
 
 @Directive({
   selector: '[appFormControl]',
@@ -38,7 +38,13 @@ export class FormControlDirective implements AfterViewInit {
 
     // Construt Error message
     this.errEl.id = errMsgId;
-    this.errEl.classList.add('alert', 'alert-danger', 'd-none', 'mb-0');
+    this.errEl.classList.add(
+      'alert',
+      'alert-float',
+      'alert-danger',
+      'd-none',
+      'mb-0'
+    );
     this.errEl.setAttribute('role', 'alert');
 
     this.closeEl.setAttribute('type', 'button');

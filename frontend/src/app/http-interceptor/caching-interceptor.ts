@@ -24,7 +24,7 @@ export class CachingInterceptor implements HttpInterceptor {
 
       // ak prave prebieha request
       if (this.requestOngoingMap.get(requestHash) === true) {
-        this.debug.log('Request is already ongoing...');
+        this.debug.log('Request already ongoing...');
         // posleme dalej prazdy request
         return of(new HttpResponse({body: ''}));
       } else {
@@ -46,7 +46,7 @@ export class CachingInterceptor implements HttpInterceptor {
       return of(cachedResponse);
     } else if(this.cacheService.getCachedResponse(req.urlWithParams)) {
       const craftedCachedResponse = new HttpResponse({body: this.cacheService.getCachedResponse(req.urlWithParams)});
-      this.debug.log('Cached response from localstore', craftedCachedResponse);
+      this.debug.log('Cached response from localstore', req.urlWithParams, craftedCachedResponse);
       return of(craftedCachedResponse);
     }
 

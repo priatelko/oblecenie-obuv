@@ -9,18 +9,18 @@
   </button>
 </div>
 
-<mat-dialog-content>
-  <div class="modal-body">
-    <p class="lead / mb-4">
-      {{ 'component.user-' + componentMode.mode + '.perex' | translate }}
-    </p>
-    <form
-      [formGroup]="registForm"
-      (ngSubmit)="onSubmit()"
-      novalidate
-      class="form-one-column"
-    >
-      <mat-form-field appearance="outline">
+<form
+  [formGroup]="registForm"
+  (ngSubmit)="onSubmit()"
+  novalidate
+  class="form-one-column"
+>
+  <mat-dialog-content>
+    <div class="modal-body">
+      <p class="lead / mb-4">
+        {{ 'component.user-' + componentMode.mode + '.perex' | translate }}
+      </p>
+      <mat-form-field class="mb-2" appearance="outline">
         <mat-label>{{ 'common.form.fields.email' | translate }}</mat-label>
         <input
           appFormControl
@@ -33,7 +33,7 @@
         />
       </mat-form-field>
       <ng-container *ngIf="isEditMode">
-        <mat-form-field appearance="outline">
+        <mat-form-field class="mb-2" appearance="outline">
           <mat-label>{{ 'common.form.fields.name' | translate }}</mat-label>
           <input
             appFormControl
@@ -45,7 +45,7 @@
             required
           />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field class="mb-2" appearance="outline">
           <mat-label>{{ 'common.form.fields.surname' | translate }}</mat-label>
           <input
             appFormControl
@@ -59,7 +59,7 @@
         </mat-form-field>
       </ng-container>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field class="mb-2" appearance="outline">
         <mat-label>{{ 'common.form.fields.password' | translate }}</mat-label>
         <input
           appFormControl
@@ -71,7 +71,7 @@
           required
         />
       </mat-form-field>
-      <mat-form-field appearance="outline">
+      <mat-form-field [class.mb-2]="!isEditMode" appearance="outline">
         <mat-label>{{
           'common.form.fields.confirmPassword' | translate
         }}</mat-label>
@@ -99,18 +99,20 @@
           </mat-select>
         </mat-form-field>
       </ng-container>
+    </div>
+  </mat-dialog-content>
 
-      <button
-        mat-raised-button
-        [disabled]="registForm.invalid"
-        type="submit"
-        color="primary"
-      >
-        {{ 'common.form.fields.submit-' + componentMode.submit | translate }}
-      </button>
-    </form>
-  </div>
-</mat-dialog-content>
+  <mat-dialog-actions>
+    <button
+      mat-flat-button
+      [disabled]="registForm.invalid"
+      type="submit"
+      color="primary"
+    >
+      {{ 'common.form.fields.submit-' + componentMode.submit | translate }}
+    </button>
+  </mat-dialog-actions>
+</form>
 
 <ng-template #loading>
   <app-loader></app-loader>

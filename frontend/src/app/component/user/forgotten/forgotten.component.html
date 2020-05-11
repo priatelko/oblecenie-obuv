@@ -20,7 +20,7 @@
       novalidate
       class="form-one-column"
     >
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="mb-2">
         <mat-label>{{ 'common.form.fields.email' | translate }}</mat-label>
         <input
           appFormControl
@@ -42,10 +42,11 @@
       </div>
 
       <button
-        mat-raised-button
+        mat-flat-button
         [disabled]="forgottenForm.invalid"
         type="submit"
         color="primary"
+        class="mt-2"
       >
         {{ 'common.form.fields.submit' | translate }}
       </button>

@@ -5,45 +5,48 @@ import {
   Input,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {ArtikelTyp, Znacka} from '../../../model/Entity/Article.entity';
-import {AddArticleDressRepositoryService} from '../../../model/Repository/AddArticleDress.repository';
-import {untilDestroyed} from 'ngx-take-until-destroy';
-import {LoaderSize} from '../../loader/loader.component';
-import {MatDialog} from '@angular/material';
-import {ModalFilterComponent} from '../../modal-filter/modal-filter.component';
-import {GLOBAL} from 'src/app/variables/global';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { ArtikelTyp, Znacka } from '../../../model/Entity/Article.entity';
+import { AddArticleDressRepositoryService } from '../../../model/Repository/AddArticleDress.repository';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { LoaderSize } from '../../loader/loader.component';
+import { MatDialog } from '@angular/material';
+import { ModalFilterComponent } from '../../modal-filter/modal-filter.component';
+import { GLOBAL } from 'src/app/variables/global';
 import {
   ModalFilterOptions,
   ModalFilterService,
 } from '../../modal-filter/modal-filter.service';
-import {
-  OblecenieKategorie,
-  OblecenieKategorieChildren,
-} from 'src/app/model/Entity/AddArticleDress.entity';
-import {MultiSelectOption, SelectOption} from 'src/app/custom/interfaces';
-import {SelectType} from 'src/app/form-control/select/select.interface';
-import {first} from 'lodash';
+
+import { MultiSelectOption, SelectOption } from 'src/app/custom/interfaces';
+import { SelectType } from 'src/app/form-control/select/select.interface';
+import { first } from 'lodash';
 import { AddArticleFormTypeService } from './form-type.service';
+import { KategorieChildren, Kategorie } from 'src/app/model/Entity/Dress';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [AddArticleFormTypeService]
+  // [changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [AddArticleFormTypeService],
 })
 export class AddComponent implements OnInit, OnDestroy {
   articleKind = ArtikelTyp;
   loaderSize = LoaderSize;
 
+  SelectType = SelectType;
+
   addOblecenieForm: FormGroup;
 
   preKoho$: Observable<MultiSelectOption[]>;
   obdobie$: Observable<MultiSelectOption[]>;
+  styl$: Observable<MultiSelectOption[]>;
   znacka$: Observable<MultiSelectOption[]>;
   prilezitost$: Observable<MultiSelectOption[]>;
+  zapinanie$: Observable<MultiSelectOption[]>;
+  stav$: Observable<MultiSelectOption[]>;
   zostrih$: Observable<SelectOption[]>;
   velkost$: Observable<SelectOption[]>;
 
@@ -67,10 +70,10 @@ export class AddComponent implements OnInit, OnDestroy {
     private formType: AddArticleFormTypeService
   ) {}
 
-  trackByFn(index, item: OblecenieKategorie) {
+  trackByFn(index, item: Kategorie) {
     return item.item;
   }
-  trackByIdFn(index, item: OblecenieKategorieChildren) {
+  trackByIdFn(index, item: KategorieChildren) {
     return item.id;
   }
 
@@ -79,7 +82,10 @@ export class AddComponent implements OnInit, OnDestroy {
 
     this.preKoho$ = this.addArticleDressRepository.getPreKohoOptions();
     this.obdobie$ = this.addArticleDressRepository.getObdobieOptions();
+    this.styl$ = this.addArticleDressRepository.getStylOptions();
     this.prilezitost$ = this.addArticleDressRepository.getPrilezitostOptions();
+    this.zapinanie$ = this.addArticleDressRepository.getZapinanieOptions();
+    this.stav$ = this.addArticleDressRepository.getStavOptions();
     this.zostrih$ = this.addArticleDressRepository.getZostrihOptions();
     this.velkost$ = this.addArticleDressRepository.getVelkostOptions();
     this.addArticleDressRepository.dressCategoriesInit();
@@ -88,12 +94,12 @@ export class AddComponent implements OnInit, OnDestroy {
 
     this.oblecenieKategorieFilter.valueChanges
       .pipe(untilDestroyed(this))
-      .subscribe(string => {
+      .subscribe((string) => {
         this.addArticleDressRepository.filterDressCategories(string);
       });
     this.oblecenieZnackaFilter.valueChanges
       .pipe(untilDestroyed(this))
-      .subscribe(string => {
+      .subscribe((string) => {
         this.addArticleDressRepository.filterZnacka(string);
       });
 
@@ -136,8 +142,8 @@ export class AddComponent implements OnInit, OnDestroy {
       multiselect: false,
       checkType: SelectType.Radio,
       items: this.modalFilterService.transformItems<
-        OblecenieKategorie,
-        OblecenieKategorieChildren
+        Kategorie,
+        KategorieChildren
       >(
         this.addArticleDressRepository.oblecenieCategories,
         (item): MultiSelectOption => {
@@ -162,7 +168,7 @@ export class AddComponent implements OnInit, OnDestroy {
         data,
       })
       .beforeClose()
-      .subscribe(res => {
+      .subscribe((res) => {
         const value = first(res);
         if (value) {
           this.addOblecenieForm.get('oblecenieKategoria').setValue(value);
@@ -194,7 +200,7 @@ export class AddComponent implements OnInit, OnDestroy {
         data,
       })
       .beforeClose()
-      .subscribe(res => {
+      .subscribe((res) => {
         const value = first(res);
         if (value) {
           this.addOblecenieForm.get('znacka').setValue(value);

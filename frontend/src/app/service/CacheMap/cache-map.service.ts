@@ -6,7 +6,7 @@ import {
   MAX_CACHE_AGE,
   LOCALSTORE_CACHED_REQUEST_KEY,
 } from './cache-entry';
-import {forEach} from 'lodash';
+import { assign } from 'lodash';
 
 @Injectable()
 export class CacheMapService implements Cache {
@@ -14,9 +14,11 @@ export class CacheMapService implements Cache {
 
   get(req: HttpRequest<any>): HttpResponse<any> | null {
     const entry = this.cacheMap.get(req.urlWithParams);
+
     if (!entry) {
       return null;
     }
+
     const isExpired = Date.now() - entry.entryTime > MAX_CACHE_AGE;
     return isExpired ? null : entry.response;
   }
@@ -28,7 +30,7 @@ export class CacheMapService implements Cache {
     };
     this.cacheMap.set(req.urlWithParams, entry);
 
-    this.setToStorage(req.urlWithParams, res.body);
+    this.setToStorage(req.urlWithParams, assign(res.body, {entryTime: entry.entryTime}));
     this.deleteExpiredCache();
   }
   private deleteExpiredCache() {

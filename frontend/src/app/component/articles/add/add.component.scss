@@ -17,6 +17,7 @@
       color: $body-color;
       span {
         display: block;
+        font-size: 150%;
       }
 
       &,
@@ -34,7 +35,7 @@
     &:hover {
       a {
         transform-origin: left;
-        color: map-get($custom-primary, 800);
+        color: $color-primary;
         span {
           font-size: 250%;
           font-weight: bold;
@@ -64,4 +65,11 @@
 
 h4 {
   font-weight: normal;
+}
+
+.fornm-group {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: $color-container;
+  margin: 0 0.5rem;
 }

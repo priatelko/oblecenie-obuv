@@ -1,15 +1,15 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import {untilDestroyed} from 'ngx-take-until-destroy';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
-import {UserService} from '../../../service/User/user.service';
-import {Observable} from 'rxjs';
-import {LoginRoleRepositoryService} from '../../../model/Repository/LoginRole.repository';
-import {MatDialogRef, MatDialog} from '@angular/material';
-import {ForgottenComponent} from '../forgotten/forgotten.component';
-import {GLOBAL} from '../../../variables/global';
-import {LoginRoleEntity} from '../../../model/Entity/LoginRole.entity';
+import { UserService } from '../../../service/User/user.service';
+import { Observable } from 'rxjs';
+import { LoginRoleRepositoryService } from '../../../model/Repository/LoginRole.repository';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { ForgottenComponent } from '../forgotten/forgotten.component';
+import { GLOBAL } from '../../../variables/global';
+import { LoginRoleEntity } from '../../../model/Entity/LoginRole.entity';
 
 @Component({
   selector: 'app-user-login',
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     const login = this.userService.login(this.loginForm.value);
 
-    login.pipe(untilDestroyed(this)).subscribe(response => {
+    login.pipe(untilDestroyed(this)).subscribe((response) => {
       this.confirmationError = false;
       this.badCredentials = false;
 

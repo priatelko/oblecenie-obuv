@@ -1,23 +1,24 @@
-import {PreKoho, Obdobie, Znacka, Prilezitost, Zostrih, Velkost} from './Article.entity';
-import {NoDiaNode} from 'src/app/custom/interfaces';
+import { PreKoho, Obdobie, Znacka, Stav, Material } from './Article.entity';
+import {
+  Zapinanie,
+  Prilezitost,
+  Zostrih,
+  Velkost,
+  Styl,
+  Kategorie,
+} from './Dress';
 
 export interface AddArticleDressEntity {
   preKoho: PreKoho[];
   obdobie: Obdobie[];
-  kategorie: OblecenieKategorie[];
+  kategorie: Kategorie[];
   znacka: Znacka[];
   prilezitost: Prilezitost[];
   zostrih: Zostrih[];
   velkost: Velkost[];
   velkostCislo: number;
-}
-
-export interface OblecenieKategorie {
-  item: string;
-  children: OblecenieKategorieChildren[];
-}
-
-export interface OblecenieKategorieChildren extends NoDiaNode {
-  id: number;
-  nazov: string;
+  styl: Styl[];
+  zapinanie: Zapinanie[];
+  stav: Stav[];
+  material: Material;
 }

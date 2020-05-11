@@ -75,7 +75,7 @@ a {
 
 // Form
 .form-one-column {
-  .alert {
+  .alert-float {
     position: absolute;
     top: 0;
     left: 0;
@@ -84,7 +84,7 @@ a {
     align-items: center;
 
     animation-name: formcontrol-alert-animation;
-    animation-duration: .25s;
+    animation-duration: 0.25s;
     animation-timing-function: ease-in-out;
     animation-iteration-count: 1;
 

@@ -19,7 +19,7 @@
       <mat-form-field class="flex-grow-1" appearance="outline">
         <mat-label>{{
           'common.form.fields.search'
-            | translate: {number: data.minSearchLength}
+            | translate: { number: data.minSearchLength }
         }}</mat-label>
         <input
           matInput
@@ -44,14 +44,14 @@
       <p
         class="text-muted"
         *ngIf="!isAnyData"
-        [innerHTML]="'common.noResult' | translate: {query: searchValue}"
+        [innerHTML]="'common.noResult' | translate: { query: searchValue }"
       ></p>
     </div>
   </mat-dialog-content>
 
   <mat-dialog-actions>
     <button
-      mat-raised-button
+      mat-flat-button
       color="primary"
       [mat-dialog-close]="filterControl.value"
       [disabled]="!filterControl.valid"
@@ -59,7 +59,7 @@
     >
       {{ 'common.accept' | translate }}
     </button>
-    <button mat-raised-button mat-dialog-close class="text-capitalize">
+    <button mat-flat-button mat-dialog-close class="text-capitalize ml-2">
       {{ 'common.cancel' | translate }}
     </button>
   </mat-dialog-actions>

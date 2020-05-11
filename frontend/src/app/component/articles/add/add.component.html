@@ -27,42 +27,59 @@
     >
       <div class="container">
         <div class="row">
-          <div class="col-md">
-            <h4>
+          <div class="col-md fornm-group">
+            <h2 class="h4">
               {{ 'component.article.add.preKoho' | translate }}
               <span class="error-color">*</span>
-            </h4>
-            <p class="lead text-secondary">
-              {{ 'component.article.add.preKohoDesc' | translate }}
-            </p>
+              <mat-icon
+                class="ml-2 pointer"
+                matTooltip="{{
+                  'component.article.add.preKohoDesc' | translate
+                }}"
+                aria-label="'common.tooltipAria' | translate"
+                >help</mat-icon
+              >
+            </h2>
             <app-select
               [options]="preKoho"
               formControlName="preKoho"
             ></app-select>
           </div>
-          <div class="col-md / mt-4 mt-md-0">
-            <h4>
+          <div class="col-md fornm-group / mt-4 mt-md-0">
+            <h2 class="h4">
               {{ 'component.article.add.obdobie' | translate }}
               <span class="error-color">*</span>
-            </h4>
-            <p class="lead text-secondary">
-              {{ 'component.article.add.obdobieDesc' | translate }}
-            </p>
+              <mat-icon
+                class="ml-2 pointer"
+                matTooltip="{{
+                  'component.article.add.obdobieDesc' | translate
+                }}"
+                aria-label="'common.tooltipAria' | translate"
+                >help</mat-icon
+              >
+            </h2>
             <app-select
               [options]="obdobie$ | async"
+              [type]="SelectType.Radio"
+              [multiselect]="false"
               formControlName="obdobie"
             ></app-select>
           </div>
         </div>
         <div class="row / mt-4">
-          <div class="col-md">
-            <h4>
+          <div class="col-md fornm-group">
+            <h2 class="h4">
               {{ 'component.article.add.kategoria' | translate }}
               <span class="error-color">*</span>
-            </h4>
-            <p class="lead text-secondary">
-              {{ 'component.article.add.dress.kategoriaDesc' | translate }}
-            </p>
+              <mat-icon
+                class="ml-2 pointer"
+                matTooltip="{{
+                  'component.article.add.dress.kategoriaDesc' | translate
+                }}"
+                aria-label="'common.tooltipAria' | translate"
+                >help</mat-icon
+              >
+            </h2>
             <div class="field-dialog-select">
               <mat-form-field appearance="outline">
                 <mat-label>{{
@@ -76,7 +93,7 @@
                   <mat-option>
                     <ngx-mat-select-search
                       [placeholderLabel]="
-                        'common.form.fields.search' | translate: {number: 3}
+                        'common.form.fields.search' | translate: { number: 3 }
                       "
                       [formControl]="oblecenieKategorieFilter"
                       [noEntriesFoundLabel]="
@@ -113,14 +130,19 @@
               </button>
             </div>
           </div>
-          <div class="col-md">
-            <h4>
+          <div class="col-md fornm-group">
+            <h2 class="h4">
               {{ 'component.article.add.znacka' | translate }}
               <span class="error-color">*</span>
-            </h4>
-            <p class="lead text-secondary">
-              {{ 'component.article.add.dress.znackaDesc' | translate }}
-            </p>
+              <mat-icon
+                class="ml-2 pointer"
+                matTooltip="{{
+                  'component.article.add.dress.znackaDesc' | translate
+                }}"
+                aria-label="'common.tooltipAria' | translate"
+                >help</mat-icon
+              >
+            </h2>
             <div class="field-dialog-select">
               <mat-form-field appearance="outline">
                 <mat-label>{{
@@ -130,7 +152,7 @@
                   <mat-option>
                     <ngx-mat-select-search
                       [placeholderLabel]="
-                        'common.form.fields.search' | translate: {number: 2}
+                        'common.form.fields.search' | translate: { number: 2 }
                       "
                       [formControl]="oblecenieZnackaFilter"
                       [noEntriesFoundLabel]="
@@ -161,101 +183,135 @@
           </div>
         </div>
         <div class="row / mt-4">
-          <div class="col-md">
-            <h4>
+          <div class="col-md fornm-group">
+            <h2 class="h4">
               {{ 'component.article.add.dress.prilezitost' | translate }}
               <span class="error-color">*</span>
-            </h4>
-            <p class="lead text-secondary">
-              {{ 'component.article.add.dress.prilezitostDesc' | translate }}
-            </p>
+              <mat-icon
+                class="ml-2 pointer"
+                matTooltip="{{
+                  'component.article.add.dress.prilezitostDesc' | translate
+                }}"
+                aria-label="'common.tooltipAria' | translate"
+                >help</mat-icon
+              >
+            </h2>
             <app-select
               [options]="prilezitost$ | async"
               formControlName="prilezitost"
             ></app-select>
           </div>
-          <div class="col-md">
-            <h4>
+          <div class="col-md fornm-group">
+            <h2 class="h4">
               {{ 'component.article.add.dress.zostrih' | translate }}
               <span class="error-color">*</span>
-            </h4>
-            <p class="lead text-secondary">
-              {{ 'component.article.add.dress.zostrihDesc' | translate }}
-            </p>
+              <mat-icon
+                class="ml-2 pointer"
+                matTooltip="{{
+                  'component.article.add.dress.zostrihDesc' | translate
+                }}"
+                aria-label="'common.tooltipAria' | translate"
+                >help</mat-icon
+              >
+            </h2>
             <app-select
               [options]="zostrih$ | async"
+              [type]="SelectType.Radio"
               [multiselect]="false"
               formControlName="zostrih"
             ></app-select>
-            <h4 class="mt-4">
+            <h2 class="h4 / mt-4">
               {{ 'component.article.add.velkost' | translate }}
               <span class="error-color">*</span>
-            </h4>
-            <p class="lead text-secondary">
-              {{ 'component.article.add.dress.velkostDesc' | translate }}
-            </p>
+              <mat-icon
+                class="ml-2 pointer"
+                matTooltip="{{
+                  'component.article.add.dress.velkostDesc' | translate
+                }}"
+                aria-label="'common.tooltipAria' | translate"
+                >help</mat-icon
+              >
+            </h2>
             <div class="row" formGroupName="velkost">
               <app-validation
                 [formGroupRef]="addOblecenieForm.get('velkost')"
               ></app-validation>
-              <div class="col-md">
+              <div class="col-md fornm-group">
                 <mat-form-field appearance="outline">
-                <mat-label>{{
-                  'component.article.add.velkost' | translate
-                }}</mat-label>
-                <mat-select formControlName="velkost">
-                  <mat-option [value]="0">
-                    -{{ 'common.choose' | translate }}-
-                  </mat-option>
-                  <ng-container
-                    *ngFor="
-                      let velkost of velkost$ | async;
-                      trackBy: trackByIdFn
-                    "
-                  >
-                    <mat-option [value]="velkost.id">
-                      {{ velkost.label }}
+                  <mat-label>{{
+                    'component.article.add.velkost' | translate
+                  }}</mat-label>
+                  <mat-select formControlName="velkost">
+                    <mat-option [value]="0">
+                      -{{ 'common.choose' | translate }}-
                     </mat-option>
-                  </ng-container>
-                </mat-select>
-              </mat-form-field>
+                    <ng-container
+                      *ngFor="
+                        let velkost of velkost$ | async;
+                        trackBy: trackByIdFn
+                      "
+                    >
+                      <mat-option [value]="velkost.id">
+                        {{ velkost.label }}
+                      </mat-option>
+                    </ng-container>
+                  </mat-select>
+                </mat-form-field>
               </div>
-              <div class="col-md">
-                  <mat-form-field appearance="outline">
-                      <mat-label>{{
-                        'component.article.add.velkostCislo' | translate
-                      }}</mat-label>
-                    <input matInput type="number" formControlName="velkostCislo" step="0.1" min="0" max="500" />
-                  </mat-form-field>
+              <div class="col-md fornm-group">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{
+                    'component.article.add.velkostCislo' | translate
+                  }}</mat-label>
+                  <input
+                    matInput
+                    type="number"
+                    formControlName="velkostCislo"
+                    step="0.1"
+                    min="0"
+                    max="500"
+                  />
+                </mat-form-field>
               </div>
             </div>
-
           </div>
         </div>
         <div class="row / mt-4">
-          <div class="col-md">
-            <h4>
+          <div class="col-md fornm-group">
+            <h2 class="h4">
               {{ 'component.article.add.dress.styl' | translate }}
               <span class="error-color">*</span>
-            </h4>
+            </h2>
+            <app-select
+              [options]="styl$ | async"
+              formControlName="styl"
+            ></app-select>
           </div>
-          <div class="col-md">
-            <h4>
+          <div class="col-md fornm-group">
+            <h2 class="h4">
               {{ 'component.article.add.dress.zapinanie' | translate }}
               <span class="error-color">*</span>
-            </h4>
-            <h4>
+            </h2>
+            <app-select
+              [options]="zapinanie$ | async"
+              formControlName="zapinanie"
+            ></app-select>
+            <h2 class="h4 / mt-4">
               {{ 'component.article.add.stav' | translate }}
               <span class="error-color">*</span>
-            </h4>
+            </h2>
+            <app-select
+              [options]="stav$ | async"
+              formControlName="stav"
+            ></app-select>
           </div>
         </div>
         <div class="row / mt-4">
-          <div class="col-md">
-            <h4>
+          <div class="col-md fornm-group">
+            <h2 class="h4">
               {{ 'component.article.add.material' | translate }}
               <span class="error-color">*</span>
-            </h4>
+            </h2>
             <p>
               <input type="text" formControlName="material" />
             </p>
@@ -264,7 +320,7 @@
         <div class="row">
           <div class="col">
             <button
-              mat-raised-button
+              mat-flat-button
               [disabled]="addOblecenieForm.invalid"
               type="submit"
               color="primary"
@@ -295,7 +351,7 @@
         </mat-form-field>
 
         <button
-          mat-raised-button
+          mat-flat-button
           [disabled]="addForm.invalid"
           type="submit"
           color="primary"

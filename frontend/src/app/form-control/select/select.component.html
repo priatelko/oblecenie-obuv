@@ -6,7 +6,7 @@
 <ng-template #recursiveList let-items="items">
   <mat-radio-group *ngIf="!multiselect && (type$ | async) == selectType.Radio">
     <ng-container
-      *ngTemplateOutlet="itemList; context: {items: options$ | async}"
+      *ngTemplateOutlet="itemList; context: { items: options$ | async }"
     ></ng-container>
   </mat-radio-group>
 
@@ -18,7 +18,7 @@
     "
   >
     <ng-container
-      *ngTemplateOutlet="itemList; context: {items: options$ | async}"
+      *ngTemplateOutlet="itemList; context: { items: options$ | async }"
     ></ng-container>
   </ng-container>
 </ng-template>
@@ -34,14 +34,17 @@
       <!-- Inputs -->
       <ng-container *ngIf="toggle.id !== null">
         <!-- Radio -->
-        <mat-radio-button
-          *ngIf="(type$ | async) == selectType.Radio"
-          [value]="toggle.id"
-          [disabled]="disabled || toggle.disabled"
-          (change)="toggleEvent(toggle.id, toggle.checked)"
-        >
-          {{ toggle.label }}
-        </mat-radio-button>
+        <div class="mat-selection-list mat-selection-list--radio" *ngIf="(type$ | async) == selectType.Radio">
+          <div class="mat-list-item mat-list-option">
+            <mat-radio-button
+              [value]="toggle.id"
+              [disabled]="disabled || toggle.disabled"
+              (change)="toggleEvent(toggle.id, toggle.checked)"
+            >
+              {{ toggle.label }}
+            </mat-radio-button>
+          </div>
+        </div>
 
         <!-- Toggle -->
         <mat-slide-toggle
@@ -80,7 +83,7 @@
         <ng-container
           *ngTemplateOutlet="
             itemList;
-            context: {items: toggle.children, child: 'ANOOO'}
+            context: { items: toggle.children, child: 'ANOOO' }
           "
         ></ng-container>
       </div>
@@ -89,6 +92,6 @@
 </ng-template>
 
 <ng-container
-  *ngTemplateOutlet="recursiveList; context: {items: options$ | async}"
+  *ngTemplateOutlet="recursiveList; context: { items: options$ | async }"
 >
 </ng-container>
