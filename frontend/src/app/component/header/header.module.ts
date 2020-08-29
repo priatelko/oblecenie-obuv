@@ -27,7 +27,7 @@ import { RouterModule } from '@angular/router';
     AddModule,
   ],
   declarations: [HeaderComponent],
-  entryComponents: [RegistComponent, LoginComponent, ForgottenComponent],
+  // entryComponents: [RegistComponent, LoginComponent, ForgottenComponent],
   exports: [HeaderComponent],
 })
 export class HeaderModule {}
