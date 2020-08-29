@@ -31,7 +31,7 @@ class Helpers {
 		/* @var $item \App\Entity\UserLoginRole */
 		foreach ($entityItems as $item) {
 			if (!$item instanceof \App\Interfaces\ToArrayObjectInterface) {
-				throw new \InvalidArgumentException( 'Entity is not a right interface of ToArrayObjectInterface' );
+				throw new \InvalidArgumentException( 'Entity is not a correct interface of ToArrayObjectInterface' );
 			}
 
 			$result[] = $item->toArrayObject();

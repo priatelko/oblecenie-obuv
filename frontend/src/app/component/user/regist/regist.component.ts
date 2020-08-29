@@ -1,17 +1,17 @@
-import {Component, OnInit, OnDestroy, Inject} from '@angular/core';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
-import {UserService} from '../../../service/User/user.service';
-import {LoginRoleRepositoryService} from '../../../model/Repository/LoginRole.repository';
+import { UserService } from '../../../service/User/user.service';
+import { LoginRoleRepositoryService } from '../../../model/Repository/LoginRole.repository';
 
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-import {untilDestroyed} from 'ngx-take-until-destroy';
-import {LoginRoleEntity} from '../../../model/Entity/LoginRole.entity';
-import {IdentityService} from '../../../service/User/identity.service';
-import {Validator} from '../../../custom/validator.custom';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { LoginRoleEntity } from '../../../model/Entity/LoginRole.entity';
+import { IdentityService } from '../../../service/User/identity.service';
+import { Validator } from '../../../custom/validator.custom';
 
 @Component({
   selector: 'app-user-regist',
@@ -78,20 +78,14 @@ export class RegistComponent implements OnInit, OnDestroy {
         Validator.trim(),
         Validators.maxLength(50),
       ]),
+      name: new FormControl(null, [Validators.required, Validator.trim()]),
+      surname: new FormControl(null, [Validators.required, Validator.trim()]),
       role: new FormControl(null, [Validators.required]),
       password,
       passwordConfirm,
     });
 
     if (this.isEditMode) {
-      formGroup.addControl(
-        'name',
-        new FormControl(null, [Validators.required, Validator.trim()])
-      );
-      formGroup.addControl(
-        'surname',
-        new FormControl(null, [Validators.required, Validator.trim()])
-      );
       formGroup.removeControl('role');
     }
 
@@ -102,7 +96,7 @@ export class RegistComponent implements OnInit, OnDestroy {
     this.userService
       .regist(this.registForm.value)
       .pipe(untilDestroyed(this))
-      .subscribe(res => {
+      .subscribe((res) => {
         if (!res.error) {
           this.dialogRef.close();
         }

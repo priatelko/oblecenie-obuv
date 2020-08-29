@@ -12,13 +12,9 @@ use App\Entity\User;
 use App\Entity\UserLoginRole;
 use App\Services\ProjectConfig;
 use App\Constant\CacheNamespace;
+use App\Services\SocialProvider;
 
 class UserManager {
-
-	/**
-	 * @var CacheItem
-	 */
-	private $cacheItem;
 
 	/**
 	 * @var RequestStack
@@ -49,15 +45,22 @@ class UserManager {
 	 * @var UserPasswordEncoderInterface
 	 */
 	private $passwordEncoder;
+    
+    /**
+     * @var SocialProvider 
+     */
+    private $socialProvider;
 
 	public function __construct(EntityManager $entityManager, UserPasswordEncoderInterface $passwordEncoder, 
-			ValidatorInterface $validator, \Swift_Mailer $mailer, ProjectConfig $projectConfig, RequestStack $requestStack) {
+			ValidatorInterface $validator, \Swift_Mailer $mailer, ProjectConfig $projectConfig, RequestStack $requestStack,
+            SocialProvider $socialProvider) {
 		$this->entityManager = $entityManager;
 		$this->passwordEncoder = $passwordEncoder;
 		$this->validator = $validator;
 		$this->mailer = $mailer;
 		$this->projectConfig = $projectConfig;
 		$this->requestStack = $requestStack;
+        $this->socialProvider = $socialProvider;
 	}
 	
 	/**
@@ -105,13 +108,25 @@ class UserManager {
 		
 		$confirmHash = md5(str_shuffle(uniqid() . $email)) . md5(str_shuffle(time() . $password));
 		$user->setConfirmation($confirmHash);
-		
+
 		$this->entityManager->saveEntity($user);
 		
 		$this->sendConfirmation($user);
 
 		return $user;
 	}
+    
+    public function createSocialUser($provider, $token, $loginRole): User {
+        $socialUser = $this->socialProvider->getUser($provider, $token);
+        
+        dump($provider, $token, $loginRole, $socialUser); exit;
+		/* @var $user User */
+		$user = $this->createUser($email, '', $loginRole);
+        
+        $this->entityManager->saveEntity($user);
+        
+        return $user;
+    }
 	
 	/**
 	 * UPDATE 

@@ -33,6 +33,9 @@ class ApiController extends BaseController {
                 $prilezitost = Helpers::entityToArray($em->getRepository('\App\Entity\ObleceniePrilezitost')->findBy([], ['zorad' => 'ASC']));
                 $zostrih = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieZostrih')->findBy([], ['zorad' => 'ASC']));
                 $velkost = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieVelkost')->findBy([], ['zorad' => 'ASC']));
+                $styl = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieStyl')->findBy([], ['zorad' => 'ASC']));
+                $stav = Helpers::entityToArray($em->getRepository('\App\Entity\Stav')->findBy([], ['zorad' => 'ASC']));
+                $zapinanie = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieZapinanie')->findBy([], ['zorad' => 'ASC']));
 				
 				return $this->respond([
 					'preKoho' => $preKoho,
@@ -42,6 +45,9 @@ class ApiController extends BaseController {
                     'prilezitost' => $prilezitost,
                     'zostrih' => $zostrih,
                     'velkost' => $velkost,
+                    'styl' => $styl,
+                    'stav' => $stav,
+                    'zapinanie' => $zapinanie,
 				]);
 			default:
 				throw new \InvalidArgumentException( 'Code is not valid' );

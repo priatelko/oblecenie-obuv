@@ -25,6 +25,11 @@ class User implements UserInterface
      * @ORM\Column(type="string", unique=true)
      */
     private $apiToken;
+    
+    /**
+     * @ORM\Column(type="string", length=20, columnDefinition="ENUM('facebook', 'google')"))
+     */
+    private $provider;
 	
 	/**
      * @var \DateTime
@@ -112,6 +117,16 @@ class User implements UserInterface
 
     public function setApiToken(string $token): self {
         $this->apiToken = $token;
+
+        return $this;
+    }
+    
+    public function getProvider() {
+        return $this->provider;
+    }
+
+    public function setProvider(string $provider): self {
+        $this->provider = $provider;
 
         return $this;
     }
@@ -317,6 +332,7 @@ class User implements UserInterface
 			'updatedAt' => (string) $this->getUpdatedAt()->format(\DateTime::ATOM),
 			'lastLogin' => (string) $this->getLastLogin()->format(\DateTime::ATOM),
 			'loginRole' => (string) $this->getLoginRole(),
+            'provider' => (string) $this->getProvider(),
 		];
 	}
 

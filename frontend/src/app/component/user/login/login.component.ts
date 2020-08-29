@@ -11,12 +11,32 @@ import { ForgottenComponent } from '../forgotten/forgotten.component';
 import { GLOBAL } from '../../../variables/global';
 import { LoginRoleEntity } from '../../../model/Entity/LoginRole.entity';
 
+import {
+  AuthService,
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+} from 'angular-6-social-login';
+import { SvgName } from 'src/app/custom/svg/svg.component';
+import { isNil } from 'lodash';
+import { ApiRequestService } from 'src/app/service/ApiRequest/api-request.service';
+import { ApiResponseModel } from 'src/app/model/Model/ApiResponse.model';
+
+export enum SocialPlatform {
+  Facebook,
+  Google,
+}
+
 @Component({
   selector: 'app-user-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  SvgName = SvgName;
+  SocialPlatform = SocialPlatform;
+
+  socialLogin: SocialPlatform;
+
   loginForm: FormGroup;
   roles$: Observable<LoginRoleEntity[]>;
 
@@ -27,9 +47,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private loginRoleRepository: LoginRoleRepositoryService,
     private dialogRef: MatDialogRef<LoginComponent>,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private socialAuthService: AuthService,
+    private apiRequestService: ApiRequestService
   ) {
     this.loginForm = this.createFormGroup();
+  }
+
+  get isSocial() {
+    return !isNil(this.socialLogin);
   }
 
   ngOnInit() {
@@ -53,7 +79,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    const login = this.userService.login(this.loginForm.value);
+    // Social login
+    if (!isNil(this.socialLogin)) {
+      this.socialSignIn(this.socialLogin);
+      return;
+    }
+
+    this.login(this.loginForm.value);
+  }
+
+  login(values: object): void {
+    const login = this.userService.login(values);
 
     login.pipe(untilDestroyed(this)).subscribe((response) => {
       this.confirmationError = false;
@@ -83,6 +119,52 @@ export class LoginComponent implements OnInit, OnDestroy {
       width: GLOBAL.dialogWidth.sm,
     });
   }
+
+  socialSignIn(socialPlatform: SocialPlatform) {
+    this.socialLogin = socialPlatform;
+
+    if (!this.loginForm.valid) {
+      this.loginForm.get('role').markAsTouched();
+      this.loginForm.get('role').updateValueAndValidity();
+      this.loginForm.updateValueAndValidity();
+      return;
+    }
+
+    let socialPlatformProvider;
+    if (socialPlatform === SocialPlatform.Facebook) {
+      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    } else if (socialPlatform === SocialPlatform.Google) {
+      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    }
+
+    this.socialAuthService.signIn(socialPlatformProvider).then((userData) => {
+      console.log(userData);
+      const values = {
+        provider: userData.provider,
+        token: userData.token,
+        role: this.loginForm.value.role,
+      };
+
+      this.login(values);
+    });
+  }
+
+  // test() {
+  //   console.log(this.socialAuthService.authState);
+  //   // this.socialAuthService.signOut().then((userData) => {
+  //   //   console.log(userData, 'out');
+  //   // });
+  // }
+
+  // testEnd() {
+  //   const request = this.apiRequestService.get<ApiResponseModel<any>>(
+  //     '/user/test'
+  //   );
+
+  //   request.subscribe((res) => {
+  //     console.log(res);
+  //   });
+  // }
 
   ngOnDestroy() {}
 }

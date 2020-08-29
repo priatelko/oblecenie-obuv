@@ -16,9 +16,30 @@ import { IdentityService } from 'src/app/service/User/identity.service';
 import { FlashMessageService } from 'src/app/service/FlashMessage/flash-message.service';
 import { CommonModule } from '@angular/common';
 
+import {
+  SocialLoginModule,
+  AuthServiceConfig,
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+} from 'angular-6-social-login';
+import { GLOBAL } from 'src/app/variables/global';
+
+export function getAuthServiceConfigs() {
+  return new AuthServiceConfig([
+    {
+      id: FacebookLoginProvider.PROVIDER_ID,
+      provider: new FacebookLoginProvider(GLOBAL.facebookAppId),
+    },
+    {
+      id: GoogleLoginProvider.PROVIDER_ID,
+      provider: new GoogleLoginProvider(GLOBAL.googleClientId),
+    },
+  ]);
+}
+
 @NgModule({
   declarations: [SelectOptionDirective, VoidLinkDirective],
-  imports: [MatIconModule],
+  imports: [MatIconModule, SocialLoginModule],
   exports: [
     // modules
     CommonModule,
@@ -39,6 +60,10 @@ import { CommonModule } from '@angular/common';
         IdentityService,
         FlashMessageService,
       ],
+    },
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs,
     },
   ],
 })

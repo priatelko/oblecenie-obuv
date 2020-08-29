@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="oblecenie_zapinanie")
  * @ORM\Entity
  */
-class OblecenieZapinanie
+class OblecenieZapinanie implements \App\Interfaces\ToStringInterface, \App\Interfaces\ToArrayObjectInterface
 {
     /**
      * @var string
@@ -142,4 +142,15 @@ class OblecenieZapinanie
     {
         return $this->oblecenie;
     }
+    
+    public function __toString() {
+		return $this->getNazov();
+	}
+	
+	public function toArrayObject() {
+		return [
+			'id' => $this->getId(),
+			'nazov' => $this->getNazov()
+		];
+	}
 }

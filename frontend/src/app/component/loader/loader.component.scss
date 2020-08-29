@@ -1,0 +1,21 @@
+@import '~src/sass/variables';
+
+.big-loading {
+  text-align: center;
+  .mat-progress-spinner {
+    display: inline-block;
+  }
+}
+
+.overlay-loader {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: $zindex-overlay;
+  background-color: rgba($color-bg-body, 0.25);
+}

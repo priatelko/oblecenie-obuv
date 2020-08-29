@@ -1,3 +1,10 @@
+<div
+  *ngIf="size === loaderSize.Overlay && loaderService.overlayLoaderValue()"
+  class="overlay-loader"
+>
+  <mat-spinner [diameter]="loaderSize.Large"></mat-spinner>
+</div>
+
 <div *ngIf="size === loaderSize.Small" class="d-inline-block / clearfix">
   <div class="float-left">
     <mat-spinner [diameter]="size"></mat-spinner>
@@ -5,6 +12,9 @@
   <p class="float-left ml-2">{{ 'common.loadingData' | translate }}</p>
 </div>
 
-<div *ngIf="size !== loaderSize.Small" class="big-loading">
+<div
+  *ngIf="size !== loaderSize.Small && size !== loaderSize.Overlay"
+  class="big-loading"
+>
   <mat-spinner [diameter]="size"></mat-spinner>
 </div>

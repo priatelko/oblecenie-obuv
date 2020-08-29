@@ -122,7 +122,9 @@
       "title": "Prihlásiť sa",
       "perex": "Pred prihlásením si vyberte rolu (predajcu alebo kupcu) pod ktorou budete chciet vystupovať.",
       "confirm1": "Neobdržali ste email o potvrdení registrácie?",
-      "confirm2": "Nie, poslať znova!"
+      "confirm2": "Nie, poslať znova!",
+      "facebook": "Prihlásiť sa cez Facebook",
+      "google": "Prihlásiť sa cez Google"
     },
     "user-forgotten": {
       "title": "Zabudli ste heslo?",

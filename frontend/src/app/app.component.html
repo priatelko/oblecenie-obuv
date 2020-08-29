@@ -1,13 +1,30 @@
+<app-loader [size]="loaderSize.Overlay"></app-loader>
+
 <ngx-loading-bar color="#cc0000" [includeSpinner]="false"></ngx-loading-bar>
 
 <app-wai-status></app-wai-status>
 
-<aside *ngIf="flashMessages.length" class="flash-message" role="alert" aria-live="assertive" aria-atomic="true">
-  <div *ngFor="let msg of flashMessages; let last = last" class="shadow-sm / alert alert-{{msg.class}}" [class.mb-0]="last">
-    <mat-icon class="mr-3">{{msg.icon}}</mat-icon>
-    <span>{{msg.message|translate}}</span>
-    <time class="ml-3">{{msg.date | date:'shortTime'}}</time>
-    <mat-icon (click)="removeFlashmessage(msg)" class="close / ml-3" [attr.aria-label]="'common.close'|translate">close</mat-icon>
+<aside
+  *ngIf="flashMessages.length"
+  class="flash-message"
+  role="alert"
+  aria-live="assertive"
+  aria-atomic="true"
+>
+  <div
+    *ngFor="let msg of flashMessages; let last = last"
+    class="shadow-sm / alert alert-{{ msg.class }}"
+    [class.mb-0]="last"
+  >
+    <mat-icon class="mr-3">{{ msg.icon }}</mat-icon>
+    <span>{{ msg.message | translate }}</span>
+    <time class="ml-3">{{ msg.date | date: 'shortTime' }}</time>
+    <mat-icon
+      (click)="removeFlashmessage(msg)"
+      class="close / ml-3"
+      [attr.aria-label]="'common.close' | translate"
+      >close</mat-icon
+    >
   </div>
 </aside>
 
@@ -25,8 +42,6 @@
 </ul>
 
 <a href="#" class="btn btn-success">Daksdkaskdskadkadsak</a> -->
-
-
 
 <!-- <h3>Basic Buttons</h3>
 <div class="example-button-row">

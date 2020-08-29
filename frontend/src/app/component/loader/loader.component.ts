@@ -1,9 +1,16 @@
-import {Component, OnInit, Input, ChangeDetectionStrategy} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { LoaderService } from './loader.service';
 
 export enum LoaderSize {
   Small = 22,
   Medium = 64,
   Large = 128,
+  Overlay,
 }
 
 @Component({
@@ -17,7 +24,7 @@ export class LoaderComponent implements OnInit {
 
   loaderSize = LoaderSize;
 
-  constructor() {}
+  constructor(public loaderService: LoaderService) {}
 
   ngOnInit() {}
 }

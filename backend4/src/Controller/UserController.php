@@ -47,7 +47,7 @@ class UserController extends BaseController {
 
 		if (!empty($request->request->all())) {
 			if (!$this->userManager->emailValid($post->get('email'))) {
-				return $this->respondError(ApiCodes::INVALID_EMAIL);	// Email is not validate
+				return $this->respondError(ApiCodes::INVALID_EMAIL);	// Email is not valid
 			}
 
 			if ($this->userManager->userEmailExists($post->get('email')) &&
@@ -82,19 +82,23 @@ class UserController extends BaseController {
         $post = $this->transformJsonBody($request)->request;
 
         if (!empty($request->request->all())) {
+                // Social login
+            if ($post->get('provider') && $post->get('token')) {
+                $user = $this->userManager->createSocialUser($post->get('provider'), $post->get('token'), $post->get('role'));
+            } else {
+                if (!$this->userManager->emailValid($post->get('email'))) {
+                    return $this->respondError(ApiCodes::INVALID_EMAIL);	// Email is not validate
+                }
 
-            if (!$this->userManager->emailValid($post->get('email'))) {
-				return $this->respondError(ApiCodes::INVALID_EMAIL);	// Email is not validate
-			}
+                /* @var $user \App\Entity\User */
+                if (!($user = $this->userManager->getUserByEmail($post->get('email'))) || !$this->passwordEncoder->isPasswordValid($user, $post->get('password'))) {
+                    return $this->respondError(ApiCodes::USER_PASS_NOT_MATCH);	// User and password not match any user
+                }
 
-			/* @var $user \App\Entity\User */
-			if (!($user = $this->userManager->getUserByEmail($post->get('email'))) || !$this->passwordEncoder->isPasswordValid($user, $post->get('password'))) {
-				return $this->respondError(ApiCodes::USER_PASS_NOT_MATCH);	// User and password not match any user
-			}
-
-			if (!is_null($user->getConfirmation())) {
-				return $this->respondError(ApiCodes::USER_NOT_CONFIRMED);	// User has no confirm registration 
-			}
+                if (!is_null($user->getConfirmation())) {
+                    return $this->respondError(ApiCodes::USER_NOT_CONFIRMED);	// User has no confirm registration 
+                }
+            }
 
 			// Update user role
 			$user->setLastLogin(new \Datetime("now"));

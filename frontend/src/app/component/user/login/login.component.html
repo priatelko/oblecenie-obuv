@@ -19,7 +19,45 @@
     <div class="modal-body">
       <p class="lead / mb-4">{{ 'component.user-login.perex' | translate }}</p>
 
-      <mat-form-field appearance="outline" class="mb-2">
+      <div *ngIf="confirmationError" class="alert alert-info">
+        <mat-icon>info</mat-icon>
+        {{ 'component.user-login.confirm1' | translate }}
+        <a appVoidLink (click)="sendConfirmation()">{{
+          'component.user-login.confirm2' | translate
+        }}</a>
+      </div>
+      <div *ngIf="badCredentials" class="alert alert-info">
+        <mat-icon class="mr-1">info</mat-icon>
+        <a appVoidLink (click)="forgotPassword()">{{
+          'component.user-forgotten.title' | translate
+        }}</a>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-space-evently">
+      <button
+        type="button"
+        mat-flat-button
+        color="primary"
+        (click)="socialSignIn(SocialPlatform.Facebook)"
+      >
+        <app-svg [type]="SvgName.Facebook"></app-svg>
+        {{ 'component.user-login.facebook' | translate }}
+      </button>
+      <button
+        type="button"
+        mat-flat-button
+        color="primary"
+        (click)="socialSignIn(SocialPlatform.Google)"
+      >
+        <app-svg [type]="SvgName.Google"></app-svg>
+        {{ 'component.user-login.google' | translate }}
+      </button>
+    </div>
+    <hr class="width-75 mt-4 mb-4" />
+
+    <div class="modal-body">
+      <mat-form-field *ngIf="!isSocial" appearance="outline" class="mb-2">
         <mat-label>{{ 'common.form.fields.email' | translate }}</mat-label>
         <input
           appFormControl
@@ -31,7 +69,7 @@
           required
         />
       </mat-form-field>
-      <mat-form-field appearance="outline" class="mb-2">
+      <mat-form-field *ngIf="!isSocial" appearance="outline" class="mb-2">
         <mat-label>{{ 'common.form.fields.password' | translate }}</mat-label>
         <input
           appFormControl
@@ -46,7 +84,6 @@
       <mat-form-field
         appearance="outline"
         *ngIf="roles$ | async as roles; else loading"
-        [class.mb-2]="confirmationError || badCredentials"
       >
         <mat-label>{{ 'common.form.fields.role' | translate }}</mat-label>
         <mat-select appFormControl formControlName="role" required>
@@ -55,19 +92,6 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <div *ngIf="confirmationError" class="alert alert-info / mb-0">
-        <mat-icon>info</mat-icon>
-        {{ 'component.user-login.confirm1' | translate }}
-        <a appVoidLink (click)="sendConfirmation()">{{
-          'component.user-login.confirm2' | translate
-        }}</a>
-      </div>
-      <div *ngIf="badCredentials" class="alert alert-info / mb-0">
-        <mat-icon class="mr-1">info</mat-icon>
-        <a appVoidLink (click)="forgotPassword()">{{
-          'component.user-forgotten.title' | translate
-        }}</a>
-      </div>
     </div>
   </mat-dialog-content>
 
@@ -81,6 +105,8 @@
     >
       {{ 'common.form.fields.submit-login' | translate }}
     </button>
+    <!-- <button type="button" (click)="test()">TEST AUTH frontend</button>
+    <button type="button" (click)="testEnd()">TEST AUTH backend</button> -->
   </mat-dialog-actions>
 </form>
 

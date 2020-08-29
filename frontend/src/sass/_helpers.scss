@@ -6,7 +6,18 @@
   color: $red;
 }
 
+/* Sizes */
+.width-75 {
+  width: 75%;
+}
+
 /* Appearance */
 .pointer {
   cursor: pointer;
+}
+
+/* Alignment */
+.justify-content-space-evently {
+  justify-content: space-between;
+  justify-content: space-evenly;
 }

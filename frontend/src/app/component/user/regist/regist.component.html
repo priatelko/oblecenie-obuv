@@ -32,32 +32,30 @@
           required
         />
       </mat-form-field>
-      <ng-container *ngIf="isEditMode">
-        <mat-form-field class="mb-2" appearance="outline">
-          <mat-label>{{ 'common.form.fields.name' | translate }}</mat-label>
-          <input
-            appFormControl
-            matInput
-            formControlName="name"
-            type="text"
-            id="name"
-            maxlength="50"
-            required
-          />
-        </mat-form-field>
-        <mat-form-field class="mb-2" appearance="outline">
-          <mat-label>{{ 'common.form.fields.surname' | translate }}</mat-label>
-          <input
-            appFormControl
-            matInput
-            formControlName="surname"
-            type="text"
-            id="surname"
-            maxlength="50"
-            required
-          />
-        </mat-form-field>
-      </ng-container>
+      <mat-form-field class="mb-2" appearance="outline">
+        <mat-label>{{ 'common.form.fields.name' | translate }}</mat-label>
+        <input
+          appFormControl
+          matInput
+          formControlName="name"
+          type="text"
+          id="name"
+          maxlength="50"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="mb-2" appearance="outline">
+        <mat-label>{{ 'common.form.fields.surname' | translate }}</mat-label>
+        <input
+          appFormControl
+          matInput
+          formControlName="surname"
+          type="text"
+          id="surname"
+          maxlength="50"
+          required
+        />
+      </mat-form-field>
 
       <mat-form-field class="mb-2" appearance="outline">
         <mat-label>{{ 'common.form.fields.password' | translate }}</mat-label>
@@ -71,7 +69,7 @@
           required
         />
       </mat-form-field>
-      <mat-form-field [class.mb-2]="!isEditMode" appearance="outline">
+      <mat-form-field class="mb-2" appearance="outline">
         <mat-label>{{
           'common.form.fields.confirmPassword' | translate
         }}</mat-label>

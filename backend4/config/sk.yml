@@ -1,6 +1,11 @@
 parameters:
     projectName: oblecobuj.sk
     rootMailFrom: info@kreon.sk
+    facebook:
+        id: 428795860541786
+        secret: b917ed7016a02f43df8ce5ac38b081b8
+    google:
+        redirectUri: http://localhost:4200
     registConfirmSubject: Overenie registrácie
     registConfirmBodyTemplate: registConfirm.html
     forgottenSubject: Vyresetovanie hesla

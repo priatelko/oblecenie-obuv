@@ -2,9 +2,11 @@
   min-width: auto;
 }
 
-.big-loading {
-  text-align: center;
-  .mat-progress-spinner {
-    display: inline-block;
-  }
+.fornm-group {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: $color-container;
+  margin: 0 0.5rem;
+
+  @extend %box-shadow;
 }
