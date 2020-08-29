@@ -11,10 +11,10 @@ const pagesRoutes = [
     pathMatch: 'full',
     data: {title: 'page.homepage.title'},
   },
-  {path: 'demo', loadChildren: './demo/demo.module#DemoModule'},
+  {path: 'demo', loadChildren: () => import('./demo/demo.module').then(m => m.DemoModule)},
   {
     path: 'add-article',
-    loadChildren: './add-article/add-article.module#AddArticleModule',
+    loadChildren: () => import('./add-article/add-article.module').then(m => m.AddArticleModule),
   },
   {
     path: '**',
