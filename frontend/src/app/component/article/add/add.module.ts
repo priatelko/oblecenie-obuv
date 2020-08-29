@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatProgressSpinnerModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {CoreModule} from 'src/app/module/SharedModule/core.module';
 import {FormModule} from 'src/app/module/SharedModule/form.module';
 import {SelectModule} from 'src/app/form-control/select/select.module';

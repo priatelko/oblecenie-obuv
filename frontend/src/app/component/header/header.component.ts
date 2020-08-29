@@ -1,6 +1,6 @@
 import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import {SearchModelService} from '../../model/Model/Search.model';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {RegistComponent} from '../user/regist/regist.component';
 import {LoginComponent} from '../user/login/login.component';
 import {ForgottenComponent} from '../user/forgotten/forgotten.component';

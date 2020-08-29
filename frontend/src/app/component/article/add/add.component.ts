@@ -11,7 +11,7 @@ import { ArtikelTyp, Znacka } from '../../../model/Entity/Article.entity';
 import { AddArticleDressRepositoryService } from '../../../model/Repository/AddArticleDress.repository';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { LoaderSize } from '../../loader/loader.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ModalFilterComponent } from '../../modal-filter/modal-filter.component';
 import { GLOBAL } from 'src/app/variables/global';
 import {

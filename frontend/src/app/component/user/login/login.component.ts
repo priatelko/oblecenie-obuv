@@ -6,7 +6,7 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { UserService } from '../../../service/User/user.service';
 import { Observable } from 'rxjs';
 import { LoginRoleRepositoryService } from '../../../model/Repository/LoginRole.repository';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ForgottenComponent } from '../forgotten/forgotten.component';
 import { GLOBAL } from '../../../variables/global';
 import { LoginRoleEntity } from '../../../model/Entity/LoginRole.entity';

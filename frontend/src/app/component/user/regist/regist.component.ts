@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { UserService } from '../../../service/User/user.service';
 import { LoginRoleRepositoryService } from '../../../model/Repository/LoginRole.repository';
 
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { LoginRoleEntity } from '../../../model/Entity/LoginRole.entity';

@@ -6,7 +6,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {FormModule} from 'src/app/module/SharedModule/form.module';
 import {SelectModule} from 'src/app/form-control/select/select.module';
 import {LoaderModule} from '../loader/loader.module';
-import {MatButtonModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [ModalFilterComponent],
