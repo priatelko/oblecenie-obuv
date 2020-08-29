@@ -167,7 +167,7 @@ export class AddComponent implements OnInit, OnDestroy {
         width: GLOBAL.dialogWidth.lg,
         data,
       })
-      .beforeClose()
+      .beforeClosed()
       .subscribe((res) => {
         const value = first(res);
         if (value) {
@@ -199,7 +199,7 @@ export class AddComponent implements OnInit, OnDestroy {
         width: GLOBAL.dialogWidth.lg,
         data,
       })
-      .beforeClose()
+      .beforeClosed()
       .subscribe((res) => {
         const value = first(res);
         if (value) {
