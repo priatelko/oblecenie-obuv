@@ -31,7 +31,6 @@
     "@ngx-translate/core": "^10.0.2",
     "@ngx-translate/http-loader": "^3.0.1",
     "@types/lodash": "^4.14.116",
-    "angular-6-social-login": "^1.1.1",
     "bind-observable": "^1.0.2",
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
@@ -42,11 +41,11 @@
     "ngx-take-until-destroy": "^5.4.0",
     "ngx-translate-messageformat-compiler": "^4.3.0",
     "rxjs": "^6.3.3",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.10.0",
-    "@angular/cli": "~7.0.3",
+    "@angular/cli": "~8.3.29",
     "@angular/compiler-cli": "^7.0.1",
     "@angular/language-service": "^7.0.1",
     "@types/jasmine": "^2.8.9",

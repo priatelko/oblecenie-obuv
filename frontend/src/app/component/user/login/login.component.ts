@@ -11,11 +11,11 @@ import { ForgottenComponent } from '../forgotten/forgotten.component';
 import { GLOBAL } from '../../../variables/global';
 import { LoginRoleEntity } from '../../../model/Entity/LoginRole.entity';
 
-import {
+/*import {
   AuthService,
   FacebookLoginProvider,
   GoogleLoginProvider,
-} from 'angular-6-social-login';
+} from 'angular-6-social-login';*/
 import { SvgName } from 'src/app/custom/svg/svg.component';
 import { isNil } from 'lodash';
 import { ApiRequestService } from 'src/app/service/ApiRequest/api-request.service';
@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private loginRoleRepository: LoginRoleRepositoryService,
     private dialogRef: MatDialogRef<LoginComponent>,
     private dialog: MatDialog,
-    private socialAuthService: AuthService,
+    // private socialAuthService: AuthService,
     private apiRequestService: ApiRequestService
   ) {
     this.loginForm = this.createFormGroup();
@@ -130,7 +130,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let socialPlatformProvider;
+    /*let socialPlatformProvider;
     if (socialPlatform === SocialPlatform.Facebook) {
       socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
     } else if (socialPlatform === SocialPlatform.Google) {
@@ -146,7 +146,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       };
 
       this.login(values);
-    });
+    });*/
   }
 
   // test() {
