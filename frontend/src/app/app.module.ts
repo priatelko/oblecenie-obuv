@@ -68,7 +68,7 @@ registerLocaleData(localeSk, 'sk');
     // for HttpClient use:
     LoadingBarHttpClientModule,
     // for Core use:
-    LoadingBarModule.forRoot(),
+    LoadingBarModule,
 
     BaseRoutingModule,
     LoaderModule,

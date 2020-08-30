@@ -9,7 +9,7 @@ import { head } from 'lodash';
     <div
       class="alert alert-float alert-danger"
       role="alert"
-      *ngIf="invalid && !closed && error"
+      *ngIf="invalid && error"
     >
       <span>{{ error }}</span>
       <button (click)="close()" type="button" class="close" aria-label="Close">
