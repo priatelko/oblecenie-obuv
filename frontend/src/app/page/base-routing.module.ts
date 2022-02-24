@@ -32,10 +32,10 @@ const pagesRoutes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(pagesRoutes, {
-    preloadingStrategy: PreloadAllModules,
-    enableTracing: false,
-    relativeLinkResolution: 'legacy'
-}),
+      preloadingStrategy: PreloadAllModules,
+      enableTracing: false,
+      relativeLinkResolution: 'corrected',
+    }),
   ],
   exports: [],
 })
