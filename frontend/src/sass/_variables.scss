@@ -1,7 +1,7 @@
 /*******************************
  * Bootstrap redeclare variables
  */
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 
 $body-bg: #fafafa;
 $input-bg: $body-bg;
@@ -41,7 +41,7 @@ $dropdown-item-padding-x: 1rem;
 @import '~node_modules/bootstrap/scss/mixins';
 @import '~node_modules/bootstrap/scss/variables';
 
-@import '~@angular/material/theming';
+@import '@angular/material/theming';
 
 /***************************
  * Custom
