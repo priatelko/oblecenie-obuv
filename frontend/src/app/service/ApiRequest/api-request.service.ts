@@ -1,14 +1,14 @@
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
-import {GLOBAL} from '../../variables/global';
-import {isUndefined, isEmpty} from 'lodash';
-import {TranslateService} from '@ngx-translate/core';
-import {IdentityService} from '../User/identity.service';
-import {map, tap, share, finalize} from 'rxjs/operators';
-import {FlashMessageService} from '../FlashMessage/flash-message.service';
-import {ApiResponseModel} from '../../model/Model/ApiResponse.model';
+import { GLOBAL } from '../../variables/global';
+import { isUndefined, isEmpty } from 'lodash';
+import { TranslateService } from '@ngx-translate/core';
+import { IdentityService } from '../User/identity.service';
+import { map, tap, share, finalize } from 'rxjs/operators';
+import { FlashMessageService } from '../FlashMessage/flash-message.service';
+import { ApiResponseModel } from '../../model/Model/ApiResponse.model';
 
 @Injectable()
 export class ApiRequestService {
@@ -113,7 +113,7 @@ export class ApiRequestService {
 
   private apiResultFlashMessage<T>(request: Observable<ApiResponseModel<T>>) {
     return request.pipe(
-      map(res => (isEmpty(res) ? {error: -1} : res)),
+      map((res) => (isEmpty(res) ? { error: -1 } : res)),
       tap((res: ApiResponseModel<T>) => {
         if (res.error) {
           this.flashmessage.error('common.response.code.' + res.error);

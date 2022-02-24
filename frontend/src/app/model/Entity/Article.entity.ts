@@ -1,3 +1,4 @@
+// Article entities
 export enum ArtikelTyp {
   dress = 'ARTICLE_DRESS',
   shoes = 'ARTICLE_SHOES',
@@ -26,4 +27,17 @@ export interface Material {
 export interface Znacka {
   id: number;
   nazov: string;
+}
+
+// Form article
+export interface ArticleFormEntity {
+  typ: ArtikelTyp;
+  preKoho: Number[];
+  obdobie: Number[];
+  znacka: Number;
+  stav: Number[];
+  material: Number[];
+  titulok: String;
+  popis: String;
+  cena: Number;
 }

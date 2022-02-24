@@ -16,12 +16,12 @@ const routes: Routes = [
     data: { title: 'page.add-article.title' },
   },
   {
-    path: 'dress',
+    path: 'oblecenie',
     component: AddArticleComponent,
     data: { sub: ArtikelTyp.dress, title: 'page.add-article.dress-title' },
   },
   {
-    path: 'shoes',
+    path: 'obuv',
     component: AddArticleComponent,
     data: { sub: ArtikelTyp.shoes, title: 'page.add-article.shoes-title' },
   },

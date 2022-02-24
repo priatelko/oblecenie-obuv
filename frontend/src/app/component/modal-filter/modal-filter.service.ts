@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {has} from 'lodash';
-import {MultiSelectOption} from 'src/app/custom/interfaces';
-import {SelectType} from 'src/app/form-control/select/select.interface';
+import { Injectable } from '@angular/core';
+import { has } from 'lodash';
+import { MultiSelectOption } from 'src/app/custom/interfaces';
+import { SelectType } from 'src/app/form-control/select/select.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +27,7 @@ export class ModalFilterService {
     childrenProp?: string,
     transformChildFunc?: (item: C) => MultiSelectOption
   ): MultiSelectOption[] {
-    return items.map(item => {
+    return items.map((item) => {
       const transformedItem = transformFunc(item);
 
       if (childrenProp && has(item, childrenProp)) {
@@ -51,4 +51,5 @@ export interface ModalFilterOptions {
   search?: boolean;
   required?: boolean;
   minSearchLength?: number;
+  defaultValue?: number | number[];
 }

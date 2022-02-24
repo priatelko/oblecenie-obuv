@@ -85,6 +85,8 @@ $color-bg-body: $body-bg;
 $color-primary: map-get($mat-custom, 500);
 $color-border-light: #d8d7d7;
 $color-container: white; // #f0f0f0;
+$color-container-light: #f1f1f1;
+$color-error: map-get($mat-red, 500);
 
 // zindex
 $zindex-middle: 5;

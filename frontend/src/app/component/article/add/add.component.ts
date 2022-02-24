@@ -5,10 +5,14 @@ import {
   Input,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ArtikelTyp, Znacka } from '../../../model/Entity/Article.entity';
-import { AddArticleDressRepositoryService } from '../../../model/Repository/AddArticleDress.repository';
+import {
+  ArtikelTyp,
+  Material,
+  Znacka,
+} from '../../../model/Entity/Article.entity';
+import { ArticleRepositoryService } from '../../../model/Repository/Article.repository';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { LoaderSize } from '../../loader/loader.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,22 +25,27 @@ import {
 
 import { MultiSelectOption, SelectOption } from 'src/app/custom/interfaces';
 import { SelectType } from 'src/app/form-control/select/select.interface';
-import { first } from 'lodash';
+import { includes } from 'lodash';
 import { AddArticleFormTypeService } from './form-type.service';
 import { KategorieChildren, Kategorie } from 'src/app/model/Entity/Dress';
+import { Validator } from 'src/app/custom/validator.custom';
+import { HttpResponse } from '@angular/common/http';
+import { FlashMessageService } from '../../../service/FlashMessage/flash-message.service';
 
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
-  // [changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [AddArticleFormTypeService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddComponent implements OnInit, OnDestroy {
   articleKind = ArtikelTyp;
   loaderSize = LoaderSize;
+  APIuploadImage = GLOBAL.url + GLOBAL.APIuploadImage;
 
   SelectType = SelectType;
+
+  formStep: number = 1;
 
   addOblecenieForm: FormGroup;
 
@@ -63,11 +72,18 @@ export class AddComponent implements OnInit, OnDestroy {
     return this.addArticleDressRepository.getZnackaFilter();
   }
 
+  get isVelkostInvalid() {
+    return Validator.isInvalid(
+      this.addOblecenieForm.get('zaradenie').get('velkost') as FormGroup
+    );
+  }
+
   constructor(
-    private addArticleDressRepository: AddArticleDressRepositoryService,
+    private addArticleDressRepository: ArticleRepositoryService,
     private dialog: MatDialog,
     private modalFilterService: ModalFilterService,
-    private formType: AddArticleFormTypeService
+    private formType: AddArticleFormTypeService,
+    private flashmessage: FlashMessageService
   ) {}
 
   trackByFn(index, item: Kategorie) {
@@ -89,19 +105,23 @@ export class AddComponent implements OnInit, OnDestroy {
     this.zostrih$ = this.addArticleDressRepository.getZostrihOptions();
     this.velkost$ = this.addArticleDressRepository.getVelkostOptions();
     this.addArticleDressRepository.dressCategoriesInit();
-    this.addArticleDressRepository.dressCategoriesInit();
     this.addArticleDressRepository.znackaInit();
+    this.addArticleDressRepository.materialInit();
 
     this.oblecenieKategorieFilter.valueChanges
       .pipe(untilDestroyed(this))
-      .subscribe((string) => {
-        this.addArticleDressRepository.filterDressCategories(string);
+      .subscribe((value) => {
+        this.addArticleDressRepository.filterDressCategories(value);
       });
     this.oblecenieZnackaFilter.valueChanges
       .pipe(untilDestroyed(this))
-      .subscribe((string) => {
-        this.addArticleDressRepository.filterZnacka(string);
+      .subscribe((value) => {
+        this.addArticleDressRepository.filterZnacka(value);
       });
+
+    // this.formDress.on('change', function () {
+    //   console.log('what happend');
+    // });
 
     // chooseKind(kind: ArtikelTyp) {
     //   this.chosenKind = kind;
@@ -117,9 +137,28 @@ export class AddComponent implements OnInit, OnDestroy {
     //     this.addOblecenieForm.get('oblecenieKategoria').setValue(8);
     //   });
     // }, 2000);
+
+    this.changeStep(2);
   }
 
   ngOnDestroy() {}
+
+  changeStep(step: number | null = null) {
+    if (step === null) {
+      this.formStep++;
+    } else {
+      this.formStep = step;
+    }
+  }
+
+  uploadImagesComplete(e) {
+    if (e.event instanceof HttpResponse) {
+      if (e.event.body.error) {
+        this.flashmessage.error('common.response.code.15');
+      } else if (e.event.body.success) {
+      }
+    }
+  }
 
   onSubmit(): void {
     // const forgottenPass = this.userService.forgottenPassword(this.forgottenForm.value.email);
@@ -137,8 +176,11 @@ export class AddComponent implements OnInit, OnDestroy {
   /** Helpers */
   openCategoryFilterDialog() {
     const data: ModalFilterOptions = {
-      header: 'component.article.add.kategoria',
+      header: 'component.article.add.categorize.kategoria',
       required: true,
+      defaultValue: this.addOblecenieForm
+        .get('zaradenie')
+        .get('oblecenieKategoria').value,
       multiselect: false,
       checkType: SelectType.Radio,
       items: this.modalFilterService.transformItems<
@@ -168,20 +210,23 @@ export class AddComponent implements OnInit, OnDestroy {
         data,
       })
       .beforeClosed()
-      .subscribe((res) => {
-        const value = first(res);
+      .subscribe((value) => {
         if (value) {
-          this.addOblecenieForm.get('oblecenieKategoria').setValue(value);
+          this.addOblecenieForm
+            .get('zaradenie')
+            .get('oblecenieKategoria')
+            .setValue(value);
         }
       });
   }
 
   openZnackaFilterDialog() {
     const data: ModalFilterOptions = {
-      header: 'component.article.add.znacka',
+      header: 'component.article.add.categorize.znacka',
       required: true,
       multiselect: false,
       minSearchLength: 2,
+      defaultValue: this.addOblecenieForm.get('zaradenie').get('znacka').value,
       checkType: SelectType.Radio,
       items: this.modalFilterService.transformItems<Znacka, Znacka>(
         this.addArticleDressRepository.znacka,
@@ -200,10 +245,47 @@ export class AddComponent implements OnInit, OnDestroy {
         data,
       })
       .beforeClosed()
-      .subscribe((res) => {
-        const value = first(res);
+      .subscribe((value) => {
         if (value) {
-          this.addOblecenieForm.get('znacka').setValue(value);
+          this.addOblecenieForm.get('zaradenie').get('znacka').setValue(value);
+        }
+      });
+  }
+
+  openMaterialFilterDialog() {
+    const data: ModalFilterOptions = {
+      header: 'component.article.add.categorize.material',
+      required: true,
+      defaultValue: this.addOblecenieForm.get('zaradenie').get('material')
+        .value,
+      items: this.modalFilterService.transformItems<Material, Material>(
+        this.addArticleDressRepository.material,
+        (item): MultiSelectOption => {
+          return {
+            id: item.id,
+            label: item.nazov,
+          };
+        }
+      ),
+    };
+
+    this.dialog
+      .open(ModalFilterComponent, {
+        width: GLOBAL.dialogWidth.lg,
+        data,
+      })
+      .beforeClosed()
+      .subscribe((res) => {
+        if (res) {
+          const materialNames = this.addArticleDressRepository.material
+            .filter((item) => includes(res, item.id))
+            .map((item) => item.nazov);
+
+          this.addOblecenieForm.get('zaradenie').get('material').setValue(res);
+          this.addOblecenieForm
+            .get('zaradenie')
+            .get('materialDisplay')
+            .setValue(materialNames.join(', '));
         }
       });
   }

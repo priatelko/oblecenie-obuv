@@ -5,12 +5,12 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {ModalFilterOptions} from './modal-filter.service';
-import {LoaderSize} from '../loader/loader.component';
-import {FormControl, Validators} from '@angular/forms';
-import {SelectType} from 'src/app/form-control/select/select.interface';
-import {merge, some} from 'lodash';
-import {MultiSelectOption, BreakException} from 'src/app/custom/interfaces';
+import { ModalFilterOptions } from './modal-filter.service';
+import { LoaderSize } from '../loader/loader.component';
+import { FormControl, Validators } from '@angular/forms';
+import { SelectType } from 'src/app/form-control/select/select.interface';
+import { merge, some } from 'lodash';
+import { MultiSelectOption, BreakException } from 'src/app/custom/interfaces';
 import {
   appendNoDiacritics,
   searchInModel,
@@ -43,7 +43,7 @@ export class ModalFilterComponent implements OnInit {
   get isAnyData() {
     let notAnyHidden = false;
 
-    traverseNode(this.dataFinal, item => {
+    traverseNode(this.dataFinal, (item) => {
       if (!item.hidden) {
         notAnyHidden = true;
         return false;
@@ -66,7 +66,7 @@ export class ModalFilterComponent implements OnInit {
       this.filterControl.setValidators([Validators.required]);
     }
 
-    this.filterSearchControl.valueChanges.subscribe(val => {
+    this.filterSearchControl.valueChanges.subscribe((val) => {
       this.searchValue = val;
       this.dataFinal = searchInModel(
         this.data.items,
@@ -74,5 +74,10 @@ export class ModalFilterComponent implements OnInit {
         this.data.minSearchLength
       );
     });
+
+    // Default value
+    if (this.data.defaultValue) {
+      this.filterControl.setValue(this.data.defaultValue);
+    }
   }
 }

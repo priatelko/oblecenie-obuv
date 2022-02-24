@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Title} from '@angular/platform-browser';
-import {TranslateService} from '@ngx-translate/core';
-import {ActivatedRoute} from '@angular/router';
-import {ContainerInjector} from '../module/ContainerGetter/container-getter.module';
-import {WaiStatusService} from '../component/header/wai-status/wai-status.service';
-import {combineLatest} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute } from '@angular/router';
+import { ContainerInjector } from '../module/ContainerGetter/container-getter.module';
+import { WaiStatusService } from '../component/header/wai-status/wai-status.service';
+import { combineLatest } from 'rxjs';
 
 @Component({
   template: '',

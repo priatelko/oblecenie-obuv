@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {FlashMessageService} from '../FlashMessage/flash-message.service';
-import {ApiRequestService} from '../ApiRequest/api-request.service';
-import {UserModel} from 'src/app/model/Model/User.model';
-import {IdentityService} from './identity.service';
-import {HttpParams} from '@angular/common/http';
-import {ApiResponseModel} from '../../model/Model/ApiResponse.model';
+import { Injectable } from '@angular/core';
+import { FlashMessageService } from '../FlashMessage/flash-message.service';
+import { ApiRequestService } from '../ApiRequest/api-request.service';
+import { UserModel } from 'src/app/model/Model/User.model';
+import { IdentityService } from './identity.service';
+import { HttpParams } from '@angular/common/http';
+import { ApiResponseModel } from '../../model/Model/ApiResponse.model';
 import { LogService } from '../Admin/log.service';
 
 @Injectable({
@@ -24,7 +24,7 @@ export class UserService {
       userToLogin
     );
 
-    request.subscribe(res => {
+    request.subscribe((res) => {
       if (res.success) {
         this.debug.log('User logged in');
         this.identityService.updateUser(res.data);
@@ -40,7 +40,7 @@ export class UserService {
       userToRegister
     );
 
-    request.subscribe(res => {
+    request.subscribe((res) => {
       if (res.success) {
         this.debug.log('User signed up or profil updated');
         this.identityService.updateUser(res.data);
@@ -53,10 +53,10 @@ export class UserService {
   changeRole() {
     const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
       '/user/change-role',
-      {cachable: false}
+      { cachable: false }
     );
 
-    request.subscribe(res => {
+    request.subscribe((res) => {
       if (res.success) {
         this.debug.log('User role has changed');
         this.identityService.updateUser(res.data);
@@ -72,10 +72,10 @@ export class UserService {
 
     const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
       '/user/send-confirmation',
-      {params, cachable: false}
+      { params, cachable: false }
     );
 
-    request.subscribe(res => {
+    request.subscribe((res) => {
       if (!res.error) {
         this.debug.log('Regist confirmation sent');
       }
@@ -87,10 +87,10 @@ export class UserService {
   applyConfirmation(hash) {
     const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
       '/user/apply-confirmation/' + encodeURIComponent(hash),
-      {cachable: false}
+      { cachable: false }
     );
 
-    request.subscribe(res => {
+    request.subscribe((res) => {
       if (res.success) {
         this.debug.log('Regist confirmed');
       }
@@ -105,10 +105,10 @@ export class UserService {
 
     const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
       '/user/forgotten-password',
-      {params, cachable: false}
+      { params, cachable: false }
     );
 
-    request.subscribe(res => {
+    request.subscribe((res) => {
       if (res.success) {
         this.debug.log('Forgotten password sent');
       }
@@ -120,10 +120,10 @@ export class UserService {
   confirmForgottenPassword(hash) {
     const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
       '/user/confirm-forgotten-password/' + hash,
-      {cachable: false}
+      { cachable: false }
     );
 
-    request.subscribe(res => {
+    request.subscribe((res) => {
       if (res.success) {
         this.debug.log('Password was reset');
       }

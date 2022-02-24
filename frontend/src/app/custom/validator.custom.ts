@@ -5,35 +5,57 @@ import {
   NgControl,
   FormGroup,
 } from '@angular/forms';
-import {isUndefined, isNull, forEach} from 'lodash';
-import {TranslateService} from '@ngx-translate/core';
-import {ContainerInjector} from '../module/ContainerGetter/container-getter.module';
+import { isUndefined, isNull, forEach, isEmpty } from 'lodash';
+import { TranslateService } from '@ngx-translate/core';
+import { ContainerInjector } from '../module/ContainerGetter/container-getter.module';
 
 export class Validator {
   /** Validators */
   static sameAs(asControl: FormControl): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
-      return asControl.value !== control.value ? {sameAs: true} : null;
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      return asControl.value !== control.value ? { sameAs: true } : null;
     };
   }
 
   static trim(): ValidatorFn {
-    return (control: AbstractControl): {[key: string]: any} | null => {
+    return (control: AbstractControl): { [key: string]: any } | null => {
       const trimmed = isNull(control.value) || Boolean(control.value.trim());
-      return !trimmed ? {required: true} : null;
+      return !trimmed ? { required: true } : null;
     };
   }
 
-  static oneOfGroup(): ValidatorFn {
-    return (group: FormGroup): {[key: string]: any} | null => {
+  static oneOfGroup(controlValidators): ValidatorFn {
+    return (group: FormGroup): { [key: string]: any } | null => {
       let valid = false;
+
+      // Set true validators
+      forEach(group.controls, (control, controlName) => {
+        control.setValidators(controlValidators[controlName]);
+        control.updateValueAndValidity({
+          onlySelf: true,
+        });
+      });
+
+      // Validate
       forEach(group.controls, (control) => {
-        if (group.touched && control.valid) {
+        if (control.valid) {
           valid = true;
         }
       });
 
-      return !valid ? {requiredOneOfGroup: true} : null;
+      // Preset all validators for valid or invalid
+      forEach(group.controls, (control, controlName) => {
+        if (valid) {
+          control.setValidators(null);
+        } else {
+          control.setValidators(controlValidators[controlName]);
+        }
+        control.updateValueAndValidity({
+          onlySelf: true,
+        });
+      });
+
+      return !valid ? { requiredOneOfGroup: true } : null;
     };
   }
 
@@ -78,12 +100,16 @@ export class Validator {
     return err;
   }
 
+  static isInvalid(form: FormControl | FormGroup) {
+    return form.touched && !form.valid && !isEmpty(form.errors);
+  }
+
   static translate(key) {
     const translateService = ContainerInjector.get(TranslateService);
 
     let translated;
 
-    translateService.get(key).subscribe(res => {
+    translateService.get(key).subscribe((res) => {
       translated = res;
     });
 

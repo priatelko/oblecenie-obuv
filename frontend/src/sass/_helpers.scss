@@ -12,8 +12,12 @@
 }
 
 /* Appearance */
-.pointer {
+.pointer,
+.cursor-pointer {
   cursor: pointer;
+}
+.cursor-auto {
+  cursor: auto;
 }
 
 /* Alignment */

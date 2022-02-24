@@ -1,3 +1,63 @@
+# What to do to go production
+
+- Dokoncit pridavanie artikov, a spravit aj jednoduchu verziu: Nazov tovaru, fotky a tagy, ta bude ako prva a bude viditelny link - rozsireny formular
+- Archiv pridanych artiklov, editacia
+- Zobrazenie artiklov + filter
+- Objednavka - formular, odosle sa email predajcovi
+- Design by Facebook, svetly a tmavy mod
+
+# Temp
+
+titulok: 'Titulok'
+titulok_desc: 'Zadajte stručný a výstižný názov tovaru.'
+cena: 'Cena tovaru'
+cena_desc: 'V prípade dohody nechajte nulu alebo prázdne políčko.'
+popis: 'Popis'
+popis_desc: 'Popíšte detaily tovaru, ktoré bližšie špecifikujú tovar.'
+photos: 'Fotografie tovaru'
+photos_desc: 'Obrázky môžete z priečinka presunúť do označenej zóny. Hlavný náhľadový obrázok vyberiete kliknutím na jeho plochu.'
+photos_input_placeholder: 'Popis obrazku...'
+photos_button: 'Pridať obrázok'
+contact:
+email_contact: 'Kontakt na Vás'
+email_contact_desc: 'Nemusíte mať obavy, Váš e-mail nebude zverejnený.'
+
+# Next future
+
+## Pridat artikel
+
+- Vyber Dress alebo Shoes - zvacsit klikaciu link areu
+- Do modal zoznamu pridat aj popis, co je v tooltipe
+- Select modal, spravit trosku chybovu hlasku, napr. pri material sitia, dolnit pri multiple de/select all
+- Spodne Step menu a Pridat nech je fixne na spodu, obsah nech sa scroluje
+- Filôe upload, help buble - zobrazi sa hint nad buttonmi upload, upload all...
+
+### URL
+
+Je striktne zakazane udavat adresy web stranok do popisov tovaru. Pri opakovanych situaciach osobne ucty blokujeme.
+
+- Moznost uviest adresu web stranky za poplatok
+
+## Pridane artikle
+
+- Zobrazovat statistitu - pocet videni...
+
+## Kolekcia
+
+- By default 1.
+- Zobrazia sa na zaklade jedneho artikla vsetky artikle v kolejcii
+- Dalsia kolekcia spoplatena
+- Limit na kolekciu cca 10 artiklov.
+
+## Topovanie artiklov
+
+- SMS platba
+- Nebude ziadny ukazovatel ze je top. Iba budu v popredi
+
+## General
+
+- Pozriet mobilnu a tabletovu verziu
+
 # How to
 
 - File upload - https://malcoded.com/posts/angular-file-upload-component-with-express

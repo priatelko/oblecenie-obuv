@@ -11,10 +11,10 @@ import { head } from 'lodash';
       role="alert"
       *ngIf="invalid && error"
     >
+      <mat-icon class="mr-2" aria-label="'common.tooltipAria' | translate"
+        >report_problem</mat-icon
+      >
       <span>{{ error }}</span>
-      <button (click)="close()" type="button" class="close" aria-label="Close">
-        <span aria-hidden="true" class="mat-icon">close</span>
-      </button>
     </div>
   `,
   styles: [
@@ -23,6 +23,13 @@ import { head } from 'lodash';
         position: relative;
         display: block;
         width: 100%;
+      }
+      .alert {
+        user-select: none;
+        cursor: auto;
+      }
+      .alert:hover {
+        opacity: 0.5;
       }
     `,
   ],
@@ -53,11 +60,5 @@ export class ValidationComponent implements OnInit {
       : [];
 
     return errors.length ? head(errors) : false;
-  }
-
-  close() {
-    this.formGroupRef
-      ? this.formGroupRef.markAsUntouched()
-      : this.formControlRef.markAsUntouched();
   }
 }

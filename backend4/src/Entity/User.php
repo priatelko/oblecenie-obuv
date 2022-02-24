@@ -327,7 +327,7 @@ class User implements UserInterface
 			'email' => (string) $this->getEmail(),
 			'name' => (string) $this->getName(),
 			'surname' => (string) $this->getSurname(),
-            'roles' => (string) json_encode($this->getRoles()),
+            'roles' => $this->getRoles(),
 			'createdAt' => (string) $this->getCreatedAt()->format(\DateTime::ATOM),
 			'updatedAt' => (string) $this->getUpdatedAt()->format(\DateTime::ATOM),
 			'lastLogin' => (string) $this->getLastLogin()->format(\DateTime::ATOM),

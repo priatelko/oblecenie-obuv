@@ -7,9 +7,14 @@ import {
   BaseRepositoryService,
   BaseRepositoryInterface,
 } from './Base.repository';
-import { AddArticleDressEntity } from '../Entity/AddArticleDress.entity';
 import { SelectService } from 'src/app/form-control/select/select.service';
-import { PreKoho, Obdobie, Znacka, Stav } from '../Entity/Article.entity';
+import {
+  PreKoho,
+  Obdobie,
+  Znacka,
+  Stav,
+  Material,
+} from '../Entity/Article.entity';
 import FuzzySearch from 'fuzzy-search';
 import { assign } from 'lodash';
 import { appendNoDiacritics } from 'src/app/custom/helpers';
@@ -21,17 +26,18 @@ import {
   Styl,
   KategorieChildren,
   Zapinanie,
+  DressFormDataEntity,
 } from '../Entity/Dress';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AddArticleDressRepositoryService
-  extends BaseRepositoryService<AddArticleDressEntity>
-  implements BaseRepositoryInterface<AddArticleDressEntity> {
-  dataStream: Observable<AddArticleDressEntity>;
+export class ArticleRepositoryService
+  extends BaseRepositoryService<DressFormDataEntity>
+  implements BaseRepositoryInterface<DressFormDataEntity> {
+  dataStream: Observable<DressFormDataEntity>;
   API = '/get/add-dress-article';
-  dataStreamFinal: Observable<AddArticleDressEntity>;
+  dataStreamFinal: Observable<DressFormDataEntity>;
 
   private oblecenieCategories$: Observable<Kategorie[]>;
   private oblecenieCategoriesFilter$ = new BehaviorSubject<Kategorie[]>([]);
@@ -40,6 +46,10 @@ export class AddArticleDressRepositoryService
   private znacka$: Observable<Znacka[]>;
   private znackaFilter$ = new BehaviorSubject<Znacka[]>([]);
   znacka: Znacka[];
+
+  private material$: Observable<Material[]>;
+  private materialFilter$ = new BehaviorSubject<Material[]>([]);
+  material: Material[];
 
   constructor(
     private apiRequestService: ApiRequestService,
@@ -51,12 +61,12 @@ export class AddArticleDressRepositoryService
 
   findAll() {
     this.dataStream = this.apiRequestService
-      .get<AddArticleDressEntity>(this.API)
-      .pipe(map((d) => d.data as AddArticleDressEntity));
+      .get<DressFormDataEntity>(this.API)
+      .pipe(map((d) => d.data as DressFormDataEntity));
     return this;
   }
 
-  result(): Observable<AddArticleDressEntity> {
+  result(): Observable<DressFormDataEntity> {
     return this.dataStream;
   }
 
@@ -166,5 +176,14 @@ export class AddArticleDressRepositoryService
     const result: KategorieChildren[] = searcher.search(string);
 
     this.znackaFilter$.next(result);
+  }
+
+  materialInit() {
+    this.material$ = this.dataStreamFinal.pipe(map((res) => res.material));
+
+    this.material$.pipe(share()).subscribe((res) => {
+      this.material = appendNoDiacritics(res, 'nazov');
+      this.materialFilter$.next(res);
+    });
   }
 }

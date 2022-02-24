@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 use App\Services\Helpers;
 
@@ -12,6 +14,12 @@ use App\Services\Helpers;
 */
 
 class ApiController extends BaseController {
+    
+    private $uploadedFiles;
+
+    public function __construct(/*UploadedFile $uploadedFiles*/) {
+        //$this->uploadedFiles = $uploadedFiles;
+    }
 	
     /**
      * @Route("/get/{code}")
@@ -36,6 +44,7 @@ class ApiController extends BaseController {
                 $styl = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieStyl')->findBy([], ['zorad' => 'ASC']));
                 $stav = Helpers::entityToArray($em->getRepository('\App\Entity\Stav')->findBy([], ['zorad' => 'ASC']));
                 $zapinanie = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieZapinanie')->findBy([], ['zorad' => 'ASC']));
+                $material = Helpers::entityToArray($em->getRepository('\App\Entity\Material')->findBy([], ['nazov' => 'ASC']));
 				
 				return $this->respond([
 					'preKoho' => $preKoho,
@@ -48,9 +57,18 @@ class ApiController extends BaseController {
                     'styl' => $styl,
                     'stav' => $stav,
                     'zapinanie' => $zapinanie,
+                    'material' => $material,
 				]);
 			default:
 				throw new \InvalidArgumentException( 'Code is not valid' );
 		}
+    }
+    
+    /**
+     * @Route("/upload-images")
+     * @Method({"POST"})
+     */
+    public function uploadImagesAction() {
+        // dump($this->uploadedFiles);
     }
 }

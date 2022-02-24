@@ -71,8 +71,11 @@
           <a
             mat-icon-button
             color="primary"
-            *ngIf="identityService.logged && identityService.isSeller"
-            routerLink="/add-article"
+            *ngIf="
+              !identityService.logged ||
+              (identityService.logged && identityService.isSeller)
+            "
+            routerLink="/pridat-tovar"
             class="btn btn-outline-primary btn-transparent / text-color / d-flex align-items-center"
             title="{{ 'component.header.button.add' | translate }}"
             ><mat-icon>add</mat-icon></a
@@ -111,13 +114,14 @@
               <div mat-menu-item class="dropdown-header">
                 {{ identityService.roleName }}
               </div>
-              <div mat-menu-item (click)="openEditProfileModal()">
-                <mat-icon>account_circle</mat-icon>
-                {{ 'component.header.user.editProfile' | translate }}
-              </div>
               <div mat-menu-item (click)="changeRole()">
                 <mat-icon>compare_arrows</mat-icon>
                 {{ 'component.header.user.switchRole' | translate }}
+              </div>
+              <mat-divider></mat-divider>
+              <div mat-menu-item (click)="openEditProfileModal()">
+                <mat-icon>account_circle</mat-icon>
+                {{ 'component.header.user.editProfile' | translate }}
               </div>
               <mat-divider></mat-divider>
               <div mat-menu-item (click)="logout()">
@@ -138,11 +142,11 @@
     <h1>
       {{ title }}
     </h1>
-    <p *ngIf="subTitle" class="lead">
+    <p *ngIf="subTitle" class="lead / pr-4">
       {{ subTitle }}
     </p>
   </div>
-  <div>
+  <div class="text-nowrap">
     <a
       *ngIf="backLink"
       mat-icon-button
@@ -158,7 +162,9 @@
       color="primary"
       routerLink="/"
       class="btn btn-outline-primary btn-transparent btn-home"
-      title="{{ 'core.projectTitle' | translate }}"
+      title="{{ 'common.home' | translate }} - {{
+        'core.projectTitle' | translate
+      }}"
       ><mat-icon>home</mat-icon></a
     >
   </div>

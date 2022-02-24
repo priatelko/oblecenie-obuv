@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FlashMessageService, FlashMessageTypes } from 'src/app/service/FlashMessage/flash-message.service';
+import {
+  FlashMessageService,
+  FlashMessageTypes,
+} from 'src/app/service/FlashMessage/flash-message.service';
 import { BaseComponent } from '../base.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-demo',
   templateUrl: './demo.component.html',
-  styleUrls: ['./demo.component.scss']
+  styleUrls: ['./demo.component.scss'],
 })
 export class DemoComponent extends BaseComponent implements OnInit {
-
   constructor(
     protected activatedRoute: ActivatedRoute,
+    protected router: Router,
+    protected viewportScroller: ViewportScroller,
     private fms: FlashMessageService
   ) {
     super(activatedRoute);

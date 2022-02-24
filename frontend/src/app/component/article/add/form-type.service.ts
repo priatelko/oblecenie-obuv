@@ -6,44 +6,51 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { merge } from 'lodash';
+import { ArtikelTyp } from 'src/app/model/Entity/Article.entity';
 import { Validator } from '../../../custom/validator.custom';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AddArticleFormTypeService {
-  private commonFields: { [key: string]: AbstractControl };
-  private dressFields: { [key: string]: AbstractControl };
+  private commonFieldsZaradenie: { [key: string]: AbstractControl };
+  private dressFieldsZaradenie: { [key: string]: AbstractControl };
+  private commonFieldsPopis: { [key: string]: AbstractControl };
 
   constructor() {
-    this.commonFields = {
+    this.commonFieldsZaradenie = {
       typ: new FormControl(null, []),
       preKoho: new FormControl(null, [Validators.required]),
       obdobie: new FormControl(null, [Validators.required]),
       znacka: new FormControl(null, [Validators.required]),
       stav: new FormControl(null, [Validators.required]),
       material: new FormControl(null, []),
-      titulok: new FormControl(null, []),
-      popis: new FormControl(null, []),
-      cena: new FormControl(null, []),
-      url: new FormControl(null, []),
-      expiracia: new FormControl(null, []),
+      materialDisplay: new FormControl(null, []),
     };
 
-    this.dressFields = {
+    this.commonFieldsPopis = {
+      titulok: new FormControl(null, [Validators.required]),
+      popis: new FormControl(null, [Validators.required]),
+      cena: new FormControl(null, []),
+      // url: new FormControl(null, []),
+      // expiracia: new FormControl(null, []),
+    };
+
+    this.dressFieldsZaradenie = {
       oblecenieKategoria: new FormControl(null, [Validators.required]),
       prilezitost: new FormControl(null, [Validators.required]),
       zostrih: new FormControl(null, [Validators.required]),
       velkost: new FormGroup(
         {
-          velkost: new FormControl(null, [
-            Validators.required,
-            Validators.min(1),
-          ]),
-          velkostCislo: new FormControl(null, [
-            Validators.required,
-            Validators.min(1),
-          ]),
+          velkost: new FormControl(null),
+          velkostCislo: new FormControl(null),
         },
-        [Validator.oneOfGroup()]
+        [
+          Validator.oneOfGroup({
+            velkost: [Validators.required, Validators.min(1)],
+            velkostCislo: [Validators.required, Validators.min(1)],
+          }),
+        ]
       ),
       styl: new FormControl(null, [Validators.required]),
       zapinanie: new FormControl(null, [Validators.required]),
@@ -51,6 +58,14 @@ export class AddArticleFormTypeService {
   }
 
   getDress() {
-    return new FormGroup(merge(this.commonFields, this.dressFields));
+    const form = new FormGroup({
+      zaradenie: new FormGroup(
+        merge(this.commonFieldsZaradenie, this.dressFieldsZaradenie)
+      ),
+      popis: new FormGroup(merge(this.commonFieldsPopis)),
+    });
+    form.get('zaradenie').get('typ').setValue(ArtikelTyp.dress);
+
+    return form;
   }
 }

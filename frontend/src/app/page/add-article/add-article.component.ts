@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {BaseComponent} from '../base.component';
-import {ActivatedRoute} from '@angular/router';
-import {ArtikelTyp} from 'src/app/model/Entity/Article.entity';
+import { Component, OnInit } from '@angular/core';
+import { BaseComponent } from '../base.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ArtikelTyp } from 'src/app/model/Entity/Article.entity';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-add-article',
@@ -13,6 +14,7 @@ export class AddArticleComponent extends BaseComponent implements OnInit {
   title: string;
   subTitle: string;
   backLink: string;
+  wrapperClass: string;
 
   constructor(protected activatedRoute: ActivatedRoute) {
     super(activatedRoute);
@@ -28,13 +30,15 @@ export class AddArticleComponent extends BaseComponent implements OnInit {
         break;
       case ArtikelTyp.dress:
         this.title = 'component.article.add.dress.title';
-        this.subTitle = 'component.article.add.shoes.perex';
+        this.subTitle = 'component.article.add.dress.perex';
         this.backLink = '../';
+        this.wrapperClass = 'wrapper-dress';
         break;
       case ArtikelTyp.shoes:
         this.title = 'component.article.add.shoes.title';
         this.subTitle = 'component.article.add.shoes.perex';
         this.backLink = '../';
+        this.wrapperClass = 'wrapper-shoes';
         break;
     }
   }

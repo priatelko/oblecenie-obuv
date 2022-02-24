@@ -15,16 +15,16 @@ import {
   FormControl,
   NgControl,
 } from '@angular/forms';
-import {BindObservable} from 'bind-observable';
-import {Observable} from 'rxjs';
-import {SelectType} from './select.interface';
-import {filter} from 'lodash';
-import {MultiSelectOption, SelectOptionId} from 'src/app/custom/interfaces';
-import {traverseNode} from 'src/app/custom/helpers';
+import { BindObservable } from 'bind-observable';
+import { Observable } from 'rxjs';
+import { SelectType } from './select.interface';
+import { filter } from 'lodash';
+import { MultiSelectOption, SelectOptionId } from 'src/app/custom/interfaces';
+import { traverseNode } from 'src/app/custom/helpers';
 
 @Component({
   selector: 'app-select',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -38,7 +38,7 @@ import {traverseNode} from 'src/app/custom/helpers';
 export class SelectComponent
   implements OnInit, AfterContentInit, ControlValueAccessor, OnDestroy {
   disabled: boolean;
-  value: SelectOptionId[] = [];
+  value: SelectOptionId | SelectOptionId[] = [];
   selectType = SelectType;
 
   formControlRef: FormControl = new FormControl();
@@ -56,7 +56,7 @@ export class SelectComponent
   multiselect = true;
   multiselect$: Observable<boolean>;
 
-  @Output() valueChange = new EventEmitter<SelectOptionId[]>();
+  @Output() valueChange = new EventEmitter<SelectOptionId | SelectOptionId[]>();
 
   // Prekaza to zavretiu erroru ktory pendluje na is touched
   // @HostListener('click')
@@ -70,6 +70,7 @@ export class SelectComponent
 
   ngAfterContentInit() {
     const ngControl: NgControl = this.injector.get(NgControl, null);
+
     if (ngControl) {
       this.formControlRef = ngControl.control as FormControl;
     }
@@ -79,13 +80,15 @@ export class SelectComponent
 
   toggleEvent(selectId: SelectOptionId, checked: boolean) {
     if (!checked) {
+      // Set or insert value
       if (this.multiselect) {
-        this.value.push(selectId);
+        (this.value as SelectOptionId[]).push(selectId);
       } else {
-        this.value = [selectId];
+        this.value = selectId;
       }
-    } else {
-      this.value = filter(this.value, id => {
+    } else if (this.multiselect) {
+      // Remove value
+      this.value = filter(this.value as SelectOptionId[], (id) => {
         return id !== selectId;
       });
     }
@@ -98,24 +101,30 @@ export class SelectComponent
   }
 
   private syncOptions() {
-    traverseNode(this.options, item => {
-      item.checked = this.value.indexOf(item.id) >= 0;
+    traverseNode(this.options, (item) => {
+      item.checked = this.multiselect
+        ? (this.value as SelectOptionId[]).indexOf(item.id) >= 0
+        : this.value === item.id;
     });
   }
 
   // API
-  CVA_ON_CHANGE = (value: SelectOptionId[]) => {};
+  CVA_ON_CHANGE = (value: SelectOptionId | SelectOptionId[]) => {};
   CVA_ON_TOUCHED = () => {};
 
-  writeValue(value: SelectOptionId[]): void {
+  writeValue(value: SelectOptionId | SelectOptionId[]): void {
     this.value = value || [];
 
     if (!this.options) {
       return;
     }
 
-    this.options.forEach(opt => {
-      opt.checked = this.value.indexOf(opt.id) >= 0 ? true : false;
+    traverseNode(this.options, (item) => {
+      item.checked = this.multiselect
+        ? (this.value as SelectOptionId[]).indexOf(item.id) >= 0
+          ? true
+          : false
+        : this.value === item.id;
     });
   }
 

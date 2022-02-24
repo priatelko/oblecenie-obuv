@@ -2,10 +2,12 @@
   <div class="modal-header / d-block">
     <div class="d-flex">
       <h1 mat-dialog-title class="modal-title / flex-grow-1">
-        {{ 'component.modalFilter.title' | translate
-        }}<ng-container *ngIf="data.header"
-          >: {{ data.header | translate }}</ng-container
-        >
+        <ng-container *ngIf="!data.header">{{
+          'component.modalFilter.title' | translate
+        }}</ng-container>
+        <ng-container *ngIf="data.header">{{
+          data.header | translate
+        }}</ng-container>
       </h1>
       <button mat-button mat-dialog-close class="close">
         <mat-icon

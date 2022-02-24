@@ -1,32 +1,32 @@
-import {Injectable} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {UserModel, UserLoginRoleModel, UserRoleModel} from '../../model/Model/User.model';
+import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import {
+  UserModel,
+  UserLoginRoleModel,
+  UserRoleModel,
+} from '../../model/Model/User.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IdentityService {
-  constructor(private translateService: TranslateService) {}
+  identity: UserModel;
+
+  constructor(private translateService: TranslateService) {
+    this.identity = JSON.parse(localStorage.getItem('identity'));
+  }
 
   /** Methods */
   updateUser(res) {
+    this.identity = res;
     localStorage.setItem('identity', JSON.stringify(res));
   }
 
   logout() {
+    this.identity = null;
     localStorage.removeItem('identity');
   }
 
-  /** Getters */
-  get identity(): UserModel {
-    const identity = JSON.parse(localStorage.getItem('identity'));
-
-    if (identity && identity.roles) {
-      identity.roles = JSON.parse(identity.roles) || [];
-    }
-
-    return identity as UserModel;
-  }
   get isBuyer() {
     return this.identity.loginRole === UserLoginRoleModel.Buyer;
   }
@@ -36,7 +36,9 @@ export class IdentityService {
   }
 
   get isAdmin() {
-    return this.identity && this.identity.roles.indexOf(UserRoleModel.Admin) > -1;
+    return (
+      this.identity && this.identity.roles.indexOf(UserRoleModel.Admin) > -1
+    );
   }
 
   get logged() {
@@ -47,7 +49,7 @@ export class IdentityService {
     let translated;
     this.translateService
       .get('common.user.' + this.identity.loginRole)
-      .subscribe(res => {
+      .subscribe((res) => {
         translated = res;
       });
 

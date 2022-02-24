@@ -1,0 +1,6 @@
+- skontrolovat Symfony a logovat chyby
+- po registracii sa nemoze automaticky prihlasit
+
+
+PRODUCTION
+- upload file limit 5MB

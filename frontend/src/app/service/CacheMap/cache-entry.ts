@@ -1,4 +1,4 @@
-import {HttpResponse} from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 
 export interface CacheEntry {
   url: string;
@@ -6,5 +6,5 @@ export interface CacheEntry {
   entryTime: number;
 }
 
-export const MAX_CACHE_AGE = 10 * 60 * 1000; // in milliseconds - 10min
+export const MAX_CACHE_AGE = 6 * 60 * 60 * 1000; // in milliseconds - 6hod
 export const LOCALSTORE_CACHED_REQUEST_KEY = 'cachedStorageReq';

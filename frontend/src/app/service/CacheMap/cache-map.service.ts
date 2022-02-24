@@ -1,76 +1,77 @@
-import {Injectable} from '@angular/core';
-import {HttpRequest, HttpResponse} from '@angular/common/http';
-import {Cache} from './cache';
+import { Injectable } from '@angular/core';
+import { HttpRequest, HttpResponse } from '@angular/common/http';
+import { Cache } from './cache';
 import {
   CacheEntry,
   MAX_CACHE_AGE,
   LOCALSTORE_CACHED_REQUEST_KEY,
 } from './cache-entry';
-import { assign } from 'lodash';
 
 @Injectable()
 export class CacheMapService implements Cache {
-  cacheMap = new Map<string, CacheEntry>();
-
   get(req: HttpRequest<any>): HttpResponse<any> | null {
-    const entry = this.cacheMap.get(req.urlWithParams);
+    const storage = this.getStorageMap();
+    const entry = storage.get(req.urlWithParams);
 
     if (!entry) {
       return null;
     }
 
     const isExpired = Date.now() - entry.entryTime > MAX_CACHE_AGE;
-    return isExpired ? null : entry.response;
+    return isExpired
+      ? null
+      : new HttpResponse({
+          body: entry.response,
+        });
   }
   put(req: HttpRequest<any>, res: HttpResponse<any>): void {
     const entry: CacheEntry = {
       url: req.urlWithParams,
-      response: res,
+      response: res.body,
       entryTime: Date.now(),
     };
-    this.cacheMap.set(req.urlWithParams, entry);
 
-    this.setToStorage(req.urlWithParams, assign(res.body, {entryTime: entry.entryTime}));
+    this.setKeyToLocalStorage(req.urlWithParams, entry);
     this.deleteExpiredCache();
   }
+
   private deleteExpiredCache() {
-    this.cacheMap.forEach(entry => {
+    const storage = this.getStorageMap();
+    storage.forEach((entry) => {
       if (Date.now() - entry.entryTime > MAX_CACHE_AGE) {
-        this.cacheMap.delete(entry.url);
+        storage.delete(entry.url);
       }
     });
+    this.saveStorageMap(storage);
   }
 
   /**
-   * Local storage requests
+   * Local storage
    */
-  // parseFromCache() {
-  //   forEach(this.getParsedCachedStorage(), (item, key) => {
-  //     this.cacheMap.set(key, JSON.parse(item));
-  //   });
-  // }
+  setKeyToLocalStorage(key, data) {
+    const storage = this.getStorageMap();
+    storage.set(key, data);
 
-  setToStorage(key: string, data) {
-    const cachedStorageReq = this.getParsedCachedStorage();
-    cachedStorageReq[key] = JSON.stringify(data);
-
-    localStorage.setItem(
-      LOCALSTORE_CACHED_REQUEST_KEY,
-      JSON.stringify(cachedStorageReq)
-    );
+    this.saveStorageMap(storage);
   }
 
-  getCachedResponse(key) {
-    const parsedStorage = this.getParsedCachedStorage();
+  getKeyFromLocalStore(key) {
+    const parsedStorage = this.getStorageMap();
     if (parsedStorage[key]) {
       return JSON.parse(parsedStorage[key]);
     }
     return false;
   }
 
-  getParsedCachedStorage() {
-    return (
-      JSON.parse(localStorage.getItem(LOCALSTORE_CACHED_REQUEST_KEY)) || {}
+  getStorageMap(): Map<string, CacheEntry> {
+    return new Map(
+      JSON.parse(localStorage.getItem(LOCALSTORE_CACHED_REQUEST_KEY))
+    );
+  }
+  saveStorageMap(map: Map<string, CacheEntry>) {
+    localStorage.setItem(
+      LOCALSTORE_CACHED_REQUEST_KEY,
+      JSON.stringify(Array.from(map.entries()))
     );
   }
 }

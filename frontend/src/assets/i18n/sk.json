@@ -4,22 +4,24 @@
     "portalTitle": "Portál, predaj a kúpa oblečenia a obuvy"
   },
   "common": {
+    "home": "Úvod",
     "dress": "Oblečenie",
     "shoes": "Obuv",
     "choose": "Vyberte si",
     "back": "Späť",
     "youNavigated": "Presmerovali ste sa na stránku",
     "requestLoading": "Doťahujú sa vzdialené dáta. Počkajte chvíľu prosím.",
-    "requestLoaded": "Vzdialené dáta sa dotiahli. Môžete pokračovať",
+    "requestLoaded": "Vzdialené dáta sa dotiahli. Môžete pokračovať.",
     "close": "Zavrieť.",
     "loadingData": "Načítavam dáta.",
-    "modalFilter": "Zobraziť veľký filter",
+    "modalFilter": "Zoznam - zobraziť veľký filter",
     "cancel": "zrušiť",
     "accept": "potvrdiť",
     "noResult": "Žiadny výraz <b><i>`{query}`</i></b> nebol nájdený.",
     "tooltipAria": "Tlačítko, ktoré zobrazuje nápovedu (tooltip).",
     "form": {
       "error": {
+        "invalid": "Formulár nie je správne vyplnený. Skontrolujte, prosím, povinné políčka.",
         "required": "Políčko je povinné.",
         "email": "Email nie je validný.",
         "minlength": "Min počet znakov je %requiredLength.",
@@ -41,7 +43,11 @@
         "submit-add": "Pridať",
         "search": "hľadaj (min {number}. znaky)...",
         "noSearchEntryFound": "Vyhľadávaný reťazec sa nenašiel.",
-        "autocompletePlaceholder": "Začnite písať, vyberte zo zoznamu, alebo dopíšte"
+        "chooseFromList": "Vyberte zo zoznamu.",
+        "dragAndDrop": "Obrázky presuňte sem.",
+        "uploadImagesManually": "Vybrať obrázky z disku",
+        "removeAll": "Odstrániť obrázky",
+        "uploadAll": "Nahrať vybrané obrázky"
       }
     },
     "response": {
@@ -51,28 +57,29 @@
         "2": "Email nie je validný.",
         "3": "Email už je zaregistrovaný.",
         "4": "Email alebo heslo nie je správne.",
-        "5": "Chyba autorizácie! Akcia vyžaduje aby ste boli prihlásený.",
-        "6": "Registrácia ešte nebola potvrdená. Skontrolujte Váš email.",
-        "7": "Registrácia s týmto emailom neexistuje.",
-        "8": "Overenie registrácie bolo odoslané na Váš email.",
-        "9": "Overenie už bolo predchvíľou odoslané. Požiadať o zaslenie môžete každú minútu.",
-        "10": "Overenie nie je platné. Buď neexistuje, alebo ste registráciu už potvrdili.",
-        "11": "Overenie prebehlo úspešne. Váš uživateľský účet je aktivovaný.",
-        "12": "Na Váš email boli odoslané pokyny k vyresetovaniu hesla.",
-        "13": "Email o vyresetovaní hesla už bol predchvíľou odoslaný. Požiadať o zaslenie môžete každú minútu.",
-        "14": "Vyresetovanie hesla nie je platné.",
-        "15": "Pri posielaní nového hesla nastala chyba. Skúste zopakovať akciu. Pokiaľ sa chyba stále opakuje, kontaktujte nás prosím.",
-        "16": "Nové heslo bolo vygenerované a odoslané na Váš email.",
-        "17": "Boli ste úspešne zaregistrovaný a prihlásený. Skontrolujte Váš email a potvrďte Vašu registráciu.",
-        "18": "Profil bol úspešne upravený.",
-        "19": "Rola bola úspešne prepnutá.",
-        "20": "Boli ste úspešne prihlásený."
+        "5": "Chyba autorizácie! Táto akcia vyžaduje aby ste boli prihlásený.",
+        "6": "Registrácia ešte nebola potvrdená. Skontrolujte email a potvrďte registráciu.",
+        "7": "Účet s emailom ktorý ste uviedli neexistuje.",
+        "8": "Overenie už bolo predchvíľou odoslané. Požiadať o zaslenie môžete o minútku.",
+        "9": "Overenie nie je platné. Buď neexistuje, alebo ste registráciu už potvrdili.",
+        "10": "Email o vyresetovaní hesla už bol predchvíľou odoslaný. Požiadať o zaslenie môžete o minútku.",
+        "11": "Vyresetovanie hesla nie je platné.",
+        "12": "Pri posielaní nového hesla nastala chyba. Skúste zopakovať akciu. Pokiaľ sa chyba stále opakuje, kontaktujte nás prosím.",
+        "13": "Boli ste úspešne zaregistrovaný a prihlásený. Skontrolujte Váš email a potvrďte Vašu registráciu.",
+        "14": "Váš profil bol úspešne upravený.",
+        "15": "Nastala chyba pri nahrávaní súboru. Maximálna veľkosť je 5MB.",
+        "100": "Overenie registrácie bolo odoslané na Váš email.",
+        "101": "Overenie prebehlo úspešne. Váš uživateľský účet bol aktivovaný.",
+        "102": "Na Váš email boli odoslané pokyny k vyresetovaniu hesla.",
+        "103": "Nové heslo bolo vygenerované a odoslané na Váš email.",
+        "104": "Vaša rola bola úspešne prepnutá.",
+        "105": "Úspešne ste sa prihlásili."
       }
     },
     "user": {
       "ROLE_SELLER": "Predavač",
       "ROLE_BUYER": "Kupec",
-      "logout": "Boli ste úspešne odhlásený."
+      "logout": "Úspešne ste sa odhlásili."
     }
   },
   "page": {
@@ -100,7 +107,7 @@
         "advancedSearch": "Rozšírené vyhľadávanie",
         "user": "Užívateľský účet"
       },
-      "searchPlaceholder": "Oblečenie a obuv, zadaj názov...",
+      "searchPlaceholder": "Hľadaj oblečenie alebo obuv, zadaj názov alebo slovo...",
       "user": {
         "login": "Prihlásiť sa",
         "regist": "Registrácia",
@@ -116,7 +123,7 @@
     },
     "user-editprofile": {
       "title": "Úprava profilu",
-      "perex": "Pri registrácií sme Vás nechceli zdržovať. Skúste prosím doplniť ostatné údaje."
+      "perex": "Doplňte, prosím, všetky potrebné údaje."
     },
     "user-login": {
       "title": "Prihlásiť sa",
@@ -133,32 +140,52 @@
     "article": {
       "add": {
         "title": "Pridať artikel",
-        "perex": "Vyberte si, čo idete predávať. Oblečenie alebo obuv?",
-        "preKoho": "Pre koho",
-        "preKohoDesc": "Komu je oblečenie určené.",
-        "obdobie": "Kedy",
-        "obdobieDesc": "Pre aké ročné obdobie je oblečenie šité (ak oblečenie nie je na von, označte indoorové).",
-        "kategoria": "Čo (kategória)",
-        "znacka": "Značka",
-        "velkost": "Veľkosť",
-        "velkostCislo": "Veľkosť číslo",
-        "stav": "Stav, závada",
-        "material": "Materiál šitia",
+        "perex": "Vyberte, čo chete ponúknuť na predaj. Oblečenie alebo obuv?",
+        "stepMenuItems": {
+          "categorize": "Zaradenie",
+          "description": "Popis",
+          "contact": "Kontaktné údaje",
+          "next": "Ďalej"
+        },
+        "categorize": {
+          "preKoho": "Pre koho",
+          "obdobie": "Kedy",
+          "kategoria": "Čo (kategória)",
+          "znacka": "Značka",
+          "velkost": "Veľkosť",
+          "velkostCislo": "Veľkosť číslo",
+          "stav": "Stav, závada",
+          "material": "Materiál šitia"
+        },
+        "description": {
+          "titulok": "Titulok",
+          "titulokDesc": "Zadajte stručný a výstižný názov tovaru.",
+          "popis": "Popis",
+          "popisDesc": "Popíšte Váš tovar. Kľúčové slová budú zohľadnené pri vyhľadávaní.",
+          "cena": "Cena tovaru",
+          "cenaDesc": "V prípade, že sa chcete na cene dohodnúť, zadajte nulu alebo nechajte prázdne políčko.",
+          "foto": "Fotografie tovaru",
+          "fotoDesc": "Obrázky presuňte z priečinka do označenej zóny alebo ich vyberte z disku. Hlavný náhľadový obrázok označte na jeho kliknutím."
+        },
         "shoes": {
-          "title": "Pridať obuv",
-          "perex": "Údaje zadajte pravdivo a presne vyplnené."
+          "title": "Idem pridať obuv",
+          "perex": "Údaje zadajte pravdivo a hodnotne vyplnené."
         },
         "dress": {
-          "title": "Pridať oblečenie",
+          "title": "Pridať oblečenie do katalógu",
+          "perex": "Oporúčame Vám údaje zadávať pravdivo a hodnotne vyplnené pre lepšie vyhľadávanie Vašim zákazníkom. Je striktne zakázané uvádzať webové adresy a iné kontakty (vrátane obrázkov). Takýto artikel bude vymazaný alebo Váš účet zablokovaný.",
+          "preKohoDesc": "Komu je oblečenie určené.",
           "kategoriaDesc": "Zkrátené rukávy, nohavice, sukne nastavte v časti „Zostrih“.",
-          "znackaDesc": "Sadu oblečenia zadajte pod „Rôzne značky“. Keď neviete značku, vyberte „Neznáma značka“.",
+          "znackaDesc": "Sadu oblečenia zadajte pod „Rôzne značky“. Keď neviete, vyberte „Iné“.",
           "prilezitost": "Príležitosť",
           "prilezitostDesc": "Na akú príležitosť sa oblečenie hodí.",
           "zostrih": "Zostrih",
           "zostrihDesc": "Krátke / dlhé rukávy, nohavice, sukňa.",
           "styl": "Štýl",
           "zapinanie": "Zapínanie",
-          "velkostDesc": "Sadu oblečenia zadajte pod „Rôzne veľkosti“."
+          "velkostDesc": "Sadu oblečenia zadajte pod „Rôzne veľkosti“.",
+          "obdobieDesc": "Pre aké ročné obdobie je oblečenie šité (ak oblečenie nie je na von, označte indoorové).",
+          "materialDesc": "Sadu oblečenia zadajte pod „Rôzny materiál. Keď neviete, vyberte „Iné“."
         }
       }
     },

@@ -10,5 +10,10 @@
     flex-grow: 1;
     display: flex;
     align-items: center;
+    overflow: auto;
+
+    &.wrapper-dress {
+      align-items: flex-start;
+    }
   }
 }
