@@ -1,6 +1,7 @@
 /*******************************
  * Bootstrap redeclare variables
  */
+@use '~@angular/material' as mat;
 
 $body-bg: #fafafa;
 $input-bg: $body-bg;
@@ -86,7 +87,7 @@ $color-primary: map-get($mat-custom, 500);
 $color-border-light: #d8d7d7;
 $color-container: white; // #f0f0f0;
 $color-container-light: #f1f1f1;
-$color-error: map-get($mat-red, 500);
+$color-error: map-get(mat.$red-palette, 500);
 
 // zindex
 $zindex-middle: 5;
