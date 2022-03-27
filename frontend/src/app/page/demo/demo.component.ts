@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   FlashMessageService,
   FlashMessageTypes,
-} from 'src/app/service/FlashMessage/flash-message.service';
+} from '../../service/FlashMessage/flash-message.service';
 import { BaseComponent } from '../base.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';

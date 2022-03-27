@@ -9,6 +9,7 @@
     "shoes": "Obuv",
     "choose": "Vyberte si",
     "back": "Späť",
+    "next": "Ďalej",
     "youNavigated": "Presmerovali ste sa na stránku",
     "requestLoading": "Doťahujú sa vzdialené dáta. Počkajte chvíľu prosím.",
     "requestLoaded": "Vzdialené dáta sa dotiahli. Môžete pokračovať.",
@@ -65,15 +66,16 @@
         "10": "Email o vyresetovaní hesla už bol predchvíľou odoslaný. Požiadať o zaslenie môžete o minútku.",
         "11": "Vyresetovanie hesla nie je platné.",
         "12": "Pri posielaní nového hesla nastala chyba. Skúste zopakovať akciu. Pokiaľ sa chyba stále opakuje, kontaktujte nás prosím.",
-        "13": "Boli ste úspešne zaregistrovaný a prihlásený. Skontrolujte Váš email a potvrďte Vašu registráciu.",
-        "14": "Váš profil bol úspešne upravený.",
-        "15": "Nastala chyba pri nahrávaní súboru. Maximálna veľkosť je 5MB.",
+        "13": "Nastala chyba pri nahrávaní súboru. Maximálna veľkosť je 5MB.",
         "100": "Overenie registrácie bolo odoslané na Váš email.",
         "101": "Overenie prebehlo úspešne. Váš uživateľský účet bol aktivovaný.",
         "102": "Na Váš email boli odoslané pokyny k vyresetovaniu hesla.",
         "103": "Nové heslo bolo vygenerované a odoslané na Váš email.",
         "104": "Vaša rola bola úspešne prepnutá.",
-        "105": "Úspešne ste sa prihlásili."
+        "105": "Boli ste úspešne zaregistrovaný a prihlásený. Skontrolujte Váš email a potvrďte Vašu registráciu.",
+        "106": "Úspešne ste sa prihlásili.",
+        "107": "Váš profil bol úspešne upravený.",
+        "108": "Obrázok bol úspašne nahraný."
       }
     },
     "user": {
@@ -144,8 +146,7 @@
         "stepMenuItems": {
           "categorize": "Zaradenie",
           "description": "Popis",
-          "contact": "Kontaktné údaje",
-          "next": "Ďalej"
+          "contact": "Kontaktné údaje"
         },
         "categorize": {
           "preKoho": "Pre koho",
@@ -172,7 +173,7 @@
           "perex": "Údaje zadajte pravdivo a hodnotne vyplnené."
         },
         "dress": {
-          "title": "Pridať oblečenie do katalógu",
+          "title": "Pridať oblečenie",
           "perex": "Oporúčame Vám údaje zadávať pravdivo a hodnotne vyplnené pre lepšie vyhľadávanie Vašim zákazníkom. Je striktne zakázané uvádzať webové adresy a iné kontakty (vrátane obrázkov). Takýto artikel bude vymazaný alebo Váš účet zablokovaný.",
           "preKohoDesc": "Komu je oblečenie určené.",
           "kategoriaDesc": "Zkrátené rukávy, nohavice, sukne nastavte v časti „Zostrih“.",

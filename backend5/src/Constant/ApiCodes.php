@@ -17,9 +17,7 @@ class ApiCodes {
 	CONST FORGOTTEN_EMAIL_ALREADY_SENT     			= 10;
 	CONST FORGOTTEN_HASH_NOT_EXISTS       			= 11;
 	CONST NEW_PASSWORD_SENT_FAIL          			= 12;
-	CONST USER_CREATED                      		= 13;
-	CONST USER_UPDATED                  				= 14;
-  CONST UPLOAD_FILE_ERROR                     = 15;
+  CONST UPLOAD_FILE_ERROR                     = 13;
 
 	// SUCCESS
 	const REGIST_CONFIRMATION_SENT      				= 100;
@@ -28,4 +26,7 @@ class ApiCodes {
 	const NEW_PASSWORD_RESET              			= 103;
 	const CHANGE_ROLE_SUCCESS             			= 104;
 	const USER_LOGGED                       		= 105;
+  CONST USER_CREATED                      		= 106;
+	CONST USER_UPDATED                  				= 107;
+  CONST UPLOAD_FILE_SUCCESS                   = 108;
 }

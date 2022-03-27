@@ -19,8 +19,8 @@ import { BindObservable } from 'bind-observable';
 import { Observable } from 'rxjs';
 import { SelectType } from './select.interface';
 import { filter } from 'lodash';
-import { MultiSelectOption, SelectOptionId } from 'src/app/custom/interfaces';
-import { traverseNode } from 'src/app/custom/helpers';
+import { MultiSelectOption, SelectOptionId } from '../../custom/interfaces';
+import { traverseNode } from '../../custom/helpers';
 
 @Component({
   selector: 'app-select',
@@ -36,7 +36,8 @@ import { traverseNode } from 'src/app/custom/helpers';
   styleUrls: ['./select.component.scss'],
 })
 export class SelectComponent
-  implements OnInit, AfterContentInit, ControlValueAccessor, OnDestroy {
+  implements OnInit, AfterContentInit, ControlValueAccessor, OnDestroy
+{
   disabled: boolean;
   value: SelectOptionId | SelectOptionId[] = [];
   selectType = SelectType;

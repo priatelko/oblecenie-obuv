@@ -1,5 +1,6 @@
 - skontrolovat Symfony a logovat chyby
 - po registracii sa nemoze automaticky prihlasit
+- vyskusat font Poppins
 
 
 PRODUCTION

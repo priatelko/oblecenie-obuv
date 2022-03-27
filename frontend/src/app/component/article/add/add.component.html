@@ -25,9 +25,193 @@
       class="form-one-column"
     >
       <div class="container">
-        <!-- Step 1: Zaradenie -->
+        <!-- Steps -->
+        <!-- !addOblecenieForm.get('zaradenie').valid -->
+        <div class="step-menu-items row / my-4">
+          <a [class]="formStep === 1 ? 'active' : ''" (click)="changeStep(1)">
+            <span>1</span>
+            <!-- <span><mat-icon>check</mat-icon></span> -->
+            {{
+              'component.article.add.stepMenuItems.description' | translate
+            }}</a
+          >
+          <a [class]="formStep === 2 ? 'active' : ''" (click)="changeStep(2)">
+            <span>2</span>
+            {{ 'component.article.add.stepMenuItems.categorize' | translate }}
+          </a>
+          <a
+            class="flex-grow-1"
+            [class]="formStep === 3 ? 'active' : ''"
+            (click)="changeStep(3)"
+          >
+            <span>3</span>
+            {{ 'component.article.add.stepMenuItems.contact' | translate }}
+          </a>
+          <div class="text-right">
+            <button
+              mat-flat-button
+              class="mat-button--md"
+              [disabled]="!addOblecenieForm.valid"
+              type="submit"
+              color="primary"
+            >
+              {{ 'component.article.add.title' | translate }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 1: Popis  -->
         <ng-container
           *ngIf="formStep === 1"
+          [formGroup]="addOblecenieForm.get('popis')"
+        >
+          <div class="row">
+            <div class="col-md-8 / px-0">
+              <div class="form-group">
+                <h2 class="h4">
+                  {{ 'component.article.add.description.titulok' | translate }}
+                  <span class="error-color">*</span>
+                </h2>
+                <mat-form-field appearance="outline">
+                  <mat-label>{{
+                    'component.article.add.description.titulokDesc' | translate
+                  }}</mat-label>
+                  <input matInput type="text" formControlName="titulok" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-md-4 / px-0">
+              <div class="form-group">
+                <h2 class="h4">
+                  {{ 'component.article.add.description.cena' | translate }}
+                  <mat-icon
+                    class="ml-2 pointer"
+                    matTooltip="{{
+                      'component.article.add.description.cenaDesc' | translate
+                    }}"
+                    aria-label="'common.tooltipAria' | translate"
+                    >help</mat-icon
+                  >
+                </h2>
+                <mat-form-field appearance="outline">
+                  <input
+                    matInput
+                    type="number"
+                    min="0"
+                    max="1000000"
+                    step="0.01"
+                    formControlName="cena"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="row / mt-4">
+            <div class="col form-group">
+              <h2 class="h4">
+                {{ 'component.article.add.description.popis' | translate }}
+                <span class="error-color">*</span>
+              </h2>
+
+              <mat-form-field appearance="outline">
+                <mat-label>{{
+                  'component.article.add.description.popisDesc' | translate
+                }}</mat-label>
+                <textarea
+                  matInput
+                  type="text"
+                  formControlName="popis"
+                  rows="5"
+                ></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row / mt-4">
+            <div class="col form-group">
+              <h2 class="h4">
+                {{ 'component.article.add.description.foto' | translate }}
+                <span class="error-color">*</span>
+                <mat-icon
+                  class="ml-2 pointer"
+                  matTooltip="{{
+                    'component.article.add.description.fotoDesc' | translate
+                  }}"
+                  aria-label="'common.tooltipAria' | translate"
+                  >help</mat-icon
+                >
+              </h2>
+              <app-dnd [httpUrl]="APIuploadImage"></app-dnd>
+              <!-- <div
+                [fileUploadInputFor]="fileUploadQueue"
+                class="upload-drop-zone"
+              >
+                {{ 'common.form.fields.dragAndDrop' | translate }}
+              </div>
+              <mat-file-upload-queue
+                #fileUploadQueue
+                [fileAlias]="'file'"
+                [httpUrl]="APIuploadImage"
+                removeAllLabel="{{
+                  'common.form.fields.removeAll' | translate
+                }}"
+                uploadAllLabel="{{
+                  'common.form.fields.uploadAll' | translate
+                }}"
+              >
+                <mat-file-upload
+                  [file]="file"
+                  [id]="i"
+                  (onUpload)="uploadImagesComplete($event)"
+                  *ngFor="let file of fileUploadQueue.files; let i = index"
+                >
+                </mat-file-upload>
+              </mat-file-upload-queue>
+              <p class="m-0 mt-2">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  (click)="uploadFileManualy.click()"
+                >
+                  {{ 'common.form.fields.uploadImagesManually' | translate }}
+                </button>
+                <input
+                  #uploadFileManualy
+                  id="singleFile"
+                  hidden
+                  multiple
+                  type="file"
+                  accept="image/x-png,image/gif,image/jpeg"
+                  [fileUploadInputFor]="fileUploadQueue"
+                />
+              </p> -->
+            </div>
+          </div>
+          <!-- Validation form -->
+          <!-- <div class="row / mt-4">
+            <div
+              *ngIf="!addOblecenieForm.get('popis').valid"
+              class="alert alert-danger / mb-4"
+            >
+              <mat-icon class="mr-2">report_problem</mat-icon>
+              {{ 'common.form.error.invalid' | translate }}
+            </div>
+          </div> -->
+          <div class="row / mt-4 justify-content-center">
+            <button
+              mat-stroked-button
+              [disabled]="!addOblecenieForm.get('popis').valid"
+              class="mat-button--md"
+              type="submit"
+              color="primary"
+            >
+              {{ 'common.next' | translate }}
+            </button>
+          </div>
+        </ng-container>
+
+        <!-- Step 2: Zaradenie -->
+        <ng-container
+          *ngIf="formStep === 2"
           [formGroup]="addOblecenieForm.get('zaradenie')"
         >
           <div class="row">
@@ -95,15 +279,15 @@
                     required
                   >
                     <mat-option>
-                      <ngx-mat-select-search
-                        [placeholderLabel]="
-                          'common.form.fields.search' | translate: { number: 3 }
-                        "
-                        [formControl]="oblecenieKategorieFilter"
-                        [noEntriesFoundLabel]="
-                          'common.form.fields.noSearchEntryFound' | translate
-                        "
-                      ></ngx-mat-select-search>
+                      <!-- <ngx-mat-select-search
+                  [placeholderLabel]="
+                    'common.form.fields.search' | translate: { number: 3 }
+                  "
+                  [formControl]="oblecenieKategorieFilter"
+                  [noEntriesFoundLabel]="
+                    'common.form.fields.noSearchEntryFound' | translate
+                  "
+                ></ngx-mat-select-search> -->
                     </mat-option>
                     <mat-optgroup
                       *ngFor="
@@ -363,204 +547,31 @@
               </div>
             </div>
           </div>
-        </ng-container>
-
-        <!-- Step 2: Popis  -->
-        <ng-container
-          *ngIf="formStep === 2"
-          [formGroup]="addOblecenieForm.get('popis')"
-        >
-          <div class="row">
-            <div class="col-md-8 / px-0">
-              <div class="form-group">
-                <h2 class="h4">
-                  {{ 'component.article.add.description.titulok' | translate }}
-                  <span class="error-color">*</span>
-                </h2>
-                <mat-form-field appearance="outline">
-                  <mat-label>{{
-                    'component.article.add.description.titulokDesc' | translate
-                  }}</mat-label>
-                  <input matInput type="text" formControlName="titulok" />
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="col-md-4 / px-0">
-              <div class="form-group">
-                <h2 class="h4">
-                  {{ 'component.article.add.description.cena' | translate }}
-                  <mat-icon
-                    class="ml-2 pointer"
-                    matTooltip="{{
-                      'component.article.add.description.cenaDesc' | translate
-                    }}"
-                    aria-label="'common.tooltipAria' | translate"
-                    >help</mat-icon
-                  >
-                </h2>
-                <mat-form-field appearance="outline">
-                  <input
-                    matInput
-                    type="number"
-                    min="0"
-                    max="1000000"
-                    step="0.01"
-                    formControlName="cena"
-                  />
-                </mat-form-field>
-              </div>
+          <!-- Validation form -->
+          <div class="row / mt-4">
+            <div
+              *ngIf="!addOblecenieForm.get('zaradenie').valid"
+              class="alert alert-danger / mb-4"
+            >
+              <mat-icon class="mr-2">report_problem</mat-icon>
+              {{ 'common.form.error.invalid' | translate }}
             </div>
           </div>
-          <div class="row / mt-4">
-            <div class="col form-group">
-              <h2 class="h4">
-                {{ 'component.article.add.description.popis' | translate }}
-                <span class="error-color">*</span>
-              </h2>
-
-              <mat-form-field appearance="outline">
-                <mat-label>{{
-                  'component.article.add.description.popisDesc' | translate
-                }}</mat-label>
-                <textarea
-                  matInput
-                  type="text"
-                  formControlName="popis"
-                  rows="5"
-                ></textarea>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="row / mt-4">
-            <div class="col form-group">
-              <h2 class="h4">
-                {{ 'component.article.add.description.foto' | translate }}
-                <span class="error-color">*</span>
-                <mat-icon
-                  class="ml-2 pointer"
-                  matTooltip="{{
-                    'component.article.add.description.fotoDesc' | translate
-                  }}"
-                  aria-label="'common.tooltipAria' | translate"
-                  >help</mat-icon
-                >
-              </h2>
-              <div
-                [fileUploadInputFor]="fileUploadQueue"
-                class="upload-drop-zone"
-              >
-                {{ 'common.form.fields.dragAndDrop' | translate }}
-              </div>
-              <mat-file-upload-queue
-                #fileUploadQueue
-                [fileAlias]="'file'"
-                [httpUrl]="APIuploadImage"
-                removeAllLabel="{{
-                  'common.form.fields.removeAll' | translate
-                }}"
-                uploadAllLabel="{{
-                  'common.form.fields.uploadAll' | translate
-                }}"
-              >
-                <mat-file-upload
-                  [file]="file"
-                  [id]="i"
-                  (onUpload)="uploadImagesComplete($event)"
-                  *ngFor="let file of fileUploadQueue.files; let i = index"
-                >
-                </mat-file-upload>
-              </mat-file-upload-queue>
-              <p class="m-0 mt-2">
-                <button
-                  mat-flat-button
-                  color="primary"
-                  (click)="uploadFileManualy.click()"
-                >
-                  {{ 'common.form.fields.uploadImagesManually' | translate }}
-                </button>
-                <input
-                  #uploadFileManualy
-                  id="singleFile"
-                  hidden
-                  multiple
-                  type="file"
-                  accept="image/x-png,image/gif,image/jpeg"
-                  [fileUploadInputFor]="fileUploadQueue"
-                />
-              </p>
-            </div>
+          <div class="row / justify-content-center">
+            <button
+              mat-stroked-button
+              [disabled]="!addOblecenieForm.get('zaradenie').valid"
+              class="mat-button--md"
+              type="submit"
+              color="primary"
+            >
+              {{ 'common.next' | translate }}
+            </button>
           </div>
         </ng-container>
 
         <!-- Step 3: Kontakt  -->
         <ng-container *ngIf="formStep === 3"> kontakt </ng-container>
-
-        <div
-          *ngIf="!addOblecenieForm.get('zaradenie').valid"
-          class="alert alert-danger / mt-4"
-        >
-          <mat-icon class="mr-2">report_problem</mat-icon>
-          {{ 'common.form.error.invalid' | translate }}
-        </div>
-        <div class="step-menu-items row / my-4">
-          <div class="mx-2">
-            <button
-              mat-flat-button
-              type="submit"
-              [color]="formStep === 1 ? 'primary' : ''"
-              (click)="changeStep(1)"
-            >
-              {{ 'component.article.add.stepMenuItems.categorize' | translate }}
-            </button>
-          </div>
-          <div class="mx-2">
-            <button
-              mat-flat-button
-              type="submit"
-              [color]="formStep === 2 ? 'primary' : ''"
-              (click)="changeStep(2)"
-              [disabled]="!addOblecenieForm.get('zaradenie').valid"
-            >
-              {{
-                'component.article.add.stepMenuItems.description' | translate
-              }}
-            </button>
-          </div>
-          <div class="mx-2">
-            <button
-              mat-flat-button
-              type="submit"
-              [color]="formStep === 3 ? 'primary' : ''"
-              (click)="changeStep(3)"
-              [disabled]="!addOblecenieForm.get('zaradenie').valid"
-            >
-              {{ 'component.article.add.stepMenuItems.contact' | translate }}
-            </button>
-          </div>
-          <div class="flex-grow-1 mx-2 text-right">
-            <button
-              mat-flat-button
-              type="submit"
-              [color]="formStep === 4 ? 'primary' : ''"
-              (click)="changeStep()"
-              [disabled]="
-                !addOblecenieForm.get('zaradenie').valid || formStep >= 3
-              "
-            >
-              {{ 'component.article.add.stepMenuItems.next' | translate }}
-            </button>
-          </div>
-          <div class="mx-2">
-            <button
-              mat-flat-button
-              [disabled]="!addOblecenieForm.get('zaradenie').valid"
-              type="submit"
-              color="primary"
-            >
-              {{ 'common.form.fields.submit' | translate }}
-            </button>
-          </div>
-        </div>
       </div>
     </form>
     <!-- <div *ngIf="addKind == articleKind.shoes" class="modal-body">

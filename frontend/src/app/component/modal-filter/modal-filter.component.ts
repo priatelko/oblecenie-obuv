@@ -8,14 +8,14 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ModalFilterOptions } from './modal-filter.service';
 import { LoaderSize } from '../loader/loader.component';
 import { FormControl, Validators } from '@angular/forms';
-import { SelectType } from 'src/app/form-control/select/select.interface';
+import { SelectType } from '../../form-control/select/select.interface';
 import { merge, some } from 'lodash';
-import { MultiSelectOption, BreakException } from 'src/app/custom/interfaces';
+import { MultiSelectOption, BreakException } from '../../custom/interfaces';
 import {
   appendNoDiacritics,
   searchInModel,
   traverseNode,
-} from 'src/app/custom/helpers';
+} from '../../custom/helpers';
 
 @Component({
   selector: 'app-modal-filter',

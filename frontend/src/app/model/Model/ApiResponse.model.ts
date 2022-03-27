@@ -3,3 +3,7 @@ export interface ApiResponseModel<T> {
   success?: number;
   data?: T;
 }
+
+// export interface FileUpload {
+//   name: string;
+// }

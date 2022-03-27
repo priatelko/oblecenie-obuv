@@ -6,7 +6,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { merge } from 'lodash';
-import { ArtikelTyp } from 'src/app/model/Entity/Article.entity';
+import { ArtikelTyp } from '../../../model/Entity/Article.entity';
 import { Validator } from '../../../custom/validator.custom';
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { has } from 'lodash';
-import { MultiSelectOption } from 'src/app/custom/interfaces';
-import { SelectType } from 'src/app/form-control/select/select.interface';
+import { MultiSelectOption } from '../../custom/interfaces';
+import { SelectType } from '../../form-control/select/select.interface';
 
 @Injectable({
   providedIn: 'root',

@@ -1,11 +1,11 @@
-import {NgModule} from '@angular/core';
-import {FormControlDirective} from 'src/app/directive/form-control.directive';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
+import { NgModule } from '@angular/core';
+import { FormControlDirective } from '../../directive/form-control.directive';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+// import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
     FormsModule,
     MatInputModule,
     MatSelectModule,
-    NgxMatSelectSearchModule,
+    //NgxMatSelectSearchModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -25,7 +25,7 @@ import {NgxMatSelectSearchModule} from 'ngx-mat-select-search';
     FormsModule,
     MatInputModule,
     MatSelectModule,
-    NgxMatSelectSearchModule,
+    //NgxMatSelectSearchModule,
     MatSlideToggleModule,
     MatCheckboxModule,
   ],

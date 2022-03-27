@@ -7,7 +7,7 @@ import {
   BaseRepositoryService,
   BaseRepositoryInterface,
 } from './Base.repository';
-import { SelectService } from 'src/app/form-control/select/select.service';
+import { SelectService } from '../../form-control/select/select.service';
 import {
   PreKoho,
   Obdobie,
@@ -17,7 +17,7 @@ import {
 } from '../Entity/Article.entity';
 import FuzzySearch from 'fuzzy-search';
 import { assign } from 'lodash';
-import { appendNoDiacritics } from 'src/app/custom/helpers';
+import { appendNoDiacritics } from '../../custom/helpers';
 import {
   Kategorie,
   Prilezitost,
@@ -34,7 +34,8 @@ import {
 })
 export class ArticleRepositoryService
   extends BaseRepositoryService<DressFormDataEntity>
-  implements BaseRepositoryInterface<DressFormDataEntity> {
+  implements BaseRepositoryInterface<DressFormDataEntity>
+{
   dataStream: Observable<DressFormDataEntity>;
   API = '/get/add-dress-article';
   dataStreamFinal: Observable<DressFormDataEntity>;

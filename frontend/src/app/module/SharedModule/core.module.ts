@@ -5,15 +5,16 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { SelectOptionDirective } from '../../directive/select-option.directive';
 import {
   apiRequestServiceCreator,
   ApiRequestService,
-} from 'src/app/service/ApiRequest/api-request.service';
-import { VoidLinkDirective } from 'src/app/directive/void-link.directive';
-import { IdentityService } from 'src/app/service/User/identity.service';
-import { FlashMessageService } from 'src/app/service/FlashMessage/flash-message.service';
+} from '../../service/ApiRequest/api-request.service';
+import { VoidLinkDirective } from '../../directive/void-link.directive';
+import { IdentityService } from '../../service/User/identity.service';
+import { FlashMessageService } from '../../service/FlashMessage/flash-message.service';
 import { CommonModule } from '@angular/common';
 
 /*import {
@@ -22,7 +23,6 @@ import { CommonModule } from '@angular/common';
   GoogleLoginProvider,
   FacebookLoginProvider,
 } from 'angular-6-social-login';*/
-import { GLOBAL } from 'src/app/variables/global';
 
 /*export function getAuthServiceConfigs() {
   return new AuthServiceConfig([
@@ -46,6 +46,7 @@ import { GLOBAL } from 'src/app/variables/global';
     TranslateModule,
     MatIconModule,
     MatTooltipModule,
+    MatProgressBarModule,
     // directives
     SelectOptionDirective,
     VoidLinkDirective,

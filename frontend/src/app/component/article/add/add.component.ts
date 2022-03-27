@@ -17,18 +17,18 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { LoaderSize } from '../../loader/loader.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalFilterComponent } from '../../modal-filter/modal-filter.component';
-import { GLOBAL } from 'src/app/variables/global';
+import { GLOBAL } from '../../../variables/global';
 import {
   ModalFilterOptions,
   ModalFilterService,
 } from '../../modal-filter/modal-filter.service';
 
-import { MultiSelectOption, SelectOption } from 'src/app/custom/interfaces';
-import { SelectType } from 'src/app/form-control/select/select.interface';
+import { MultiSelectOption, SelectOption } from '../../../custom/interfaces';
+import { SelectType } from '../../../form-control/select/select.interface';
 import { includes } from 'lodash';
 import { AddArticleFormTypeService } from './form-type.service';
-import { KategorieChildren, Kategorie } from 'src/app/model/Entity/Dress';
-import { Validator } from 'src/app/custom/validator.custom';
+import { KategorieChildren, Kategorie } from '../../../model/Entity/Dress';
+import { Validator } from '../../../custom/validator.custom';
 import { HttpResponse } from '@angular/common/http';
 import { FlashMessageService } from '../../../service/FlashMessage/flash-message.service';
 
@@ -36,16 +36,16 @@ import { FlashMessageService } from '../../../service/FlashMessage/flash-message
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddComponent implements OnInit, OnDestroy {
   articleKind = ArtikelTyp;
   loaderSize = LoaderSize;
-  APIuploadImage = GLOBAL.url + GLOBAL.APIuploadImage;
+  APIuploadImage = GLOBAL.APIuploadImage;
 
   SelectType = SelectType;
 
-  formStep: number = 1;
+  formStep = 1;
 
   addOblecenieForm: FormGroup;
 
@@ -138,7 +138,7 @@ export class AddComponent implements OnInit, OnDestroy {
     //   });
     // }, 2000);
 
-    this.changeStep(2);
+    // this.changeStep(2);
   }
 
   ngOnDestroy() {}

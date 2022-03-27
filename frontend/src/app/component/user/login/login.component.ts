@@ -16,10 +16,9 @@ import { LoginRoleEntity } from '../../../model/Entity/LoginRole.entity';
   FacebookLoginProvider,
   GoogleLoginProvider,
 } from 'angular-6-social-login';*/
-import { SvgName } from 'src/app/custom/svg/svg.component';
+import { SvgName } from '../../../custom/svg/svg.component';
 import { isNil } from 'lodash';
-import { ApiRequestService } from 'src/app/service/ApiRequest/api-request.service';
-import { ApiResponseModel } from 'src/app/model/Model/ApiResponse.model';
+import { ApiRequestService } from '../../../service/ApiRequest/api-request.service';
 
 export enum SocialPlatform {
   Facebook,

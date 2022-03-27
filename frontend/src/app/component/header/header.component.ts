@@ -10,9 +10,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { RegistComponent } from '../user/regist/regist.component';
 import { LoginComponent } from '../user/login/login.component';
 import { ForgottenComponent } from '../user/forgotten/forgotten.component';
-import { UserService } from 'src/app/service/User/user.service';
+import { UserService } from '../../service/User/user.service';
 import { GLOBAL } from '../../variables/global';
-import { IdentityService } from 'src/app/service/User/identity.service';
+import { IdentityService } from '../../service/User/identity.service';
 
 @Component({
   selector: 'app-header',

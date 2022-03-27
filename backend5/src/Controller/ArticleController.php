@@ -37,6 +37,8 @@ class ArticleController extends BaseController {
     }
 
     $imgOptimizer->saveTemp( $request->files->get('file')->getPathname() );
+
+    return $this->respondSuccess(ApiCodes::UPLOAD_FILE_SUCCESS);
     //dump(\App\Services\Helpers::resizeImage($request->files->get('file')->getPathname()));
 	}
 }

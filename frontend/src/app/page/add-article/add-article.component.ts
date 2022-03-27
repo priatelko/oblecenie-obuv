@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../base.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ArtikelTyp } from 'src/app/model/Entity/Article.entity';
+import { ArtikelTyp } from '../../model/Entity/Article.entity';
 import { ViewportScroller } from '@angular/common';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FlashMessageService } from '../FlashMessage/flash-message.service';
 import { ApiRequestService } from '../ApiRequest/api-request.service';
-import { UserModel } from 'src/app/model/Model/User.model';
+import { UserModel } from '../../model/Model/User.model';
 import { IdentityService } from './identity.service';
 import { HttpParams } from '@angular/common/http';
 import { ApiResponseModel } from '../../model/Model/ApiResponse.model';

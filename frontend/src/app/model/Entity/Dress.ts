@@ -1,4 +1,4 @@
-import { NoDiaNode } from 'src/app/custom/interfaces';
+import { NoDiaNode } from '../../custom/interfaces';
 import {
   ArticleFormEntity,
   Material,

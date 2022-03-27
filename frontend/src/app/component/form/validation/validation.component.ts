@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Validator } from 'src/app/custom/validator.custom';
+import { Validator } from '../../../custom/validator.custom';
 import { head } from 'lodash';
 
 @Component({

@@ -111,7 +111,7 @@
             </ng-container>
             <!-- Logged -->
             <ng-container *ngIf="identityService.logged">
-              <div mat-menu-item class="dropdown-header">
+              <div mat-menu-item disabled class="dropdown-header">
                 {{ identityService.roleName }}
               </div>
               <div mat-menu-item (click)="changeRole()">

@@ -112,7 +112,24 @@ body {
   }
 
   // Button
-  .mat-button-disabled {
-    cursor: not-allowed !important;
+  .mat-button-base {
+    &.mat-button-disabled {
+      cursor: not-allowed !important;
+    }
+    &.mat-stroked-button {
+      &.mat-primary {
+        border: 2px solid $color-primary;
+        &.mat-button-disabled {
+          border-color: $color-border-disabled;
+        }
+      }
+    }
+  }
+  .mat-button {
+    &--md {
+      min-width: 18rem;
+      line-height: 48px;
+      font-size: 18px;
+    }
   }
 }

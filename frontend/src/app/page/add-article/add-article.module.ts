@@ -3,10 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { AddArticleComponent } from './add-article.component';
-import { HeaderModule } from 'src/app/component/header/header.module';
-import { CoreModule } from 'src/app/module/SharedModule/core.module';
-import { AddModule } from 'src/app/component/article/add/add.module';
-import { ArtikelTyp } from 'src/app/model/Entity/Article.entity';
+import { HeaderModule } from '../../component/header/header.module';
+import { CoreModule } from '../../module/SharedModule/core.module';
+import { AddModule } from '../../component/article/add/add.module';
+import { ArtikelTyp } from '../../model/Entity/Article.entity';
 
 const routes: Routes = [
   {
