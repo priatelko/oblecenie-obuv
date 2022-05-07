@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Services\SocialProvider;
 
 /**
  * User
@@ -25,12 +26,12 @@ class User implements UserInterface
     private $id;
 	
 	/**
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string", unique=true, nullable=true)
      */
     private $apiToken;
     
     /**
-     * @ORM\Column(type="string", length=20, columnDefinition="ENUM('facebook', 'google')"))
+     * @ORM\Column(type="string", length=20, columnDefinition="ENUM('local', 'facebook', 'google')"), options={"default" : "local"})
      */
     private $provider;
 	
@@ -81,7 +82,7 @@ class User implements UserInterface
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $password;
 	
@@ -109,6 +110,12 @@ class User implements UserInterface
      */
     private $loginRole;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="vip", type="boolean")
+     */
+    private $vip;
 
     public function getId() {
         return $this->id;
@@ -118,10 +125,14 @@ class User implements UserInterface
         return $this->apiToken;
     }
 
-    public function setApiToken(string $token): self {
+    public function setApiToken(?string $token): self {
         $this->apiToken = $token;
 
         return $this;
+    }
+
+    public function isSocial() {
+      return in_array($this->getProvider(), SocialProvider::$providers);
     }
     
     public function getProvider() {
@@ -305,6 +316,30 @@ class User implements UserInterface
         return $this->surname;
     }
 
+/**
+     * Set VIP
+     *
+     * @param boolean $bool
+     *
+     * @return boolean
+     */
+    public function setVip($bool)
+    {
+        $this->vip = $bool;
+
+        return $this;
+    }
+
+    /**
+     * Get VIP
+     *
+     * @return boolean
+     */
+    public function getVip()
+    {
+        return $this->vip;
+    }
+
     /**
      * @see UserInterface
      */
@@ -330,12 +365,13 @@ class User implements UserInterface
 			'email' => (string) $this->getEmail(),
 			'name' => (string) $this->getName(),
 			'surname' => (string) $this->getSurname(),
-            'roles' => $this->getRoles(),
+      'roles' => $this->getRoles(),
 			'createdAt' => (string) $this->getCreatedAt()->format(\DateTime::ATOM),
 			'updatedAt' => (string) $this->getUpdatedAt()->format(\DateTime::ATOM),
 			'lastLogin' => (string) $this->getLastLogin()->format(\DateTime::ATOM),
 			'loginRole' => (string) $this->getLoginRole(),
-            'provider' => (string) $this->getProvider(),
+      'provider' => (string) $this->getProvider(),
+      'vip' => (boolean) $this->getVip(),
 		];
 	}
 
@@ -347,5 +383,8 @@ class User implements UserInterface
         $this->createdAt = new \Datetime("now");
         $this->updatedAt = new \Datetime("now");
         $this->lastLogin = new \Datetime("now");
+
+        $this->provider = SocialProvider::local;
+        $this->vip = false;
     }
 }

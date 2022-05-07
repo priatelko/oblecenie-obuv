@@ -2,23 +2,26 @@
 
 namespace App\Services;
 
-use Symfony\Component\Config\Loader\FileLoader;
-use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 use App\Services\Helpers;
 
 class ProjectConfig {
 
+  const SEP       = DIRECTORY_SEPARATOR;
+
 	/**
 	 * @var Request
 	 */
 	private $request;
-	private $configValues;
+  private $appKernel;
+  private $configValues;
 	private $lang;
 
-	public function __construct(RequestStack $requestStack) {
+	public function __construct($configValues, RequestStack $requestStack, KernelInterface $appKernel) {
 		$this->request = $requestStack;
+    $this->appKernel = $appKernel;
 
 		if ($this->request->getCurrentRequest()->isXmlHttpRequest()
 				&& $this->request->getCurrentRequest()->getMethod() != 'OPTIONS'
@@ -26,20 +29,21 @@ class ProjectConfig {
 			throw new \InvalidArgumentException('Header language provider error');
 		}
 		
-		$sep = DIRECTORY_SEPARATOR;
-		$this->lang = $this->request->getCurrentRequest()->headers->get('x-lang');
-		$resource = __DIR__."$sep..$sep..{$sep}config{$sep}{$this->lang}.yml";
-
-		$this->configValues = Yaml::parse(file_get_contents($resource));
-		$this->configValues = Helpers::arrayToObject($this->configValues);
+		$this->lang = $this->request->getCurrentRequest()->headers->get('x-lang') /*?? 'sk'*/;
+//$this->lang = 'sk';
+		$this->configValues = Helpers::arrayToObject($configValues[$this->lang]);
 	}
 	
 	public function getLang() {
 		return $this->lang;
 	}
+
+  public function getProjetAbsRoot() {
+    return $this->appKernel->getProjectDir();
+  }
 	
 	public function getParam($key) {
-		return $this->configValues->parameters->{$key};
+		return $this->configValues->{$key};
 	}
 	
 	public function getReferer() {
@@ -48,13 +52,11 @@ class ProjectConfig {
 	}
 	
 	public function getTemplatePath() {
-		$sep = DIRECTORY_SEPARATOR;
-		return __DIR__.$sep.'..'.$sep.'Resources'.$sep.'MailTemplates'.$sep.$this->getLang();
+		return __DIR__.self::SEP.'..'.self::SEP.'Resources'.self::SEP.'MailTemplates'.self::SEP.$this->getLang();
 	}
 	
 	public function loadTemplate($fileName, array $params) {
-		$sep = DIRECTORY_SEPARATOR;
-		$body = file_get_contents($this->getTemplatePath().$sep.$fileName);
+		$body = file_get_contents($this->getTemplatePath().self::SEP.$fileName);
 		
 		return Helpers::mapParams($body, $params);
 	}

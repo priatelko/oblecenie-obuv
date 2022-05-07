@@ -16,6 +16,8 @@ use App\Services\SocialProvider;
 
 class UserManager {
 
+  const ANONYMOUS_RESPONSE       = ['loginRole' => UserLoginRole::ANONYMOUS];
+
 	/**
 	 * @var RequestStack
 	 */
@@ -60,7 +62,7 @@ class UserManager {
 		$this->mailer = $mailer;
 		$this->projectConfig = $projectConfig;
 		$this->requestStack = $requestStack;
-        $this->socialProvider = $socialProvider;
+    $this->socialProvider = $socialProvider;
 	}
 	
 	/**
@@ -97,46 +99,60 @@ class UserManager {
 	/**
 	 * CREATE
 	 */
-	public function createUser($email, $password, $loginRole): User {
+	public function createUser($email, $password, $provider = SocialProvider::local, $fname = '', $lname = ''): User {
 		/* @var $user User */
 		$user = new User();
 		$user->setEmail($email);
 		$user->setRoles([User::ROLE_USER]);
-		$user->setLoginRole($this->getLoginRole($loginRole));
-		$user->setApiToken(str_shuffle(uniqid() . $email));
-		$user->setPassword($this->passwordEncoder->encodePassword($user, $password));
-		
-		$confirmHash = md5(str_shuffle(uniqid() . $email)) . md5(str_shuffle(time() . $password));
-		$user->setConfirmation($confirmHash);
+    $user->setApiToken(null);
+    $user->setName($fname);
+    $user->setSurname($lname);
+    $user->setProvider($provider);
+
+    if ($provider == SocialProvider::local) {
+      $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
+      $confirmHash = md5(str_shuffle(uniqid() . $email)) . md5(str_shuffle(time() . $password));
+      $user->setConfirmation($confirmHash);
+    }
 
 		$this->entityManager->saveEntity($user);
-		
 		$this->sendConfirmation($user);
 
 		return $user;
 	}
-    
-    public function createSocialUser($provider, $token, $loginRole): User {
-        $socialUser = $this->socialProvider->getUser($provider, $token);
-        
-        dump($provider, $token, $loginRole, $socialUser); exit;
-		/* @var $user User */
-		$user = $this->createUser($email, '', $loginRole);
-        
-        $this->entityManager->saveEntity($user);
-        
-        return $user;
+
+  public function logout(?User $user) {
+    $user->setApiToken(null);
+		$this->entityManager->saveEntity($user);
+    return true;
+  }
+
+  public function createSocialUser($provider, $email, $fname, $lname, $token): ?User {
+    $socialUser = $this->socialProvider->getUser($provider, $token);
+    if (!$socialUser) {
+      return null;
     }
+
+    /* @var $user User */
+    if (!($user = $this->getUserByEmail($email))) {
+      $user = $this->createUser($email, '', $provider, $fname, $lname);
+    }
+
+    return $user;
+  }
 	
 	/**
 	 * UPDATE 
 	 */
 	public function updateUser(User $user, $email, $password, $name, $surname) {
-		$user->setEmail($email);
 		$user->setName($name);
 		$user->setSurname($surname);
-		$user->setPassword($this->passwordEncoder->encodePassword($user, $password));
 		$user->setUpdatedAt(new \Datetime("now"));
+
+    if(!$user->isSocial()) {
+      $user->setEmail($email);
+      $user->setPassword($this->passwordEncoder->encodePassword($user, $password));
+    }
 
 		$this->entityManager->saveEntity($user);
 	}

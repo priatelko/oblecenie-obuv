@@ -3,6 +3,10 @@
 namespace App\Constant;
 
 class ApiCodes {
+
+  // VOID
+  CONST VOID                              		= -10;
+  CONST DO_FE_LOGOUT                          = -11;
 	
 	// ERRORS
 	CONST COMMON_ERROR                      		= 1;
@@ -18,6 +22,7 @@ class ApiCodes {
 	CONST FORGOTTEN_HASH_NOT_EXISTS       			= 11;
 	CONST NEW_PASSWORD_SENT_FAIL          			= 12;
   CONST UPLOAD_FILE_ERROR                     = 13;
+  CONST SOCIAL_AUTHORIZATION_FAIL             = 14;
 
 	// SUCCESS
 	const REGIST_CONFIRMATION_SENT      				= 100;
@@ -29,4 +34,6 @@ class ApiCodes {
   CONST USER_CREATED                      		= 106;
 	CONST USER_UPDATED                  				= 107;
   CONST UPLOAD_FILE_SUCCESS                   = 108;
+  CONST AUTHORIZED                    				= 109;
+  const USER_LOGGED_OUT                       = 110;
 }

@@ -5,6 +5,8 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use App\Services\UserManager;
@@ -59,15 +61,14 @@ class UserController extends BaseController {
 
 			/* @var $user User */
 			if (!$this->isAuthorized()) {		// New user
-				$user = $this->userManager->createUser($post->get('email'), $post->get('password'), $post->get('role'));
-				$returnData = $user->toArray();
+				$user = $this->userManager->createUser($post->get('email'), $post->get('password'));
+				$returnData = UserManager::ANONYMOUS_RESPONSE;
 			} else {		// Edit user
 				$this->userManager->updateUser($this->getUser(), $post->get('email'), $post->get('password'), $post->get('name'), $post->get('surname'));
 				$returnData = $this->getUser()->toArray();
 			}
 
 			return $this->respondSuccess((!$this->isAuthorized() ? ApiCodes::USER_CREATED : ApiCodes::USER_UPDATED), $returnData);
-
 		}
 		
 		return $this->respondError(ApiCodes::COMMON_ERROR);	// Common error
@@ -79,36 +80,58 @@ class UserController extends BaseController {
 	 * @Method({"POST"})
      */
 	public function loginAction(Request $request){
-        $post = $this->transformJsonBody($request)->request;
+    $post = $this->transformJsonBody($request)->request;
 
-        if (!empty($request->request->all())) {
-                // Social login
-            if ($post->get('provider') && $post->get('token')) {
-                $user = $this->userManager->createSocialUser($post->get('provider'), $post->get('token'), $post->get('role'));
-            } else {
-                if (!$this->userManager->emailValid($post->get('email'))) {
-                    return $this->respondError(ApiCodes::INVALID_EMAIL);	// Email is not validate
-                }
-
-                /* @var $user \App\Entity\User */
-                if (!($user = $this->userManager->getUserByEmail($post->get('email'))) || !$this->passwordEncoder->isPasswordValid($user, $post->get('password'))) {
-                    return $this->respondError(ApiCodes::USER_PASS_NOT_MATCH);	// User and password not match any user
-                }
-
-                if (!is_null($user->getConfirmation())) {
-                    return $this->respondError(ApiCodes::USER_NOT_CONFIRMED);	// User has no confirm registration 
-                }
-            }
-
-			// Update user role
-			$user->setLastLogin(new \Datetime("now"));
-			$this->userManager->updateUserRole($user, $post->get('role'));
-
-			// Login in
-			return $this->respondSuccess(ApiCodes::USER_LOGGED, $user->toArray());
+    if (!empty($request->request->all())) {
+      // Social login
+      if ($post->get('provider') && $post->get('token')) {
+        $user = $this->userManager->createSocialUser($post->get('provider'), $post->get('email'), $post->get('firstName'), $post->get('lastName'), $post->get('token'));
+        if (!$user) {
+          return $this->respondError(ApiCodes::SOCIAL_AUTHORIZATION_FAIL);	// Auth fail
+        }
+      } else {
+        if (!$this->userManager->emailValid($post->get('email'))) {
+          return $this->respondError(ApiCodes::INVALID_EMAIL);	// Email is not validate
         }
 
-        return $this->respondError(ApiCodes::COMMON_ERROR);	// Common error
+        /* @var $user \App\Entity\User */
+        if (!($user = $this->userManager->getUserByEmail($post->get('email'))) || !$this->passwordEncoder->isPasswordValid($user, $post->get('password'))) {
+          return $this->respondError(ApiCodes::USER_PASS_NOT_MATCH);	// User and password not match any user
+        }
+
+        if (!is_null($user->getConfirmation())) {
+          return $this->respondError(ApiCodes::USER_NOT_CONFIRMED);	// User has no confirm registration 
+        }
+      }
+
+      // Update user role
+      $user->setLastLogin(new \Datetime("now"));
+      $user->setProvider($post->get('provider') ?? \App\Services\SocialProvider::local);
+      $user->setApiToken(str_shuffle(uniqid() . $post->get('email')));
+      $this->userManager->updateUserRole($user, $post->get('role'));
+
+      // Login in
+      return $this->respondSuccess(ApiCodes::USER_LOGGED, $user->toArray());
+    }
+
+    return $this->respondError(ApiCodes::COMMON_ERROR);	// Common error
+  }
+
+/**
+	 * @Route("/redirect", name="google-redirect")
+	 * @Method({"GET"})
+     */
+	public function redirectAction(Request $request){
+    die('Google redirect?');
+  }
+
+	/**
+	 * @Route("/logout", name="logout-user")
+	 * @Method({"GET"})
+     */
+    public function logoutAction(){
+      $this->loggoutCredentials();
+      return $this->respondSuccess(ApiCodes::USER_LOGGED_OUT);
     }
 	
 	/**
@@ -187,15 +210,39 @@ class UserController extends BaseController {
 		return $this->respondSuccess(ApiCodes::NEW_PASSWORD_RESET);
 	}
 
+  /**
+     * @Route("/logged-check", name="logged-check")
+	 * @Method({"GET"})
+     */
+    public function loggedCheckAction() {
+      if ($this->isAuthorized() && $this->getUser()->getApiToken()) {
+        return $this->respondSuccess(ApiCodes::AUTHORIZED, $this->getUser()->toArray());
+      }
+
+      // bad authorization, so logout
+      $this->loggoutCredentials();
+
+      return $this->respondError(ApiCodes::VOID);
+    }
+
+    private function loggoutCredentials() {
+      if ($this->getUser()) {
+        $this->userManager->logout($this->getUser());
+      }
+      // $this->get('request')->getSession()->invalidate();
+      $this->get('security.token_storage')->setToken(null);
+    }
+
 
 	/**
 	 * AUTHORIZED METHODS
 	 */
 	
 	/**
-     * @Route("/change-role", name="change-role")
-	 * @Method({"GET"})
-     */
+    * @IsGranted("IS_AUTHENTICATED_FULLY")
+    * @Route("/change-role", name="change-role")
+	  * @Method({"GET"})
+    */
     public function changeRoleAction() {
 		if (!$this->isAuthorized()) {
 			return $this->respondUnauthorized();

@@ -64,7 +64,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     {
         $apiToken = $credentials['token'];
 
-        if (null === $apiToken) {
+        if (!$apiToken) {
             return;
         }
 
@@ -91,7 +91,8 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         $data = array(
-            'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
+            'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
+            'error' => \App\Constant\ApiCodes::DO_FE_LOGOUT,
 
             // or to translate this message
             // $this->translator->trans($exception->getMessageKey(), $exception->getMessageData())

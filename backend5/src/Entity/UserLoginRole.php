@@ -14,6 +14,8 @@ class UserLoginRole implements \App\Interfaces\ToStringInterface, \App\Interface
 {
 	const ROLE_BUYER			= 'ROLE_BUYER';
 	const ROLE_SELLER			= 'ROLE_SELLER';
+  const ANONYMOUS       = 'ANONYMOUS';
+
 	
     /**
      * @var string

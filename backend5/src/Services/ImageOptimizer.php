@@ -2,26 +2,31 @@
 
 namespace App\Services;
 
-use Symfony\Component\HttpKernel\KernelInterface;
+use \Symfony\Component\HttpFoundation\File\UploadedFile;
 use Imagine\Gd\Imagine;
 use Imagine\Image\Box;
 use App\Services\Helpers;
+use App\Services\ProjectConfig;
 
 class ImageOptimizer {
+
+    const SEP       = DIRECTORY_SEPARATOR;
+
     private const MAX_WIDTH = 1200;
     private const MAX_HEIGHT = 800;
     private const MAX_FILE_SIZE = 5; //MB
 
     private $imagine;
-    private $homeDir;
+    private $projectConfig;
 
-    public function __construct(KernelInterface $appKernel) {
-      $this->homeDir = $appKernel->getProjectDir();
+    public function __construct(ProjectConfig $projectConfig) {
+      $this->projectConfig = $projectConfig;
       $this->imagine = new Imagine();
     }
 
-    public function saveTemp(string $filename): void {
-        list($iwidth, $iheight) = getimagesize($filename);
+    public function saveTemp(UploadedFile $file): string {
+        list($iwidth, $iheight) = getimagesize($file->getPathname());
+
         $ratio = $iwidth / $iheight;
         $width = self::MAX_WIDTH;
         $height = self::MAX_HEIGHT;
@@ -31,8 +36,10 @@ class ImageOptimizer {
             $height = $width / $ratio;
         }
 
-        $photo = $this->imagine->open($filename);
-        
-        $photo->resize(new Box($width, $height))->save($this->homeDir.'/public/img/articles/test.jpg');
+        $fileRelativePath = '/img/articles/temp/'.$file->getClientOriginalName();
+        $photo = $this->imagine->open($file->getPathname());
+        $photo->resize(new Box($width, $height))->save($this->projectConfig->getProjetAbsRoot(). self::SEP.'public' .$fileRelativePath);
+
+        return $fileRelativePath;
     }
 }
