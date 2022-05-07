@@ -1,20 +1,31 @@
+import { FacebookLoginProvider } from 'angularx-social-login';
+
 export interface UserModel {
-  id: number;
-  createdAt: string;
-  email: string;
-  name: string;
-  surname: string;
-  loginRole: UserLoginRoleModel;
-  roles: string[];
-  token: string;
+  loginRole: UserBussinesRoleModel;
+  id?: number;
+  createdAt?: string;
+  email?: string;
+  name?: string;
+  surname?: string;
+  roles?: UserRoleModel[];
+  token?: string;
+  provider?: SocialProvider;
+  extra?: boolean; // ma platene
 }
 
-export enum UserLoginRoleModel {
+export enum UserBussinesRoleModel {
+  Anonym = 'ANONYMOUS',
   Buyer = 'ROLE_BUYER',
-  Seller = 'ROLE_SELLER'
+  Seller = 'ROLE_SELLER',
 }
 
 export enum UserRoleModel {
   User = 'ROLE_USER',
-  Admin = 'ROLE_ADMIN'
+  Admin = 'ROLE_ADMIN',
+}
+
+export enum SocialProvider {
+  Local = 'local',
+  Facebook = 'facebook',
+  Google = 'google',
 }

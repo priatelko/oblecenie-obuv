@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {indexOf, remove} from 'lodash';
-import {ArtikelTyp} from '../Entity/Article.entity';
+import { Injectable } from '@angular/core';
+import { indexOf, remove } from 'lodash';
+import { ArtikelTyp } from '../Entity/ArticleForm.entity';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class SearchModelService {
 
   setActiveType(type): void {
     if (this.isActiveType(type)) {
-      this.searchModel.type = remove(this.searchModel.type, n => n === type);
+      this.searchModel.type = remove(this.searchModel.type, (n) => n === type);
     } else {
       this.searchModel.type.push(type);
     }

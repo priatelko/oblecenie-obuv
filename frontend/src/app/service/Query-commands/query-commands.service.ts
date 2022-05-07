@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { UserService } from '../User/user.service';
+import { UserManagerService } from '../User/user-manager.service';
 import { forEach, clone, keys } from 'lodash';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class QueryCommandsService {
-
   readonly QUERY_COMMANDS = ['cR', 'fP'];
   requestedQuery = [];
   requestedCount = 0;
@@ -16,9 +15,9 @@ export class QueryCommandsService {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private userService: UserService
+    private userService: UserManagerService
   ) {
-    this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe((params) => {
       forEach(params, (param, command) => {
         if (this.isAllowed(command)) {
           this.requestedQuery.push(command);
@@ -32,16 +31,18 @@ export class QueryCommandsService {
     switch (command) {
       case 'cR':
         if (String(param).length === 64) {
-          this.userService.applyConfirmation(param).subscribe((result => {
+          this.userService.applyConfirmation(param).subscribe((result) => {
             this.proccessResultQuery(command);
-          }));
+          });
         }
         break;
       case 'fP':
         if (String(param).length === 64) {
-          this.userService.confirmForgottenPassword(param).subscribe((result => {
-            this.proccessResultQuery(command);
-          }));
+          this.userService
+            .confirmForgottenPassword(param)
+            .subscribe((result) => {
+              this.proccessResultQuery(command);
+            });
         }
         break;
     }

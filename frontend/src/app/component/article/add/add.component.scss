@@ -113,8 +113,8 @@ h4 {
 
     span {
       display: inline-flex;
-      width: 1.8rem;
-      height: 1.8rem;
+      width: $badge-height;
+      height: $badge-height;
       color: white;
       align-items: center;
       justify-content: center;
@@ -122,6 +122,10 @@ h4 {
       background-color: $color-border-light;
       border-radius: 50%;
       margin-right: 0.25rem;
+
+      &.valid {
+        background-color: var(--teal) !important;
+      }
     }
 
     &.active {
@@ -132,4 +136,13 @@ h4 {
       }
     }
   }
+}
+
+.big-success,
+.big-disabled {
+  color: var(--blue);
+  font-size: 7rem;
+}
+.big-disabled {
+  color: var(--gray);
 }

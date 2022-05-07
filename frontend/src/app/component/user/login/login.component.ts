@@ -1,9 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { untilDestroyed } from 'ngx-take-until-destroy';
-
-import { UserService } from '../../../service/User/user.service';
+import { UserManagerService } from '../../../service/User/user-manager.service';
 import { Observable } from 'rxjs';
 import { LoginRoleRepositoryService } from '../../../model/Repository/LoginRole.repository';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
@@ -11,54 +9,65 @@ import { ForgottenComponent } from '../forgotten/forgotten.component';
 import { GLOBAL } from '../../../variables/global';
 import { LoginRoleEntity } from '../../../model/Entity/LoginRole.entity';
 
-/*import {
-  AuthService,
+import { SvgName } from '../../../custom/svg/svg.component';
+
+import {
+  SocialAuthService,
   FacebookLoginProvider,
   GoogleLoginProvider,
-} from 'angular-6-social-login';*/
-import { SvgName } from '../../../custom/svg/svg.component';
-import { isNil } from 'lodash';
-import { ApiRequestService } from '../../../service/ApiRequest/api-request.service';
-
-export enum SocialPlatform {
-  Facebook,
-  Google,
-}
-
+  SocialUser,
+} from 'angularx-social-login';
+import { RegistComponent } from '../regist/regist.component';
+import { SocialProvider } from '../../../model/Model/User.model';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+@UntilDestroy()
 @Component({
   selector: 'app-user-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit {
   SvgName = SvgName;
-  SocialPlatform = SocialPlatform;
-
-  socialLogin: SocialPlatform;
 
   loginForm: FormGroup;
   roles$: Observable<LoginRoleEntity[]>;
 
   confirmationError: boolean;
-  badCredentials: boolean;
+
+  socialChoosen: SocialProvider;
+  socialLogin = false;
+  userProvider = SocialProvider;
 
   constructor(
-    private userService: UserService,
+    private userService: UserManagerService,
     private loginRoleRepository: LoginRoleRepositoryService,
     private dialogRef: MatDialogRef<LoginComponent>,
     private dialog: MatDialog,
-    // private socialAuthService: AuthService,
-    private apiRequestService: ApiRequestService
+    private socialAuthService: SocialAuthService
   ) {
     this.loginForm = this.createFormGroup();
   }
 
-  get isSocial() {
-    return !isNil(this.socialLogin);
-  }
-
   ngOnInit() {
     this.roles$ = this.loginRoleRepository.getRoles();
+
+    this.socialAuthService.authState
+      .pipe(untilDestroyed(this))
+      .subscribe((user: SocialUser) => {
+        if (user == null) {
+          return;
+        }
+        const values = {
+          provider: user.provider.toLocaleLowerCase(),
+          token: user.authToken,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          role: this.loginForm.value.role,
+        };
+
+        this.login(values);
+      });
   }
 
   createFormGroup(): FormGroup {
@@ -78,27 +87,27 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    // Social login
-    if (!isNil(this.socialLogin)) {
-      this.socialSignIn(this.socialLogin);
-      return;
+    if (this.socialChoosen === SocialProvider.Facebook) {
+      this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    } else if (this.socialChoosen === SocialProvider.Google) {
+      this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    } else {
+      this.login(this.loginForm.value);
     }
-
-    this.login(this.loginForm.value);
   }
 
   login(values: object): void {
+    if (!this.loginForm.valid) {
+      return;
+    }
+
     const login = this.userService.login(values);
 
     login.pipe(untilDestroyed(this)).subscribe((response) => {
       this.confirmationError = false;
-      this.badCredentials = false;
 
       if (response.error) {
         switch (response.error) {
-          case 4:
-            this.badCredentials = true;
-            break;
           case 6:
             this.confirmationError = true;
             break;
@@ -119,44 +128,39 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  socialSignIn(socialPlatform: SocialPlatform) {
-    this.socialLogin = socialPlatform;
+  openRegistModal() {
+    this.dialog.open(RegistComponent, {
+      width: GLOBAL.dialogWidth.sm,
+    });
+  }
 
-    if (!this.loginForm.valid) {
-      this.loginForm.get('role').markAsTouched();
-      this.loginForm.get('role').updateValueAndValidity();
-      this.loginForm.updateValueAndValidity();
+  socialPrepareSign(socialPlatform: SocialProvider) {
+    if (this.socialChoosen === socialPlatform) {
+      this.socialChoosen = null;
       return;
     }
 
-    /*let socialPlatformProvider;
-    if (socialPlatform === SocialPlatform.Facebook) {
-      socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-    } else if (socialPlatform === SocialPlatform.Google) {
-      socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
-    }
+    this.socialChoosen = socialPlatform;
 
-    this.socialAuthService.signIn(socialPlatformProvider).then((userData) => {
-      console.log(userData);
-      const values = {
-        provider: userData.provider,
-        token: userData.token,
-        role: this.loginForm.value.role,
-      };
+    // Remove email and password validity
+    this.loginForm.get('email').setValidators(null);
+    this.loginForm.get('email').updateValueAndValidity();
+    this.loginForm.get('password').setValidators(null);
+    this.loginForm.get('password').updateValueAndValidity();
 
-      this.login(values);
-    });*/
+    // if (!this.loginForm.valid) {
+    //   this.loginForm.get('role').markAsTouched();
+    //   this.loginForm.updateValueAndValidity();
+    //   return;
+    // }
   }
 
-  // test() {
-  //   console.log(this.socialAuthService.authState);
-  //   // this.socialAuthService.signOut().then((userData) => {
-  //   //   console.log(userData, 'out');
-  //   // });
-  // }
+  test() {
+    console.log(this.socialAuthService.authState);
+  }
 
   // testEnd() {
-  //   const request = this.apiRequestService.get<ApiResponseModel<any>>(
+  //   const request = this.apiRequestService.get<any>(
   //     '/user/test'
   //   );
 
@@ -165,5 +169,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   //   });
   // }
 
-  ngOnDestroy() {}
+  debug() {
+    console.log(this.loginForm);
+  }
 }

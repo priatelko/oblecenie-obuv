@@ -31,8 +31,10 @@ export class CachingInterceptor implements HttpInterceptor {
         // posleme dalej prazdy request
         return of(new HttpResponse({ body: '' }));
       } else {
-        // ho ulozime do prebiehajucich requestov
-        this.requestOngoingMap.set(requestHash, true);
+        // ak nie je povoleny multi req. tak ho ulozime do prebiehajucich requestov
+        if (!this.isRequestMulti(req)) {
+          this.requestOngoingMap.set(requestHash, true);
+        }
       }
 
       return next.handle(req).pipe(
@@ -60,5 +62,9 @@ export class CachingInterceptor implements HttpInterceptor {
 
   private isRequestCachable(req: HttpRequest<any>) {
     return Boolean(req.headers.get('X-CACHABLE'));
+  }
+
+  private isRequestMulti(req: HttpRequest<any>) {
+    return Boolean(req.headers.get('X-MULTI'));
   }
 }

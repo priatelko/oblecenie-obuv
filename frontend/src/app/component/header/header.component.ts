@@ -10,14 +10,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { RegistComponent } from '../user/regist/regist.component';
 import { LoginComponent } from '../user/login/login.component';
 import { ForgottenComponent } from '../user/forgotten/forgotten.component';
-import { UserService } from '../../service/User/user.service';
+import { UserManagerService } from '../../service/User/user-manager.service';
 import { GLOBAL } from '../../variables/global';
 import { IdentityService } from '../../service/User/identity.service';
+import { SocialAuthService } from 'angularx-social-login';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
@@ -29,9 +30,10 @@ export class HeaderComponent {
     public el: ElementRef,
     private searchModel: SearchModelService,
     private dialog: MatDialog,
-    private userService: UserService,
+    private userService: UserManagerService,
     private chd: ChangeDetectorRef,
-    public identityService: IdentityService
+    public identityService: IdentityService,
+    private socialAuthService: SocialAuthService
   ) {}
 
   /** Filter switch */
@@ -43,11 +45,6 @@ export class HeaderComponent {
   }
 
   /** Modals */
-  openRegistModal() {
-    this.dialog.open(RegistComponent, {
-      width: GLOBAL.dialogWidth.sm,
-    });
-  }
   openEditProfileModal() {
     this.dialog.open(RegistComponent, {
       data: { editProfile: true },
@@ -64,16 +61,11 @@ export class HeaderComponent {
         this.chd.detectChanges();
       });
   }
-  openForgottenPasswordModal() {
-    this.dialog.open(ForgottenComponent, {
-      width: GLOBAL.dialogWidth.sm,
-    });
-  }
 
   /** Actions */
   changeRole() {
     const res = this.userService.changeRole();
-    res.subscribe((res) => {
+    res.subscribe((_res) => {
       this.chd.detectChanges();
     });
   }

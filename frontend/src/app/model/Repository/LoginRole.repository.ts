@@ -8,13 +8,15 @@ import {
   BaseRepositoryInterface,
 } from './Base.repository';
 import { LoginRoleEntity } from '../Entity/LoginRole.entity';
+import { ApiResponseModel } from '../Model/ApiResponse.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginRoleRepositoryService
   extends BaseRepositoryService<LoginRoleEntity[]>
-  implements BaseRepositoryInterface<LoginRoleEntity[]> {
+  implements BaseRepositoryInterface<LoginRoleEntity[]>
+{
   dataStream: Observable<LoginRoleEntity[]>;
   API = '/get/role';
 

@@ -1,0 +1,80 @@
+<app-validation
+  *ngIf="formControlRef"
+  [formControlRef]="formControlRef"
+></app-validation>
+<div class="container" appDnd (fileDropped)="onFileDropped($event)">
+  <input
+    type="file"
+    #fileDropRef
+    id="fileDropRef"
+    multiple
+    (change)="fileBrowseHandler($event.target)"
+    accept="image/x-png,image/gif,image/jpeg"
+  />
+  <mat-icon class="mat-icon--hg">file_upload</mat-icon>
+  <h3>{{ 'common.form.fields.dragAndDrop' | translate }}</h3>
+  <p>{{ 'common.or' | translate }}</p>
+  <button mat-flat-button type="submit" color="primary">
+    {{ 'common.form.fields.uploadImagesManually' | translate }}
+  </button>
+</div>
+
+<!-- Upload in progress -->
+<div class="files-list">
+  <ng-container *ngFor="let file of files; let i = index">
+    <div
+      *ngIf="file && !file.imgPath"
+      [ngClass]="{
+        uploaded: file.imgPath
+      }"
+      class="single-file"
+    >
+      <mat-icon class="mat-icon--lg">description</mat-icon>
+      <div class="info">
+        <h4 class="name">
+          {{ file.name }}
+        </h4>
+        <p class="size">
+          {{ formatBytes(file.size) }}
+        </p>
+        <!-- [color]="color"
+          [mode]="mode" -->
+        <mat-progress-bar [value]="file.progress"> </mat-progress-bar>
+      </div>
+      <mat-icon class="mat-icon--md / pointer" (click)="deleteFile(i)"
+        >clear</mat-icon
+      >
+    </div>
+  </ng-container>
+</div>
+
+<!-- Uploaded -->
+<div class="files-list files-list--uploaded">
+  <ng-container *ngFor="let file of files; let i = index">
+    <div
+      *ngIf="file && file.imgPath"
+      [ngClass]="{
+        uploaded: file.imgPath
+      }"
+      class="single-file"
+    >
+      <div *ngIf="file.imgPath">
+        <img [src]="file.imgPath" class="img-prev" alt="" />
+      </div>
+      <div class="info">
+        <h4 class="name">
+          {{ file.name }}
+        </h4>
+        <p class="size">
+          {{ formatBytes(file.size) }}
+        </p>
+        <!-- [color]="color"
+          [mode]="mode" -->
+        <mat-progress-bar [value]="file.progress"> </mat-progress-bar>
+      </div>
+      <mat-icon class="mat-icon--md / pointer" (click)="deleteFile(i)"
+        >clear</mat-icon
+      >
+    </div></ng-container
+  >
+</div>

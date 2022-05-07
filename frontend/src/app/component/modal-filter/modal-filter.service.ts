@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { has } from 'lodash';
-import { MultiSelectOption } from '../../custom/interfaces';
+import { MultiSelectOption } from '../../model/Entity/Form.entity';
 import { SelectType } from '../../form-control/select/select.interface';
 
 @Injectable({

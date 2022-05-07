@@ -4,7 +4,7 @@
   position: absolute;
   width: calc(100% - 4%);
   top: 12vh;
-  right: 2%;
+  right: 10%;
   z-index: $zindex-alert;
 
   @include media-breakpoint-up(lg) {
@@ -31,6 +31,15 @@
   span {
     flex-grow: 1;
   }
+}
+
+mat-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1500;
 }
 
 @keyframes animationAlert {

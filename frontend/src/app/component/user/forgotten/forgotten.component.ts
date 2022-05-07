@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserService } from '../../../service/User/user.service';
+import { UserManagerService } from '../../../service/User/user-manager.service';
 import { Subscription } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
 
@@ -15,7 +15,7 @@ export class ForgottenComponent {
   forgottenSubscription: Subscription;
 
   constructor(
-    private userService: UserService,
+    private userService: UserManagerService,
     public dialogRef: MatDialogRef<ForgottenComponent>
   ) {
     this.forgottenForm = this.createFormGroup();

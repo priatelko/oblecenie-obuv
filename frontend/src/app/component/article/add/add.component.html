@@ -17,6 +17,8 @@
   </div>
 
   <!-- Pridat oblecenie -->
+  VYSKUSAT mat-error
+
   <ng-container *ngIf="addKind == articleKind.dress">
     <form
       *ngIf="preKoho$ | async as preKoho; else loading"
@@ -25,18 +27,24 @@
       class="form-one-column"
     >
       <div class="container">
+        <button (click)="debug()">debug FORM</button>
+        <button (click)="loadForm()">load FORM</button>
         <!-- Steps -->
-        <!-- !addOblecenieForm.get('zaradenie').valid -->
         <div class="step-menu-items row / my-4">
           <a [class]="formStep === 1 ? 'active' : ''" (click)="changeStep(1)">
-            <span>1</span>
-            <!-- <span><mat-icon>check</mat-icon></span> -->
+            <span *ngIf="!addOblecenieForm.get('popis').valid">1</span>
+            <span *ngIf="addOblecenieForm.get('popis').valid" class="valid"
+              ><mat-icon>check</mat-icon></span
+            >
             {{
               'component.article.add.stepMenuItems.description' | translate
             }}</a
           >
           <a [class]="formStep === 2 ? 'active' : ''" (click)="changeStep(2)">
-            <span>2</span>
+            <span *ngIf="!addOblecenieForm.get('zaradenie').valid">2</span>
+            <span *ngIf="addOblecenieForm.get('zaradenie').valid" class="valid"
+              ><mat-icon>check</mat-icon></span
+            >
             {{ 'component.article.add.stepMenuItems.categorize' | translate }}
           </a>
           <a
@@ -44,7 +52,10 @@
             [class]="formStep === 3 ? 'active' : ''"
             (click)="changeStep(3)"
           >
-            <span>3</span>
+            <span *ngIf="!identityService.isLogged">3</span>
+            <span *ngIf="identityService.isLogged" class="valid"
+              ><mat-icon>check</mat-icon></span
+            >
             {{ 'component.article.add.stepMenuItems.contact' | translate }}
           </a>
           <div class="text-right">
@@ -63,7 +74,7 @@
         <!-- Step 1: Popis  -->
         <ng-container
           *ngIf="formStep === 1"
-          [formGroup]="addOblecenieForm.get('popis')"
+          [formGroup]="addOblecenieFormPopis"
         >
           <div class="row">
             <div class="col-md-8 / px-0">
@@ -85,11 +96,11 @@
                 <h2 class="h4">
                   {{ 'component.article.add.description.cena' | translate }}
                   <mat-icon
-                    class="ml-2 pointer"
+                    class="ml-2 cursor-help"
                     matTooltip="{{
                       'component.article.add.description.cenaDesc' | translate
                     }}"
-                    aria-label="'common.tooltipAria' | translate"
+                    aria-label="common.tooltipAria"
                     >help</mat-icon
                   >
                 </h2>
@@ -132,77 +143,25 @@
                 {{ 'component.article.add.description.foto' | translate }}
                 <span class="error-color">*</span>
                 <mat-icon
-                  class="ml-2 pointer"
+                  class="ml-2 cursor-help"
                   matTooltip="{{
                     'component.article.add.description.fotoDesc' | translate
                   }}"
-                  aria-label="'common.tooltipAria' | translate"
+                  aria-label="common.tooltipAria"
                   >help</mat-icon
                 >
               </h2>
-              <app-dnd [httpUrl]="APIuploadImage"></app-dnd>
-              <!-- <div
-                [fileUploadInputFor]="fileUploadQueue"
-                class="upload-drop-zone"
-              >
-                {{ 'common.form.fields.dragAndDrop' | translate }}
-              </div>
-              <mat-file-upload-queue
-                #fileUploadQueue
-                [fileAlias]="'file'"
-                [httpUrl]="APIuploadImage"
-                removeAllLabel="{{
-                  'common.form.fields.removeAll' | translate
-                }}"
-                uploadAllLabel="{{
-                  'common.form.fields.uploadAll' | translate
-                }}"
-              >
-                <mat-file-upload
-                  [file]="file"
-                  [id]="i"
-                  (onUpload)="uploadImagesComplete($event)"
-                  *ngFor="let file of fileUploadQueue.files; let i = index"
-                >
-                </mat-file-upload>
-              </mat-file-upload-queue>
-              <p class="m-0 mt-2">
-                <button
-                  mat-flat-button
-                  color="primary"
-                  (click)="uploadFileManualy.click()"
-                >
-                  {{ 'common.form.fields.uploadImagesManually' | translate }}
-                </button>
-                <input
-                  #uploadFileManualy
-                  id="singleFile"
-                  hidden
-                  multiple
-                  type="file"
-                  accept="image/x-png,image/gif,image/jpeg"
-                  [fileUploadInputFor]="fileUploadQueue"
-                />
-              </p> -->
+              <app-dnd formControlName="foto" [limit]="dndLimit"></app-dnd>
             </div>
           </div>
-          <!-- Validation form -->
-          <!-- <div class="row / mt-4">
-            <div
-              *ngIf="!addOblecenieForm.get('popis').valid"
-              class="alert alert-danger / mb-4"
-            >
-              <mat-icon class="mr-2">report_problem</mat-icon>
-              {{ 'common.form.error.invalid' | translate }}
-            </div>
-          </div> -->
-          <div class="row / mt-4 justify-content-center">
+          <div class="row / my-4 justify-content-center">
             <button
               mat-stroked-button
               [disabled]="!addOblecenieForm.get('popis').valid"
               class="mat-button--md"
               type="submit"
               color="primary"
+              (click)="changeStep(2)"
             >
               {{ 'common.next' | translate }}
             </button>
@@ -212,7 +171,7 @@
         <!-- Step 2: Zaradenie -->
         <ng-container
           *ngIf="formStep === 2"
-          [formGroup]="addOblecenieForm.get('zaradenie')"
+          [formGroup]="addOblecenieFormZaradenie"
         >
           <div class="row">
             <div class="col-md form-group">
@@ -220,11 +179,11 @@
                 {{ 'component.article.add.categorize.preKoho' | translate }}
                 <span class="error-color">*</span>
                 <mat-icon
-                  class="ml-2 pointer"
+                  class="ml-2 cursor-help"
                   matTooltip="{{
                     'component.article.add.dress.preKohoDesc' | translate
                   }}"
-                  aria-label="'common.tooltipAria' | translate"
+                  aria-label="common.tooltipAria"
                   >help</mat-icon
                 >
               </h2>
@@ -238,11 +197,11 @@
                 {{ 'component.article.add.categorize.obdobie' | translate }}
                 <span class="error-color">*</span>
                 <mat-icon
-                  class="ml-2 pointer"
+                  class="ml-2 cursor-help"
                   matTooltip="{{
                     'component.article.add.dress.obdobieDesc' | translate
                   }}"
-                  aria-label="'common.tooltipAria' | translate"
+                  aria-label="common.tooltipAria"
                   >help</mat-icon
                 >
               </h2>
@@ -260,11 +219,11 @@
                 {{ 'component.article.add.categorize.kategoria' | translate }}
                 <span class="error-color">*</span>
                 <mat-icon
-                  class="ml-2 pointer"
+                  class="ml-2 cursor-help"
                   matTooltip="{{
                     'component.article.add.dress.kategoriaDesc' | translate
                   }}"
-                  aria-label="'common.tooltipAria' | translate"
+                  aria-label="common.tooltipAria"
                   >help</mat-icon
                 >
               </h2>
@@ -278,8 +237,8 @@
                     formControlName="oblecenieKategoria"
                     required
                   >
-                    <mat-option>
-                      <!-- <ngx-mat-select-search
+                    <!-- <mat-option>
+                      <ngx-mat-select-search
                   [placeholderLabel]="
                     'common.form.fields.search' | translate: { number: 3 }
                   "
@@ -287,8 +246,8 @@
                   [noEntriesFoundLabel]="
                     'common.form.fields.noSearchEntryFound' | translate
                   "
-                ></ngx-mat-select-search> -->
-                    </mat-option>
+                ></ngx-mat-select-search>
+                    </mat-option> -->
                     <mat-optgroup
                       *ngFor="
                         let kategoriaGroup of oblecenieKategorieFilter$ | async;
@@ -314,7 +273,7 @@
                   (click)="openCategoryFilterDialog()"
                   [title]="'common.modalFilter' | translate"
                 >
-                  <mat-icon>list</mat-icon>
+                  <mat-icon>format_list_bulleted</mat-icon>
                 </button>
               </div>
             </div>
@@ -323,11 +282,11 @@
                 {{ 'component.article.add.categorize.znacka' | translate }}
                 <span class="error-color">*</span>
                 <mat-icon
-                  class="ml-2 pointer"
+                  class="ml-2 cursor-help"
                   matTooltip="{{
                     'component.article.add.dress.znackaDesc' | translate
                   }}"
-                  aria-label="'common.tooltipAria' | translate"
+                  aria-label="common.tooltipAria"
                   >help</mat-icon
                 >
               </h2>
@@ -337,7 +296,7 @@
                     'component.article.add.categorize.znacka' | translate
                   }}</mat-label>
                   <mat-select appFormControl formControlName="znacka" required>
-                    <mat-option>
+                    <!-- <mat-option>
                       <ngx-mat-select-search
                         [placeholderLabel]="
                           'common.form.fields.search' | translate: { number: 2 }
@@ -347,7 +306,7 @@
                           'common.form.fields.noSearchEntryFound' | translate
                         "
                       ></ngx-mat-select-search>
-                    </mat-option>
+                    </mat-option> -->
                     <ng-container
                       *ngFor="
                         let znacka of oblecenieZnackaFilter$ | async;
@@ -365,7 +324,7 @@
                   (click)="openZnackaFilterDialog()"
                   [title]="'common.modalFilter' | translate"
                 >
-                  <mat-icon>list</mat-icon>
+                  <mat-icon>format_list_bulleted</mat-icon>
                 </button>
               </div>
             </div>
@@ -376,11 +335,11 @@
                 {{ 'component.article.add.dress.prilezitost' | translate }}
                 <span class="error-color">*</span>
                 <mat-icon
-                  class="ml-2 pointer"
+                  class="ml-2 cursor-help"
                   matTooltip="{{
                     'component.article.add.dress.prilezitostDesc' | translate
                   }}"
-                  aria-label="'common.tooltipAria' | translate"
+                  aria-label="common.tooltipAria"
                   >help</mat-icon
                 >
               </h2>
@@ -394,11 +353,11 @@
                 {{ 'component.article.add.dress.zostrih' | translate }}
                 <span class="error-color">*</span>
                 <mat-icon
-                  class="ml-2 pointer"
+                  class="ml-2 cursor-help"
                   matTooltip="{{
                     'component.article.add.dress.zostrihDesc' | translate
                   }}"
-                  aria-label="'common.tooltipAria' | translate"
+                  aria-label="common.tooltipAria"
                   >help</mat-icon
                 >
               </h2>
@@ -412,11 +371,11 @@
                 {{ 'component.article.add.categorize.velkost' | translate }}
                 <span class="error-color">*</span>
                 <mat-icon
-                  class="ml-2 pointer"
+                  class="ml-2 cursor-help"
                   matTooltip="{{
                     'component.article.add.dress.velkostDesc' | translate
                   }}"
-                  aria-label="'common.tooltipAria' | translate"
+                  aria-label="common.tooltipAria"
                   >help</mat-icon
                 >
               </h2>
@@ -428,9 +387,7 @@
                 }"
               >
                 <app-validation
-                  [formGroupRef]="
-                    addOblecenieForm.get('zaradenie').get('velkost')
-                  "
+                  [formGroupRef]="addOblecenieFormZaradenieVelkost"
                 ></app-validation>
                 <div class="col-md form-group">
                   <mat-form-field appearance="outline">
@@ -493,6 +450,7 @@
                 [options]="zapinanie$ | async"
                 formControlName="zapinanie"
               ></app-select>
+              <hr />
               <h2 class="h4 / mt-4">
                 {{ 'component.article.add.categorize.stav' | translate }}
                 <span class="error-color">*</span>
@@ -509,11 +467,11 @@
                 {{ 'component.article.add.categorize.material' | translate }}
                 <span class="error-color">*</span>
                 <mat-icon
-                  class="ml-2 pointer"
+                  class="ml-2 cursor-help"
                   matTooltip="{{
                     'component.article.add.dress.materialDesc' | translate
                   }}"
-                  aria-label="'common.tooltipAria' | translate"
+                  aria-label="common.tooltipAria"
                   >help</mat-icon
                 >
               </h2>
@@ -542,28 +500,19 @@
                   (click)="openMaterialFilterDialog()"
                   [title]="'common.modalFilter' | translate"
                 >
-                  <mat-icon>list</mat-icon>
+                  <mat-icon>format_list_bulleted</mat-icon>
                 </button>
               </div>
             </div>
           </div>
-          <!-- Validation form -->
-          <div class="row / mt-4">
-            <div
-              *ngIf="!addOblecenieForm.get('zaradenie').valid"
-              class="alert alert-danger / mb-4"
-            >
-              <mat-icon class="mr-2">report_problem</mat-icon>
-              {{ 'common.form.error.invalid' | translate }}
-            </div>
-          </div>
-          <div class="row / justify-content-center">
+          <div class="row / my-4 justify-content-center">
             <button
               mat-stroked-button
               [disabled]="!addOblecenieForm.get('zaradenie').valid"
               class="mat-button--md"
               type="submit"
               color="primary"
+              (click)="changeStep(3)"
             >
               {{ 'common.next' | translate }}
             </button>
@@ -571,7 +520,56 @@
         </ng-container>
 
         <!-- Step 3: Kontakt  -->
-        <ng-container *ngIf="formStep === 3"> kontakt </ng-container>
+        <ng-container *ngIf="formStep === 3">
+          <!-- Logged -->
+          <div *ngIf="identityService.isLogged" class="row">
+            <div class="col-md">
+              <div class="d-flex align-items-center / mb-3">
+                <mat-icon class="big-success">face</mat-icon>
+                <div class="ml-3">
+                  <h2 class="h4">
+                    {{ 'component.article.add.contact.logged' | translate }}
+                  </h2>
+                  <p class="mb-0" *ngIf="identityService.identity.name">
+                    <strong
+                      >{{ identityService.identity.name }}
+                      {{ identityService.identity.surname }}</strong
+                    >
+                  </p>
+                  <p class="mb-0">
+                    {{ identityService.identity.email }}
+                  </p>
+                </div>
+              </div>
+              <p>
+                {{ 'component.article.add.contact.info' | translate }}
+                <strong
+                  >{{ identityService.identity.name }}
+                  {{ identityService.identity.surname }}</strong
+                >
+              </p>
+            </div>
+          </div>
+          <!-- Not logged -->
+          <div *ngIf="!identityService.isLogged" class="row">
+            <div class="col-md">
+              <div class="d-flex align-items-center">
+                <mat-icon class="big-disabled">person_search</mat-icon>
+                <div class="ml-3">
+                  <button
+                    mat-stroked-button
+                    class="mat-button--md"
+                    type="submit"
+                    color="primary"
+                    (click)="changeStep(3)"
+                  >
+                    {{ 'component.article.add.contact.notLogged' | translate }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </form>
     <!-- <div *ngIf="addKind == articleKind.shoes" class="modal-body">

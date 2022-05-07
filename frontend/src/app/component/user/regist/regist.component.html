@@ -20,7 +20,7 @@
       <p class="lead / mb-4">
         {{ 'component.user-' + componentMode.mode + '.perex' | translate }}
       </p>
-      <mat-form-field class="mb-2" appearance="outline">
+      <mat-form-field *ngIf="!isSocial" class="mb-2" appearance="outline">
         <mat-label>{{ 'common.form.fields.email' | translate }}</mat-label>
         <input
           appFormControl
@@ -32,71 +32,71 @@
           required
         />
       </mat-form-field>
-      <mat-form-field class="mb-2" appearance="outline">
-        <mat-label>{{ 'common.form.fields.name' | translate }}</mat-label>
-        <input
-          appFormControl
-          matInput
-          formControlName="name"
-          type="text"
-          id="name"
-          maxlength="50"
-          required
-        />
-      </mat-form-field>
-      <mat-form-field class="mb-2" appearance="outline">
-        <mat-label>{{ 'common.form.fields.surname' | translate }}</mat-label>
-        <input
-          appFormControl
-          matInput
-          formControlName="surname"
-          type="text"
-          id="surname"
-          maxlength="50"
-          required
-        />
-      </mat-form-field>
-
-      <mat-form-field class="mb-2" appearance="outline">
-        <mat-label>{{ 'common.form.fields.password' | translate }}</mat-label>
-        <input
-          appFormControl
-          matInput
-          formControlName="password"
-          type="password"
-          id="password"
-          maxlength="50"
-          required
-        />
-      </mat-form-field>
-      <mat-form-field class="mb-2" appearance="outline">
-        <mat-label>{{
-          'common.form.fields.confirmPassword' | translate
-        }}</mat-label>
-        <input
-          appFormControl
-          matInput
-          formControlName="passwordConfirm"
-          type="password"
-          id="confirmPassword"
-          maxlength="50"
-          required
-        />
-      </mat-form-field>
-
-      <ng-container *ngIf="!isEditMode">
-        <mat-form-field
-          appearance="outline"
-          *ngIf="roles$ | async as roles; else loading"
-        >
-          <mat-label>{{ 'common.form.fields.role' | translate }}</mat-label>
-          <mat-select appFormControl formControlName="role">
-            <mat-option *ngFor="let role of roles" [value]="role.id">
-              {{ role.description }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </ng-container>
+      <div class="row">
+        <div class="column col-6">
+          <mat-form-field class="mb-2" appearance="outline">
+            <mat-label>{{ 'common.form.fields.name' | translate }}</mat-label>
+            <input
+              appFormControl
+              matInput
+              formControlName="name"
+              type="text"
+              id="name"
+              maxlength="50"
+              required
+            />
+          </mat-form-field>
+        </div>
+        <div class="column col-6">
+          <mat-form-field class="mb-2" appearance="outline">
+            <mat-label>{{
+              'common.form.fields.surname' | translate
+            }}</mat-label>
+            <input
+              appFormControl
+              matInput
+              formControlName="surname"
+              type="text"
+              id="surname"
+              maxlength="50"
+              required
+            />
+          </mat-form-field>
+        </div>
+        <div class="column col-6">
+          <mat-form-field *ngIf="!isSocial" class="mb-2" appearance="outline">
+            <mat-label>{{
+              'common.form.fields.password' | translate
+            }}</mat-label>
+            <input
+              appFormControl
+              matInput
+              formControlName="password"
+              type="password"
+              id="password"
+              maxlength="50"
+              required
+            />
+          </mat-form-field>
+        </div>
+        <div class="column col-6">
+          <mat-form-field *ngIf="!isSocial" class="mb-2" appearance="outline">
+            <mat-label>{{
+              'common.form.fields.confirmPassword' | translate
+            }}</mat-label>
+            <input
+              appFormControl
+              matInput
+              formControlName="passwordConfirm"
+              type="password"
+              id="confirmPassword"
+              maxlength="50"
+              required
+            />
+          </mat-form-field>
+        </div>
+      </div>
+      <app-dnd formControlName="foto" [limit]="1"></app-dnd>
     </div>
   </mat-dialog-content>
 

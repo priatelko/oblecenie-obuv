@@ -1,9 +1,13 @@
+@import '~src/sass/variables';
+@import '~src/sass/mixins/functions';
+
+
 .container {
-  width: 450px;
-  height: 200px;
+  max-width: rem-calc(600px);
   padding: 2rem;
   text-align: center;
-  border: dashed 1px #979797;
+  border: dashed 5px $color-primary;
+  color: $color-primary;
   position: relative;
   margin: 0 auto;
 
@@ -16,20 +20,16 @@
     top: 0;
     left: 0;
   }
+}
 
-  label {
-    color: white;
-    width: 183px;
-    height: 44px;
-    border-radius: 21.5px;
-    background-color: #db202f;
-    padding: 8px 16px;
-  }
+:host.ng-touched.ng-invalid {
+  .container {
+    border-color: var(--red);
+    color: var(--red);
 
-  h3 {
-    font-size: 20px;
-    font-weight: 600;
-    color: #38424c;
+    .mat-button-base {
+      background-color: var(--red);
+    }
   }
 }
 
@@ -48,23 +48,19 @@
     align-items: center;
     border: dashed 1px #979797;
     margin-bottom: 1rem;
+    flex-grow: 1;
 
     img.delete {
       margin-left: 0.5rem;
       cursor: pointer;
       align-self: flex-end;
     }
-
-    display: flex;
-    flex-grow: 1;
-
     .name {
       font-size: 14px;
       font-weight: 500;
       color: #353f4a;
       margin: 0;
     }
-
     .size {
       font-size: 12px;
       font-weight: 500;
@@ -72,9 +68,27 @@
       margin: 0;
       margin-bottom: 0.25rem;
     }
-
     .info {
       width: 100%;
+    }
+
+    &.uploaded {
+      .info {
+        display: none;
+      }
+    }
+  }
+
+  &--uploaded {
+    display: flex;
+    flex-wrap: wrap;
+    .single-file {
+      flex-grow: 0;
+      margin: 0.5rem;
+      .img-prev {
+        max-width: 10rem;
+        max-height: 10rem;
+      }
     }
   }
 }

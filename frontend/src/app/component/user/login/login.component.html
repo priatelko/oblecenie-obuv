@@ -17,8 +17,6 @@
 >
   <mat-dialog-content>
     <div class="modal-body">
-      <p class="lead / mb-4">{{ 'component.user-login.perex' | translate }}</p>
-
       <div *ngIf="confirmationError" class="alert alert-info">
         <mat-icon>info</mat-icon>
         {{ 'component.user-login.confirm1' | translate }}
@@ -26,38 +24,37 @@
           'component.user-login.confirm2' | translate
         }}</a>
       </div>
-      <div *ngIf="badCredentials" class="alert alert-info">
-        <mat-icon class="mr-1">info</mat-icon>
-        <a appVoidLink (click)="forgotPassword()">{{
-          'component.user-forgotten.title' | translate
-        }}</a>
-      </div>
     </div>
 
-    <div class="d-flex justify-content-space-evently">
+    <div class="modal-body / d-flex flex-column py-0">
       <button
         type="button"
         mat-flat-button
         color="primary"
-        (click)="socialSignIn(SocialPlatform.Facebook)"
+        class="text-left mb-2 / mat-button--md"
+        (click)="socialPrepareSign(userProvider.Facebook)"
       >
         <app-svg [type]="SvgName.Facebook"></app-svg>
         {{ 'component.user-login.facebook' | translate }}
       </button>
       <button
         type="button"
-        mat-flat-button
-        color="primary"
-        (click)="socialSignIn(SocialPlatform.Google)"
+        mat-stroked-button
+        class="text-left / mat-button--md"
+        (click)="socialPrepareSign(userProvider.Google)"
       >
         <app-svg [type]="SvgName.Google"></app-svg>
         {{ 'component.user-login.google' | translate }}
       </button>
     </div>
-    <hr class="width-75 mt-4 mb-4" />
 
-    <div class="modal-body">
-      <mat-form-field *ngIf="!isSocial" appearance="outline" class="mb-2">
+    <div class="rule">
+      <hr class="width-75 m-0" />
+      <span *ngIf="!socialChoosen">{{ 'common.or' | translate }}</span>
+    </div>
+
+    <div class="modal-body / py-0">
+      <mat-form-field *ngIf="!socialChoosen" appearance="outline" class="mb-2">
         <mat-label>{{ 'common.form.fields.email' | translate }}</mat-label>
         <input
           appFormControl
@@ -69,7 +66,7 @@
           required
         />
       </mat-form-field>
-      <mat-form-field *ngIf="!isSocial" appearance="outline" class="mb-2">
+      <mat-form-field *ngIf="!socialChoosen" appearance="outline" class="mb-2">
         <mat-label>{{ 'common.form.fields.password' | translate }}</mat-label>
         <input
           appFormControl
@@ -89,24 +86,59 @@
         <mat-select appFormControl formControlName="role" required>
           <mat-option *ngFor="let role of roles" [value]="role.id">
             {{ role.description }}
-          </mat-option>
-        </mat-select>
+          </mat-option> </mat-select
+        ><mat-icon
+          class="role-tooltip"
+          matTooltip="{{ 'component.user-login.roleInfo' | translate }}"
+          [attr.aria-label]="'common.tooltipAria' | translate"
+          >help</mat-icon
+        >
       </mat-form-field>
+
+      <div class="mt-2 text-right">
+        <a appVoidLink (click)="forgotPassword()">{{
+          'component.header.user.forgotPassword' | translate
+        }}</a>
+      </div>
     </div>
   </mat-dialog-content>
 
-  <mat-dialog-actions>
+  <mat-dialog-actions class="justify-content-between mt-2">
     <button
+      *ngIf="socialChoosen"
       mat-flat-button
       [disabled]="loginForm.invalid"
       type="submit"
       color="primary"
-      class="mt-2"
+    >
+      {{
+        (socialChoosen == userProvider.Facebook
+          ? 'component.user-login.facebook'
+          : 'component.user-login.google'
+        ) | translate
+      }}
+    </button>
+    <button
+      *ngIf="!socialChoosen"
+      mat-flat-button
+      [disabled]="loginForm.invalid"
+      type="submit"
+      color="primary"
     >
       {{ 'common.form.fields.submit-login' | translate }}
     </button>
+    <button
+      mat-stroked-button
+      (click)="openRegistModal()"
+      type="button"
+      color="accent"
+    >
+      {{ 'component.header.user.regist' | translate }}
+    </button>
     <!-- <button type="button" (click)="test()">TEST AUTH frontend</button>
-    <button type="button" (click)="testEnd()">TEST AUTH backend</button> -->
+    <button type="button
+    " (click)="testEnd()">TEST AUTH backend</button> -->
+    <!-- <button type="button" (click)="debug()">debug</button> -->
   </mat-dialog-actions>
 </form>
 

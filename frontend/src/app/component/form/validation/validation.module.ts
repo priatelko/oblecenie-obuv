@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { ValidationComponent } from './validation.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CoreModule } from '../../../module/SharedModule/core.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [CoreModule, MatFormFieldModule],
+  imports: [CommonModule, MatInputModule, MatFormFieldModule, MatIconModule],
   declarations: [ValidationComponent],
   exports: [ValidationComponent],
 })

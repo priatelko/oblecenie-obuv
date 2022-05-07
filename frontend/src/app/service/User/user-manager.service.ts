@@ -1,25 +1,42 @@
 import { Injectable } from '@angular/core';
-import { FlashMessageService } from '../FlashMessage/flash-message.service';
 import { ApiRequestService } from '../ApiRequest/api-request.service';
 import { UserModel } from '../../model/Model/User.model';
 import { IdentityService } from './identity.service';
 import { HttpParams } from '@angular/common/http';
-import { ApiResponseModel } from '../../model/Model/ApiResponse.model';
 import { LogService } from '../Admin/log.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class UserManagerService {
   constructor(
-    private flashmessage: FlashMessageService,
     private apiRequestService: ApiRequestService,
     private identityService: IdentityService,
     private debug: LogService
   ) {}
 
+  // Check identity from backend
+  loggedBECheck() {
+    const request = this.apiRequestService.get<UserModel>(
+      '/user/logged-check',
+      {
+        cachable: false,
+      }
+    );
+
+    request.subscribe((res) => {
+      if (res.success) {
+        this.debug.log('User has been logged from BackEnd');
+        this.identityService.updateIdentity(res.data);
+      } else {
+        this.debug.log('Bad authorization, going to logout from FE');
+        this.identityService.logout();
+      }
+    });
+  }
+
   login(userToLogin) {
-    const request = this.apiRequestService.post<ApiResponseModel<UserModel>>(
+    const request = this.apiRequestService.post<UserModel>(
       '/user/login',
       userToLogin
     );
@@ -27,7 +44,7 @@ export class UserService {
     request.subscribe((res) => {
       if (res.success) {
         this.debug.log('User logged in');
-        this.identityService.updateUser(res.data);
+        this.identityService.updateIdentity(res.data);
       }
     });
 
@@ -35,7 +52,7 @@ export class UserService {
   }
 
   regist(userToRegister) {
-    const request = this.apiRequestService.post<ApiResponseModel<UserModel>>(
+    const request = this.apiRequestService.post<UserModel>(
       '/user/new',
       userToRegister
     );
@@ -43,7 +60,7 @@ export class UserService {
     request.subscribe((res) => {
       if (res.success) {
         this.debug.log('User signed up or profil updated');
-        this.identityService.updateUser(res.data);
+        this.identityService.updateIdentity(res.data);
       }
     });
 
@@ -51,15 +68,14 @@ export class UserService {
   }
 
   changeRole() {
-    const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
-      '/user/change-role',
-      { cachable: false }
-    );
+    const request = this.apiRequestService.get<UserModel>('/user/change-role', {
+      cachable: false,
+    });
 
     request.subscribe((res) => {
       if (res.success) {
         this.debug.log('User role has changed');
-        this.identityService.updateUser(res.data);
+        this.identityService.updateIdentity(res.data);
       }
     });
 
@@ -70,7 +86,7 @@ export class UserService {
     let params = new HttpParams();
     params = params.append('email', encodeURIComponent(email));
 
-    const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
+    const request = this.apiRequestService.get<UserModel>(
       '/user/send-confirmation',
       { params, cachable: false }
     );
@@ -85,7 +101,7 @@ export class UserService {
   }
 
   applyConfirmation(hash) {
-    const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
+    const request = this.apiRequestService.get<UserModel>(
       '/user/apply-confirmation/' + encodeURIComponent(hash),
       { cachable: false }
     );
@@ -103,7 +119,7 @@ export class UserService {
     let params = new HttpParams();
     params = params.append('email', encodeURIComponent(email));
 
-    const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
+    const request = this.apiRequestService.get<UserModel>(
       '/user/forgotten-password',
       { params, cachable: false }
     );
@@ -118,7 +134,7 @@ export class UserService {
   }
 
   confirmForgottenPassword(hash) {
-    const request = this.apiRequestService.get<ApiResponseModel<UserModel>>(
+    const request = this.apiRequestService.get<UserModel>(
       '/user/confirm-forgotten-password/' + hash,
       { cachable: false }
     );
@@ -133,8 +149,15 @@ export class UserService {
   }
 
   logout() {
-    this.identityService.logout();
-    this.flashmessage.success('common.user.logout');
-    this.debug.log('User logged out');
+    const request = this.apiRequestService.get<UserModel>('/user/logout', {
+      cachable: false,
+    });
+
+    request.subscribe((res) => {
+      if (res.success) {
+        this.debug.log('User logged out');
+        this.identityService.logout();
+      }
+    });
   }
 }

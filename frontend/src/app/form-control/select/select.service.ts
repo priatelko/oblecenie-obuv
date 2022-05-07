@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MultiSelectOption } from '../../custom/interfaces';
+import { MultiSelectOption } from '../../model/Entity/Form.entity';
 
 @Injectable({
   providedIn: 'root',

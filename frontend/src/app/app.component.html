@@ -1,6 +1,16 @@
 <app-loader [size]="loaderSize.Overlay"></app-loader>
 
-<ngx-loading-bar color="#cc0000" [includeSpinner]="false"></ngx-loading-bar>
+<!-- <ngx-loading-bar
+  color="#6610f2"
+  [includeSpinner]="false"
+  height="10px"
+  diameter="32px"
+></ngx-loading-bar> -->
+
+<mat-progress-bar
+  mode="determinate"
+  [value]="loader.value$ | async"
+></mat-progress-bar>
 
 <app-wai-status></app-wai-status>
 

@@ -54,6 +54,11 @@ body {
     color: $color-primary;
   }
 
+  // Overlkay
+  .cdk-overlay-dark-backdrop {
+    background: rgba(0, 0, 0, 0.52);
+  }
+
   // Form fields
   .mat-form-field-appearance-legacy {
     .mat-form-field-infix {
@@ -123,6 +128,9 @@ body {
           border-color: $color-border-disabled;
         }
       }
+    }
+    &.mat-teal {
+
     }
   }
   .mat-button {

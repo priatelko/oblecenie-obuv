@@ -67,11 +67,6 @@ export class Validator {
       return err;
     }
 
-    // Required
-    if (!isUndefined(control.errors.required)) {
-      err.push(this.translate('common.form.error.required'));
-    }
-
     // Email
     if (!isUndefined(control.errors.email)) {
       err.push(this.translate('common.form.error.email'));
@@ -81,8 +76,18 @@ export class Validator {
     if (!isUndefined(control.errors.minlength)) {
       err.push(
         this.translate('common.form.error.minlength').replace(
-          '%requiredLength',
+          '%length',
           control.errors.minlength.requiredLength
+        )
+      );
+    }
+
+    // Maxlength
+    if (!isUndefined(control.errors.maxlength)) {
+      err.push(
+        this.translate('common.form.error.maxlength').replace(
+          '%length',
+          control.errors.maxlength.requiredLength
         )
       );
     }
@@ -95,6 +100,11 @@ export class Validator {
     // One of group
     if (!isUndefined(control.errors.requiredOneOfGroup)) {
       err.push(this.translate('common.form.error.requiredOneOfGroup'));
+    }
+
+    // Required
+    if (!isUndefined(control.errors.required)) {
+      err.push(this.translate('common.form.error.required'));
     }
 
     return err;

@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-
 import { MatIconModule } from '@angular/material/icon';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { SelectOptionDirective } from '../../directive/select-option.directive';
@@ -15,41 +11,28 @@ import {
 import { VoidLinkDirective } from '../../directive/void-link.directive';
 import { IdentityService } from '../../service/User/identity.service';
 import { FlashMessageService } from '../../service/FlashMessage/flash-message.service';
-import { CommonModule } from '@angular/common';
+import { LogService } from '../../service/Admin/log.service';
 
-/*import {
-  SocialLoginModule,
-  AuthServiceConfig,
-  GoogleLoginProvider,
-  FacebookLoginProvider,
-} from 'angular-6-social-login';*/
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
-/*export function getAuthServiceConfigs() {
-  return new AuthServiceConfig([
-    {
-      id: FacebookLoginProvider.PROVIDER_ID,
-      provider: new FacebookLoginProvider(GLOBAL.facebookAppId),
-    },
-    {
-      id: GoogleLoginProvider.PROVIDER_ID,
-      provider: new GoogleLoginProvider(GLOBAL.googleClientId),
-    },
-  ]);
-}*/
+export function throwIfAlreadyLoaded(parentModule: any, moduleName: string) {
+  if (parentModule) {
+    throw new Error(
+      `${moduleName} has already been loaded. Import Core modules in the AppModule only.`
+    );
+  }
+}
 
 @NgModule({
   declarations: [SelectOptionDirective, VoidLinkDirective],
-  imports: [MatIconModule /*, SocialLoginModule*/],
+  imports: [],
   exports: [
-    // modules
-    CommonModule,
-    TranslateModule,
-    MatIconModule,
-    MatTooltipModule,
+    MatInputModule,
+    MatFormFieldModule,
     MatProgressBarModule,
-    // directives
-    SelectOptionDirective,
-    VoidLinkDirective,
+    MatIconModule,
   ],
   providers: [
     {
@@ -60,12 +43,9 @@ import { CommonModule } from '@angular/common';
         TranslateService,
         IdentityService,
         FlashMessageService,
+        LogService,
       ],
-    } /*,
-    {
-      provide: AuthServiceConfig,
-      useFactory: getAuthServiceConfigs,
-    },*/,
+    },
   ],
 })
 export class CoreModule {}

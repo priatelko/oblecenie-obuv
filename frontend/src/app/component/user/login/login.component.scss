@@ -1,0 +1,21 @@
+@import '~src/sass/placeholders';
+
+.rule {
+  position: relative;
+  padding: 1rem;
+  text-align: center;
+  hr {
+    border-top-width: 2px;
+    @extend %absolute-center;
+  }
+  span {
+    position: relative;
+    padding: 0 1rem;
+    background-color: white;
+  }
+}
+.role-tooltip {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

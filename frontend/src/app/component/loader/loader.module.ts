@@ -4,16 +4,10 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { LoaderComponent } from './loader.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CoreModule } from '../../module/SharedModule/core.module';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    CoreModule,
-    TranslateModule,
-    MatProgressSpinnerModule,
-  ],
+  imports: [CommonModule, TranslateModule, MatProgressSpinnerModule],
   declarations: [LoaderComponent],
   exports: [LoaderComponent],
 })

@@ -51,6 +51,7 @@
             'component.header.searchPlaceholder' | translate
           }}</mat-label>
           <input matInput type="search" tabindex="1" />
+          <!-- <span> počet inzerátov: 18670, počet predajcov: 1265 </span> -->
         </mat-form-field>
 
         <div class="input-group-append">
@@ -72,8 +73,8 @@
             mat-icon-button
             color="primary"
             *ngIf="
-              !identityService.logged ||
-              (identityService.logged && identityService.isSeller)
+              !identityService.isLogged ||
+              (identityService.isLogged && identityService.isSeller)
             "
             routerLink="/pridat-tovar"
             class="btn btn-outline-primary btn-transparent / text-color / d-flex align-items-center"
@@ -81,6 +82,7 @@
             ><mat-icon>add</mat-icon></a
           >
           <button
+            *ngIf="identityService.isLogged"
             mat-icon-button
             color="primary"
             #menuBtn
@@ -92,25 +94,20 @@
           >
             <mat-icon>person</mat-icon>
           </button>
+          <button
+            *ngIf="!identityService.isLogged"
+            mat-icon-button
+            color="primary"
+            type="button"
+            class="btn btn-outline-primary btn-transparent / text-color"
+            title="{{ 'component.header.user.login' | translate }}"
+            (click)="openLoginModal()"
+          >
+            <mat-icon>person</mat-icon>
+          </button>
           <mat-menu #menu="matMenu" aria-labelledby="userAccountDropdown">
-            <!-- Not logged -->
-            <ng-container *ngIf="!identityService.logged">
-              <div mat-menu-item (click)="openLoginModal()">
-                <mat-icon>input</mat-icon>
-                {{ 'component.header.user.login' | translate }}
-              </div>
-              <div mat-menu-item (click)="openRegistModal()">
-                <mat-icon>person_add</mat-icon>
-                {{ 'component.header.user.regist' | translate }}
-              </div>
-              <mat-divider></mat-divider>
-              <div mat-menu-item (click)="openForgottenPasswordModal()">
-                <mat-icon>person_outline</mat-icon>
-                {{ 'component.header.user.forgotPassword' | translate }}
-              </div>
-            </ng-container>
             <!-- Logged -->
-            <ng-container *ngIf="identityService.logged">
+            <ng-container>
               <div mat-menu-item disabled class="dropdown-header">
                 {{ identityService.roleName }}
               </div>
@@ -123,7 +120,7 @@
                 <mat-icon>account_circle</mat-icon>
                 {{ 'component.header.user.editProfile' | translate }}
               </div>
-              <mat-divider></mat-divider>
+              <!-- <mat-divider></mat-divider> -->
               <div mat-menu-item (click)="logout()">
                 <mat-icon>power_settings_new</mat-icon>
                 {{ 'component.header.user.logout' | translate }}

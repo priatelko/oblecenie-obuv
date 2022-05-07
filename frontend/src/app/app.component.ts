@@ -4,6 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { FlashMessageService } from './service/FlashMessage/flash-message.service';
 import { QueryCommandsService } from './service/Query-commands/query-commands.service';
 import { LoaderSize } from './component/loader/loader.component';
+import { UserManagerService } from './service/User/user-manager.service';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 
 @Component({
   selector: 'app-root',
@@ -16,14 +18,18 @@ export class AppComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
     private flashMessageService: FlashMessageService,
-    private queryComands: QueryCommandsService
+    private queryComands: QueryCommandsService,
+    private userManager: UserManagerService,
+    public loader: LoadingBarService
   ) {
     // Set translation lang
     this.translateService.setDefaultLang('sk');
     this.translateService.use('sk');
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userManager.loggedBECheck();
+  }
 
   removeFlashmessage(i) {
     this.flashMessageService.removeFlashMessage(i);

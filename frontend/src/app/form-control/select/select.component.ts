@@ -2,7 +2,6 @@ import {
   Component,
   OnInit,
   Input,
-  OnDestroy,
   Injector,
   AfterContentInit,
   ChangeDetectionStrategy,
@@ -19,7 +18,10 @@ import { BindObservable } from 'bind-observable';
 import { Observable } from 'rxjs';
 import { SelectType } from './select.interface';
 import { filter } from 'lodash';
-import { MultiSelectOption, SelectOptionId } from '../../custom/interfaces';
+import {
+  MultiSelectOption,
+  SelectOptionId,
+} from '../../model/Entity/Form.entity';
 import { traverseNode } from '../../custom/helpers';
 
 @Component({
@@ -36,7 +38,7 @@ import { traverseNode } from '../../custom/helpers';
   styleUrls: ['./select.component.scss'],
 })
 export class SelectComponent
-  implements OnInit, AfterContentInit, ControlValueAccessor, OnDestroy
+  implements OnInit, AfterContentInit, ControlValueAccessor
 {
   disabled: boolean;
   value: SelectOptionId | SelectOptionId[] = [];
@@ -77,8 +79,6 @@ export class SelectComponent
     }
   }
 
-  ngOnDestroy() {}
-
   toggleEvent(selectId: SelectOptionId, checked: boolean) {
     if (!checked) {
       // Set or insert value
@@ -109,7 +109,7 @@ export class SelectComponent
     });
   }
 
-  // API
+  // CVA
   CVA_ON_CHANGE = (value: SelectOptionId | SelectOptionId[]) => {};
   CVA_ON_TOUCHED = () => {};
 

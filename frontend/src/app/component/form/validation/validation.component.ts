@@ -7,11 +7,11 @@ import { head } from 'lodash';
   selector: 'app-validation',
   template: `
     <div
+      *ngIf="invalid && error"
       class="alert alert-float alert-danger"
       role="alert"
-      *ngIf="invalid && error"
     >
-      <mat-icon class="mr-2" aria-label="'common.tooltipAria' | translate"
+      <mat-icon class="mr-2" aria-label="common.tooltipAria"
         >report_problem</mat-icon
       >
       <span>{{ error }}</span>

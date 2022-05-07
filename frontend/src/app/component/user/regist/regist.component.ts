@@ -1,27 +1,22 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Observable } from 'rxjs';
-
-import { UserService } from '../../../service/User/user.service';
-import { LoginRoleRepositoryService } from '../../../model/Repository/LoginRole.repository';
+import { UserManagerService } from '../../../service/User/user-manager.service';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { LoginRoleEntity } from '../../../model/Entity/LoginRole.entity';
 import { IdentityService } from '../../../service/User/identity.service';
 import { Validator } from '../../../custom/validator.custom';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
+@UntilDestroy()
 @Component({
   selector: 'app-user-regist',
   templateUrl: './regist.component.html',
   styleUrls: ['./regist.component.scss'],
 })
-export class RegistComponent implements OnInit, OnDestroy {
+export class RegistComponent implements OnInit {
   registForm: FormGroup;
-
-  roles$: Observable<LoginRoleEntity[]>;
 
   // Regist mode
   componentMode = {
@@ -32,11 +27,13 @@ export class RegistComponent implements OnInit, OnDestroy {
   get isEditMode() {
     return this.dialogData && this.dialogData.editProfile === true;
   }
+  get isSocial() {
+    return this.identityService.isSocial;
+  }
 
   constructor(
-    private userService: UserService,
+    private userService: UserManagerService,
     private identityService: IdentityService,
-    private loginRoleRepository: LoginRoleRepositoryService,
     private dialogRef: MatDialogRef<RegistComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any
   ) {
@@ -44,8 +41,6 @@ export class RegistComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.roles$ = this.loginRoleRepository.getRoles();
-
     // Edit mode
     if (this.isEditMode) {
       this.componentMode = {
@@ -80,13 +75,14 @@ export class RegistComponent implements OnInit, OnDestroy {
       ]),
       name: new FormControl(null, [Validators.required, Validator.trim()]),
       surname: new FormControl(null, [Validators.required, Validator.trim()]),
-      role: new FormControl(null, [Validators.required]),
       password,
       passwordConfirm,
     });
 
-    if (this.isEditMode) {
-      formGroup.removeControl('role');
+    if (this.isSocial) {
+      formGroup.removeControl('email');
+      formGroup.removeControl('password');
+      formGroup.removeControl('passwordConfirm');
     }
 
     return formGroup;
@@ -102,6 +98,4 @@ export class RegistComponent implements OnInit, OnDestroy {
         }
       });
   }
-
-  ngOnDestroy() {}
 }

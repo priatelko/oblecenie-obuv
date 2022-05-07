@@ -1,19 +1,8 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  Input,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, OnInit, Input, TrackByFunction } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import {
-  ArtikelTyp,
-  Material,
-  Znacka,
-} from '../../../model/Entity/Article.entity';
+import { ArtikelTyp } from '../../../model/Entity/ArticleForm.entity';
 import { ArticleRepositoryService } from '../../../model/Repository/Article.repository';
-import { untilDestroyed } from 'ngx-take-until-destroy';
 import { LoaderSize } from '../../loader/loader.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalFilterComponent } from '../../modal-filter/modal-filter.component';
@@ -23,31 +12,41 @@ import {
   ModalFilterService,
 } from '../../modal-filter/modal-filter.service';
 
-import { MultiSelectOption, SelectOption } from '../../../custom/interfaces';
+import {
+  DBSimpleEntity,
+  Kategorie,
+  KategorieChildren,
+  MultiSelectOption,
+  SelectOption,
+} from '../../../model/Entity/Form.entity';
 import { SelectType } from '../../../form-control/select/select.interface';
 import { includes } from 'lodash';
 import { AddArticleFormTypeService } from './form-type.service';
-import { KategorieChildren, Kategorie } from '../../../model/Entity/Dress';
 import { Validator } from '../../../custom/validator.custom';
-import { HttpResponse } from '@angular/common/http';
-import { FlashMessageService } from '../../../service/FlashMessage/flash-message.service';
+import { IdentityService } from '../../../service/User/identity.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { LoginComponent } from '../../user/login/login.component';
+import { ArticleService } from '../../../service/Article/article.service';
 
+@UntilDestroy()
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddComponent implements OnInit, OnDestroy {
+export class AddComponent implements OnInit {
   articleKind = ArtikelTyp;
   loaderSize = LoaderSize;
-  APIuploadImage = GLOBAL.APIuploadImage;
 
   SelectType = SelectType;
 
   formStep = 1;
 
   addOblecenieForm: FormGroup;
+  addOblecenieFormPopis: FormGroup;
+  addOblecenieFormZaradenie: FormGroup;
+  addOblecenieFormZaradenieVelkost: FormGroup;
 
   preKoho$: Observable<MultiSelectOption[]>;
   obdobie$: Observable<MultiSelectOption[]>;
@@ -65,6 +64,8 @@ export class AddComponent implements OnInit, OnDestroy {
   oblecenieKategorieFilter: FormControl = new FormControl();
   oblecenieZnackaFilter: FormControl = new FormControl();
 
+  dndLimit = this.identityService.limit.ArticleImageUpload;
+
   get oblecenieKategorieFilter$() {
     return this.addArticleDressRepository.getDressCategoriesFilter();
   }
@@ -74,7 +75,7 @@ export class AddComponent implements OnInit, OnDestroy {
 
   get isVelkostInvalid() {
     return Validator.isInvalid(
-      this.addOblecenieForm.get('zaradenie').get('velkost') as FormGroup
+      this.addOblecenieFormZaradenie.get('velkost') as FormGroup
     );
   }
 
@@ -83,18 +84,29 @@ export class AddComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private modalFilterService: ModalFilterService,
     private formType: AddArticleFormTypeService,
-    private flashmessage: FlashMessageService
+    private articleService: ArticleService,
+    public identityService: IdentityService
   ) {}
 
   trackByFn(index, item: Kategorie) {
     return item.item;
   }
-  trackByIdFn(index, item: KategorieChildren) {
-    return item.id;
-  }
+  // trackByIdFn(index, item: KategorieChildren) {
+  //   return item.id;
+  // }
+  trackByIdFn: TrackByFunction<any> = (index: number, item: any) => item.id;
 
   ngOnInit() {
     this.addOblecenieForm = this.formType.getDress();
+    this.addOblecenieFormPopis = this.addOblecenieForm.get(
+      'popis'
+    ) as FormGroup;
+    this.addOblecenieFormZaradenie = this.addOblecenieForm.get(
+      'zaradenie'
+    ) as FormGroup;
+    this.addOblecenieFormZaradenieVelkost = this.addOblecenieFormZaradenie.get(
+      'velkost'
+    ) as FormGroup;
 
     this.preKoho$ = this.addArticleDressRepository.getPreKohoOptions();
     this.obdobie$ = this.addArticleDressRepository.getObdobieOptions();
@@ -141,23 +153,39 @@ export class AddComponent implements OnInit, OnDestroy {
     // this.changeStep(2);
   }
 
-  ngOnDestroy() {}
-
   changeStep(step: number | null = null) {
+    // Mark fields as touched
+    switch (this.formStep) {
+      case 1:
+        this.addOblecenieFormPopis.markAllAsTouched();
+        break;
+      case 2:
+        this.addOblecenieFormZaradenie.markAllAsTouched();
+        break;
+    }
+
     if (step === null) {
       this.formStep++;
     } else {
       this.formStep = step;
     }
+
+    // Login
+    if (step === 3 && !this.identityService.isLogged) {
+      this.dialog.open(LoginComponent, {
+        width: GLOBAL.dialogWidth.sm,
+      });
+    }
   }
 
   uploadImagesComplete(e) {
-    if (e.event instanceof HttpResponse) {
+    // Zachytavanie chyb sa deje automaticky
+    /*if (e.event instanceof HttpResponse) {
       if (e.event.body.error) {
         this.flashmessage.error('common.response.code.15');
       } else if (e.event.body.success) {
       }
-    }
+    }*/
   }
 
   onSubmit(): void {
@@ -226,17 +254,17 @@ export class AddComponent implements OnInit, OnDestroy {
       required: true,
       multiselect: false,
       minSearchLength: 2,
-      defaultValue: this.addOblecenieForm.get('zaradenie').get('znacka').value,
+      defaultValue: this.addOblecenieFormZaradenie.get('znacka').value,
       checkType: SelectType.Radio,
-      items: this.modalFilterService.transformItems<Znacka, Znacka>(
-        this.addArticleDressRepository.znacka,
-        (item): MultiSelectOption => {
-          return {
-            id: item.id,
-            label: item.nazov,
-          };
-        }
-      ),
+      items: this.modalFilterService.transformItems<
+        DBSimpleEntity,
+        DBSimpleEntity
+      >(this.addArticleDressRepository.znacka, (item): MultiSelectOption => {
+        return {
+          id: item.id,
+          label: item.nazov,
+        };
+      }),
     };
 
     this.dialog
@@ -247,7 +275,7 @@ export class AddComponent implements OnInit, OnDestroy {
       .beforeClosed()
       .subscribe((value) => {
         if (value) {
-          this.addOblecenieForm.get('zaradenie').get('znacka').setValue(value);
+          this.addOblecenieFormZaradenie.get('znacka').setValue(value);
         }
       });
   }
@@ -256,17 +284,16 @@ export class AddComponent implements OnInit, OnDestroy {
     const data: ModalFilterOptions = {
       header: 'component.article.add.categorize.material',
       required: true,
-      defaultValue: this.addOblecenieForm.get('zaradenie').get('material')
-        .value,
-      items: this.modalFilterService.transformItems<Material, Material>(
-        this.addArticleDressRepository.material,
-        (item): MultiSelectOption => {
-          return {
-            id: item.id,
-            label: item.nazov,
-          };
-        }
-      ),
+      defaultValue: this.addOblecenieFormZaradenie.get('material').value,
+      items: this.modalFilterService.transformItems<
+        DBSimpleEntity,
+        DBSimpleEntity
+      >(this.addArticleDressRepository.material, (item): MultiSelectOption => {
+        return {
+          id: item.id,
+          label: item.nazov,
+        };
+      }),
     };
 
     this.dialog
@@ -281,12 +308,19 @@ export class AddComponent implements OnInit, OnDestroy {
             .filter((item) => includes(res, item.id))
             .map((item) => item.nazov);
 
-          this.addOblecenieForm.get('zaradenie').get('material').setValue(res);
+          this.addOblecenieFormZaradenie.get('material').setValue(res);
           this.addOblecenieForm
             .get('zaradenie')
             .get('materialDisplay')
             .setValue(materialNames.join(', '));
         }
       });
+  }
+
+  debug() {
+    console.log(this.addOblecenieForm);
+  }
+  loadForm() {
+    this.addOblecenieForm.setValue(this.articleService.loadForm());
   }
 }

@@ -5,6 +5,12 @@
 .error-color {
   color: $red;
 }
+.success-color {
+  color: var(--teal);
+}
+.primary-color {
+  color: $color-primary;
+}
 
 /* Sizes */
 .width-75 {
@@ -18,6 +24,9 @@
 }
 .cursor-auto {
   cursor: auto;
+}
+.cursor-help {
+  cursor: help;
 }
 
 /* Alignment */

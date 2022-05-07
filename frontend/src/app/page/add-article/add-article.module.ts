@@ -4,9 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { AddArticleComponent } from './add-article.component';
 import { HeaderModule } from '../../component/header/header.module';
-import { CoreModule } from '../../module/SharedModule/core.module';
 import { AddModule } from '../../component/article/add/add.module';
-import { ArtikelTyp } from '../../model/Entity/Article.entity';
+import { ArtikelTyp } from '../../model/Entity/ArticleForm.entity';
+import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -29,13 +29,15 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CoreModule,
+    TranslateModule,
     RouterModule.forChild(routes),
+
     MatButtonModule,
+
     HeaderModule,
     AddModule,
   ],
   declarations: [AddArticleComponent],
-  exports: [AddArticleComponent, CoreModule],
+  exports: [AddArticleComponent],
 })
 export class AddArticleModule {}

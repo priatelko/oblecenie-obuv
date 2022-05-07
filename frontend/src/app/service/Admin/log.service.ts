@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IdentityService } from '../User/identity.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LogService {
   constructor(private identity: IdentityService) {}

@@ -6,8 +6,9 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { merge } from 'lodash';
-import { ArtikelTyp } from '../../../model/Entity/Article.entity';
+import { ArtikelTyp } from '../../../model/Entity/ArticleForm.entity';
 import { Validator } from '../../../custom/validator.custom';
+import { IdentityService } from '../../../service/User/identity.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class AddArticleFormTypeService {
   private dressFieldsZaradenie: { [key: string]: AbstractControl };
   private commonFieldsPopis: { [key: string]: AbstractControl };
 
-  constructor() {
+  constructor(public identityService: IdentityService) {
     this.commonFieldsZaradenie = {
       typ: new FormControl(null, []),
       preKoho: new FormControl(null, [Validators.required]),
@@ -31,6 +32,10 @@ export class AddArticleFormTypeService {
     this.commonFieldsPopis = {
       titulok: new FormControl(null, [Validators.required]),
       popis: new FormControl(null, [Validators.required]),
+      foto: new FormControl(null, [
+        Validators.required,
+        Validators.maxLength(this.identityService.limit.ArticleImageUpload),
+      ]),
       cena: new FormControl(null, []),
       // url: new FormControl(null, []),
       // expiracia: new FormControl(null, []),
@@ -62,7 +67,7 @@ export class AddArticleFormTypeService {
       zaradenie: new FormGroup(
         merge(this.commonFieldsZaradenie, this.dressFieldsZaradenie)
       ),
-      popis: new FormGroup(merge(this.commonFieldsPopis)),
+      popis: new FormGroup(this.commonFieldsPopis),
     });
     form.get('zaradenie').get('typ').setValue(ArtikelTyp.dress);
 

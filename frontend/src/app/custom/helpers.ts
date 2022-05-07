@@ -1,6 +1,6 @@
-import {AbstractControl} from '@angular/forms';
-import {has, deburr, assign, some, forEach} from 'lodash';
-import {ChildrenNode} from './interfaces';
+import { AbstractControl } from '@angular/forms';
+import { has, deburr, assign, some, forEach } from 'lodash';
+import { ChildrenNode } from '../model/Entity/Form.entity';
 
 import FuzzySearch from 'fuzzy-search';
 
@@ -29,7 +29,7 @@ export function traverseNode(
   pathNodes = [],
   depth = 0
 ) {
-  forEach(items, i => {
+  forEach(items, (i) => {
     if (depth === 0) {
       pathNodes = [];
     }
@@ -50,7 +50,7 @@ export function traverseNode(
 }
 
 export function appendNoDiacritics(items, propertyName = 'label') {
-  items.forEach(rootNode => {
+  items.forEach((rootNode) => {
     rootNode.noDiaNode = deburr(rootNode[propertyName]);
     if (has(rootNode, 'children')) {
       appendNoDiacritics(rootNode.children, propertyName);
@@ -68,14 +68,14 @@ export function searchInModel(
 ) {
   if (needle.length < minSearchLength) {
     // Show all nodes
-    traverseNode(model, item => {
+    traverseNode(model, (item) => {
       item.hidden = false;
     });
     return model;
   }
 
   // Hide all nodes
-  traverseNode(model, item => {
+  traverseNode(model, (item) => {
     item.hidden = true;
   });
 
@@ -84,7 +84,7 @@ export function searchInModel(
   // Search root
   const searcherRoot = new FuzzySearch(model, [propertyName]);
   const resultRoot = searcherRoot.search(needle);
-  resultRoot.forEach(itemSearch => {
+  resultRoot.forEach((itemSearch) => {
     if (some(model, itemSearch)) {
       itemSearch.hidden = false;
     }
@@ -97,13 +97,13 @@ export function searchInModel(
 
       const isResult = Boolean(resultChildren.length);
 
-      resultChildren.forEach(itemChild => {
+      resultChildren.forEach((itemChild) => {
         itemChild.hidden = false;
       });
 
       // Enable root
       if (isResult && path.length) {
-        path.forEach(itemPath => {
+        path.forEach((itemPath) => {
           itemPath.hidden = false;
         });
       }

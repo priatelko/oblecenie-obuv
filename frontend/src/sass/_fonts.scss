@@ -2,19 +2,19 @@
 
 /* Custom font icons */
 @font-face {
-  font-family: "oo";
-src:url("~src/assets/fonts/oo.eot");
-src:url("~src/assets/fonts/oo.eot?#iefix") format("embedded-opentype"),
-  url("~src/assets/fonts/oo.woff") format("woff"),
-  url("~src/assets/fonts/oo.ttf") format("truetype"),
-  url("~src/assets/fonts/oo.svg#oo") format("svg");
+  font-family: 'oo';
+  src: url('~src/assets/fonts/oo.eot');
+  src: url('~src/assets/fonts/oo.eot?#iefix') format('embedded-opentype'),
+    url('~src/assets/fonts/oo.woff') format('woff'),
+    url('~src/assets/fonts/oo.ttf') format('truetype'),
+    url('~src/assets/fonts/oo.svg#oo') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 .oo-icon {
   &:before {
-    font-family: "oo" !important;
+    font-family: 'oo' !important;
     font-style: normal !important;
     font-weight: normal !important;
     font-variant: normal !important;
@@ -26,36 +26,43 @@ src:url("~src/assets/fonts/oo.eot?#iefix") format("embedded-opentype"),
   }
 
   &--shirt0:before {
-    content: "\e000";
+    content: '\e000';
   }
   &--shoe0:before {
-    content: "\e001";
+    content: '\e001';
   }
   &--dress:before {
-    content: "\e002";
+    content: '\e002';
   }
   &--shoe:before {
-    content: "\e003";
+    content: '\e003';
   }
 }
-
 
 /* Material icons */
 @font-face {
   font-family: 'Material Icons';
-  src: url('~src/assets/fonts/MaterialIcons-Regular.eot'); /* IE9 Compat Modes */
-  src: url('~src/assets/fonts/MaterialIcons-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('~src/assets/fonts/MaterialIcons-Regular.woff2') format('woff2'), /* Super Modern Browsers */
-       url('~src/assets/fonts/MaterialIcons-Regular.woff') format('woff'), /* Pretty Modern Browsers */
-       url('~src/assets/fonts/MaterialIcons-Regular.ttf')  format('truetype'), /* Safari, Android, iOS */
-       url('~src/assets/fonts/MaterialIcons-Regular.svg#svgFontName') format('svg'); /* Legacy iOS */
+  // src: url('~src/assets/fonts/MaterialIcons-Regular.eot'); /* IE9 Compat Modes */
+  // src: url('~src/assets/fonts/MaterialIcons-Regular.eot?#iefix')
+  //     format('embedded-opentype'),
+  //   /* IE6-IE8 */ url('~src/assets/fonts/MaterialIcons-Regular.woff2')
+  //     format('woff2'),
+  //   /* Super Modern Browsers */
+  //     url('~src/assets/fonts/MaterialIcons-Regular.woff') format('woff'),
+  //   /* Pretty Modern Browsers */
+  //     url('~src/assets/fonts/MaterialIcons-Regular.ttf') format('truetype'),
+  //   /* Safari, Android, iOS */
+  //     url('~src/assets/fonts/MaterialIcons-Regular.svg#svgFontName')
+  //     format('svg'); /* Legacy iOS */
+
+    src: url('~src/assets/fonts/MaterialIconsRound-Regular.otf') format("opentype");
 }
 
 .mat-icon {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
-  font-size: 1.5rem;  /* Preferred icon size */
+  font-size: 1.5rem; /* Preferred icon size */
   line-height: 1;
   text-transform: none;
   letter-spacing: normal;
@@ -74,6 +81,19 @@ src:url("~src/assets/fonts/oo.eot?#iefix") format("embedded-opentype"),
 
   /* Support for IE. */
   font-feature-settings: 'liga';
+
+  width: auto !important;
+  height: auto !important;
+
+  &--md {
+    font-size: 2.25rem;
+  }
+  &--lg {
+    font-size: 4.5rem;
+  }
+  &--hg {
+    font-size: 7rem;
+  }
 }
 
 // Universal
@@ -85,8 +105,6 @@ body {
       .oo-icon:before,
       .mat-icon {
         font-size: 2.25rem;
-        width: auto !important;
-        height: auto !important;
       }
     }
   }

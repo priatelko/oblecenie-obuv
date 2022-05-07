@@ -8,49 +8,38 @@ import {
   BaseRepositoryInterface,
 } from './Base.repository';
 import { SelectService } from '../../form-control/select/select.service';
-import {
-  PreKoho,
-  Obdobie,
-  Znacka,
-  Stav,
-  Material,
-} from '../Entity/Article.entity';
 import FuzzySearch from 'fuzzy-search';
 import { assign } from 'lodash';
 import { appendNoDiacritics } from '../../custom/helpers';
+import { DressResponseEntity } from '../Entity/DressForm.entity';
 import {
+  DBSimpleEntity,
   Kategorie,
-  Prilezitost,
-  Zostrih,
-  Velkost,
-  Styl,
   KategorieChildren,
-  Zapinanie,
-  DressFormDataEntity,
-} from '../Entity/Dress';
+} from '../Entity/Form.entity';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleRepositoryService
-  extends BaseRepositoryService<DressFormDataEntity>
-  implements BaseRepositoryInterface<DressFormDataEntity>
+  extends BaseRepositoryService<DressResponseEntity>
+  implements BaseRepositoryInterface<DressResponseEntity>
 {
-  dataStream: Observable<DressFormDataEntity>;
+  dataStream: Observable<DressResponseEntity>;
   API = '/get/add-dress-article';
-  dataStreamFinal: Observable<DressFormDataEntity>;
+  dataStreamFinal: Observable<DressResponseEntity>;
 
   private oblecenieCategories$: Observable<Kategorie[]>;
   private oblecenieCategoriesFilter$ = new BehaviorSubject<Kategorie[]>([]);
   oblecenieCategories: Kategorie[];
 
-  private znacka$: Observable<Znacka[]>;
-  private znackaFilter$ = new BehaviorSubject<Znacka[]>([]);
-  znacka: Znacka[];
+  private znacka$: Observable<DBSimpleEntity[]>;
+  private znackaFilter$ = new BehaviorSubject<DBSimpleEntity[]>([]);
+  znacka: DBSimpleEntity[];
 
-  private material$: Observable<Material[]>;
-  private materialFilter$ = new BehaviorSubject<Material[]>([]);
-  material: Material[];
+  private material$: Observable<DBSimpleEntity[]>;
+  private materialFilter$ = new BehaviorSubject<DBSimpleEntity[]>([]);
+  material: DBSimpleEntity[];
 
   constructor(
     private apiRequestService: ApiRequestService,
@@ -62,12 +51,12 @@ export class ArticleRepositoryService
 
   findAll() {
     this.dataStream = this.apiRequestService
-      .get<DressFormDataEntity>(this.API)
-      .pipe(map((d) => d.data as DressFormDataEntity));
+      .get<DressResponseEntity>(this.API)
+      .pipe(map((d) => d.data as DressResponseEntity));
     return this;
   }
 
-  result(): Observable<DressFormDataEntity> {
+  result(): Observable<DressResponseEntity> {
     return this.dataStream;
   }
 
@@ -76,49 +65,49 @@ export class ArticleRepositoryService
   }
 
   getPreKohoOptions() {
-    return this.selectService.mapToOptions<PreKoho>(
+    return this.selectService.mapToOptions<DBSimpleEntity>(
       this.dataStreamFinal.pipe(map((res) => res.preKoho))
     );
   }
 
   getObdobieOptions() {
-    return this.selectService.mapToOptions<Obdobie>(
+    return this.selectService.mapToOptions<DBSimpleEntity>(
       this.dataStreamFinal.pipe(map((res) => res.obdobie))
     );
   }
 
   getPrilezitostOptions() {
-    return this.selectService.mapToOptions<Prilezitost>(
+    return this.selectService.mapToOptions<DBSimpleEntity>(
       this.dataStreamFinal.pipe(map((res) => res.prilezitost))
     );
   }
 
   getZapinanieOptions() {
-    return this.selectService.mapToOptions<Zapinanie>(
+    return this.selectService.mapToOptions<DBSimpleEntity>(
       this.dataStreamFinal.pipe(map((res) => res.zapinanie))
     );
   }
 
   getStavOptions() {
-    return this.selectService.mapToOptions<Stav>(
+    return this.selectService.mapToOptions<DBSimpleEntity>(
       this.dataStreamFinal.pipe(map((res) => res.stav))
     );
   }
 
   getZostrihOptions() {
-    return this.selectService.mapToOptions<Zostrih>(
+    return this.selectService.mapToOptions<DBSimpleEntity>(
       this.dataStreamFinal.pipe(map((res) => res.zostrih))
     );
   }
 
   getVelkostOptions() {
-    return this.selectService.mapToOptions<Velkost>(
+    return this.selectService.mapToOptions<DBSimpleEntity>(
       this.dataStreamFinal.pipe(map((res) => res.velkost))
     );
   }
 
   getStylOptions() {
-    return this.selectService.mapToOptions<Styl>(
+    return this.selectService.mapToOptions<DBSimpleEntity>(
       this.dataStreamFinal.pipe(map((res) => res.styl))
     );
   }

@@ -1,28 +1,19 @@
-# What to do to go production
-
-- Dokoncit pridavanie artikov, a spravit aj jednoduchu verziu: Nazov tovaru, fotky a tagy, ta bude ako prva a bude viditelny link - rozsireny formular
-- Archiv pridanych artiklov, editacia
-- Zobrazenie artiklov + filter
-- Objednavka - formular, odosle sa email predajcovi
-- Design by Facebook, svetly a tmavy mod
-
 # Temp
 
-titulok: 'Titulok'
-titulok_desc: 'Zadajte stručný a výstižný názov tovaru.'
-cena: 'Cena tovaru'
-cena_desc: 'V prípade dohody nechajte nulu alebo prázdne políčko.'
-popis: 'Popis'
-popis_desc: 'Popíšte detaily tovaru, ktoré bližšie špecifikujú tovar.'
-photos: 'Fotografie tovaru'
-photos_desc: 'Obrázky môžete z priečinka presunúť do označenej zóny. Hlavný náhľadový obrázok vyberiete kliknutím na jeho plochu.'
-photos_input_placeholder: 'Popis obrazku...'
-photos_button: 'Pridať obrázok'
-contact:
-email_contact: 'Kontakt na Vás'
-email_contact_desc: 'Nemusíte mať obavy, Váš e-mail nebude zverejnený.'
+O tovare môže byť otvorená diskusia ale čítať tu môže len VIP person.
+VIP bude mať aj šablóny na artikel
+Budem mať aj interaktívne pridávanie a z nejakej druhej stránky
+
+Zobrazenie sa budú uprednostňovať najviac lakované teda obľúbené
+Pri VIP pri otvorení artiklu obrazy relevantné s inými jeho inzerátmi
+
+Pri inzeráte by malo hneď byť vidieť hodnotenie alebo ranking predajcu či je overený nový neoverený problémový a podobne
+
+...
 
 # Next future
+
+- Max. 3 obrazky za artikel,
 
 ## Pridat artikel
 
@@ -30,7 +21,7 @@ email_contact_desc: 'Nemusíte mať obavy, Váš e-mail nebude zverejnený.'
 - Do modal zoznamu pridat aj popis, co je v tooltipe
 - Select modal, spravit trosku chybovu hlasku, napr. pri material sitia, dolnit pri multiple de/select all
 - Spodne Step menu a Pridat nech je fixne na spodu, obsah nech sa scroluje
-- Filôe upload, help buble - zobrazi sa hint nad buttonmi upload, upload all...
+- File upload, help buble - zobrazi sa hint nad buttonmi upload, upload all...
 
 ### URL
 
@@ -40,6 +31,7 @@ Je striktne zakazane udavat adresy web stranok do popisov tovaru. Pri opakovanyc
 
 ## Pridane artikle
 
+- Správne vyplnený filter dáva najrelevantnejšie výsledky a takto articel budú hodnotené od užívateľov na základe toho čo oni hľadali alebo si zadávali do filtra tým sa stávajú articel populárnejšie keď majú kladné hodnotenia
 - Zobrazovat statistitu - pocet videni...
 
 ## Kolekcia
@@ -49,8 +41,11 @@ Je striktne zakazane udavat adresy web stranok do popisov tovaru. Pri opakovanyc
 - Dalsia kolekcia spoplatena
 - Limit na kolekciu cca 10 artiklov.
 
-## Topovanie artiklov
+## Earn money
 
+- Zarabanie bude formou poplatky mesacne, ktore bude prinjasat benefity:
+  - S / Bez
+  - Pocet obrazkov na artikel 12/3
 - SMS platba
 - Nebude ziadny ukazovatel ze je top. Iba budu v popredi
 
@@ -70,3 +65,7 @@ Facebook - https://developers.facebook.com/apps/428795860541786/rate-limit-detai
 APP ID: 428795860541786
 APP secret: b917ed7016a02f43df8ce5ac38b081b8
 Client token: 98906c2aa702014773cc64fcc34b9df3
+
+# Doctrine
+
+- php bin/console doctrine:schema:update --force

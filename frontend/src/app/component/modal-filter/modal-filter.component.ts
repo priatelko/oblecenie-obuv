@@ -9,8 +9,8 @@ import { ModalFilterOptions } from './modal-filter.service';
 import { LoaderSize } from '../loader/loader.component';
 import { FormControl, Validators } from '@angular/forms';
 import { SelectType } from '../../form-control/select/select.interface';
-import { merge, some } from 'lodash';
-import { MultiSelectOption, BreakException } from '../../custom/interfaces';
+import { merge } from 'lodash';
+import { MultiSelectOption } from '../../model/Entity/Form.entity';
 import {
   appendNoDiacritics,
   searchInModel,
