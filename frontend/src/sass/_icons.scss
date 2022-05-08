@@ -85,14 +85,17 @@
   width: auto !important;
   height: auto !important;
 
+  &--sm {
+    font-size: 2.25rem !important;
+  }
   &--md {
-    font-size: 2.25rem;
+    font-size: 3.25rem !important;
   }
   &--lg {
-    font-size: 4.5rem;
+    font-size: 4.5rem !important;
   }
   &--hg {
-    font-size: 7rem;
+    font-size: 7rem !important;
   }
 }
 

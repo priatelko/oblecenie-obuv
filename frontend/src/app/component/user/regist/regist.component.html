@@ -96,7 +96,20 @@
           </mat-form-field>
         </div>
       </div>
-      <app-dnd formControlName="foto" [limit]="1"></app-dnd>
+      <div class="row">
+        <div class="column col-12">
+          <p class="mt-1">
+            {{ 'common.form.fields.profilePicture' | translate }}:
+          </p>
+          <app-dnd
+            formControlName="photo"
+            [size]="enumSize.sm"
+            [context]="enumImageContext.avatar"
+            [limit]="1"
+            [multiple]="false"
+          ></app-dnd>
+        </div>
+      </div>
     </div>
   </mat-dialog-content>
 

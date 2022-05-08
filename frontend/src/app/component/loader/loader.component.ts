@@ -15,7 +15,7 @@ export enum LoaderSize {
 
 @Component({
   selector: 'app-loader',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss'],
 })

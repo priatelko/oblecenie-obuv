@@ -130,7 +130,7 @@ export class LoginComponent implements OnInit {
 
   openRegistModal() {
     this.dialog.open(RegistComponent, {
-      width: GLOBAL.dialogWidth.sm,
+      width: GLOBAL.dialogWidth.md,
     });
   }
 

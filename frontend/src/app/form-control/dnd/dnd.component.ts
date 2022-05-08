@@ -6,6 +6,7 @@ import {
   Input,
   AfterContentInit,
   Injector,
+  OnInit,
 } from '@angular/core';
 import { LogService } from '../../service/Admin/log.service';
 import { FlashMessageService } from '../../service/FlashMessage/flash-message.service';
@@ -20,8 +21,9 @@ import { ApiResponseModel } from '../../model/Model/ApiResponse.model';
 import { ImageEntity } from 'src/app/model/Entity/ArticleForm.entity';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
-import { IdentityService } from 'src/app/service/User/identity.service';
 import * as _ from 'lodash';
+import { enumImageContext, enumSize } from '../../model/Model/Appearance';
+import { translate, validFields } from '../../custom/helpers';
 
 interface DndFile extends File {
   progress: number;
@@ -40,25 +42,46 @@ interface DndFile extends File {
   templateUrl: './dnd.component.html',
   styleUrls: ['./dnd.component.scss'],
 })
-export class DndComponent implements AfterContentInit, ControlValueAccessor {
+export class DndComponent
+  implements OnInit, AfterContentInit, ControlValueAccessor
+{
   @ViewChild('fileDropRef', { static: false }) fileDropEl: ElementRef;
 
+  @Input() multiple = true;
   @Input() limit: number;
+  @Input() size: enumSize;
+  @Input() context: enumImageContext;
 
   formControlRef: FormControl = new FormControl();
+  limitErrorText = '';
 
   files: DndFile[] = [];
   disabled: boolean;
   removingValidationError = false;
+
+  enumSize = enumSize;
+
+  // default
+  sizeClasses = {
+    iconUpload: 'mat-icon--hg',
+    title: 'h3',
+  };
 
   constructor(
     private flashmessage: FlashMessageService,
     private debug: LogService,
     private injector: Injector,
     private apiRequestService: ApiRequestService,
-    private domSanitizer: DomSanitizer,
-    private identityService: IdentityService
+    private domSanitizer: DomSanitizer
   ) {}
+
+  ngOnInit(): void {
+    // Size classes
+    if (this.size === enumSize.sm) {
+      this.sizeClasses.iconUpload = 'mat-icon--lg';
+      this.sizeClasses.title = 'h4 m-0';
+    }
+  }
 
   ngAfterContentInit() {
     const ngControl: NgControl = this.injector.get(NgControl, null);
@@ -79,6 +102,11 @@ export class DndComponent implements AfterContentInit, ControlValueAccessor {
    * handle file from browsing
    */
   fileBrowseHandler(files) {
+    // Required Inputs
+    if (!validFields(this.limit, this.context)) {
+      return;
+    }
+
     this.prepareFilesList(files.files);
   }
 
@@ -96,7 +124,6 @@ export class DndComponent implements AfterContentInit, ControlValueAccessor {
     if (this.formControlRef) {
       this.formControlRef.updateValueAndValidity();
     }
-    this.cleanFiles();
   }
 
   /**
@@ -104,52 +131,38 @@ export class DndComponent implements AfterContentInit, ControlValueAccessor {
    * @param files (Files List)
    */
   prepareFilesList(files: DndFile[]) {
-    // remove possibly dump node
-    this.cleanFiles();
-
-    for (const item of files) {
-      // Over limit
-      if (this.files.length + 1 > this.limit) {
-        this.files.push(null);
-        // after 3sec remove null node, so error
-        if (!this.removingValidationError) {
-          this.removingValidationError = true;
-          setTimeout(() => {
-            this.cleanFiles();
-            this.removingValidationError = false;
-          }, 3000);
-        }
-      } else {
-        this.files.push(item);
-
-        item.progress = 0;
-
-        const formData: any = new FormData();
-        // formData.append("name", name);
-        formData.append('file', item);
-
-        // TODO: zmenit `any` za model co sa vrati
-        this.apiRequestService
-          .postEvents<ImageEntity>('/upload-image', formData)
-          .subscribe((data: ApiResponseModel<ImageEntity>) => {
-            switch (data.event.type) {
-              case HttpEventType.UploadProgress:
-                const eventTotal = data.event.total ? data.event.total : 0;
-                item.progress = Math.round(
-                  (data.event.loaded / eventTotal) * 100
-                );
-                break;
-              case HttpEventType.Response:
-                item.imgPath = this.domSanitizer.bypassSecurityTrustUrl(
-                  environment.urlBe + data.data.imgPath
-                );
-                this.debug.log('Image Upload Successfully!', data);
-            }
-          });
-      }
+    // Over limit
+    if (this.files.length + files.length > this.limit) {
+      this.invalidateLimit();
+      return;
     }
+    for (const item of files) {
+      this.files.push(item);
 
-    //this.formControlRef.updateValueAndValidity();
+      item.progress = 0;
+
+      const formData: any = new FormData();
+      formData.append('context', this.context);
+      formData.append('file', item);
+
+      this.apiRequestService
+        .postEvents<ImageEntity>('/upload-image', formData)
+        .subscribe((data: ApiResponseModel<ImageEntity>) => {
+          switch (data.event.type) {
+            case HttpEventType.UploadProgress:
+              const eventTotal = data.event.total ? data.event.total : 0;
+              item.progress = Math.round(
+                (data.event.loaded / eventTotal) * 100
+              );
+              break;
+            case HttpEventType.Response:
+              item.imgPath = this.domSanitizer.bypassSecurityTrustUrl(
+                environment.urlBe + data.data.imgPath
+              );
+              this.debug.log('Image Upload Successfully!', data);
+          }
+        });
+    }
 
     this.CVA_ON_TOUCHED();
     this.CVA_ON_CHANGE(this.files);
@@ -174,19 +187,14 @@ export class DndComponent implements AfterContentInit, ControlValueAccessor {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
   }
 
-  cleanFiles() {
-    this.files = _.reduce(
-      this.files,
-      (result, value) => {
-        if (value !== null) {
-          result.push(value);
-        }
-        return result;
-      },
-      []
+  private invalidateLimit() {
+    this.limitErrorText = translate('common.form.error.maxlength').replace(
+      '%length',
+      this.limit
     );
-
-    this.formControlRef.setValue(this.files);
+    setTimeout(() => {
+      this.limitErrorText = null;
+    }, 5000);
   }
 
   // CVA

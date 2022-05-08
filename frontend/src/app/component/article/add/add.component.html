@@ -17,8 +17,6 @@
   </div>
 
   <!-- Pridat oblecenie -->
-  VYSKUSAT mat-error
-
   <ng-container *ngIf="addKind == articleKind.dress">
     <form
       *ngIf="preKoho$ | async as preKoho; else loading"
@@ -79,15 +77,17 @@
           <div class="row">
             <div class="col-md-8 / px-0">
               <div class="form-group">
-                <h2 class="h4">
-                  {{ 'component.article.add.description.titulok' | translate }}
-                  <span class="error-color">*</span>
-                </h2>
                 <mat-form-field appearance="outline">
                   <mat-label>{{
-                    'component.article.add.description.titulokDesc' | translate
+                    'component.article.add.description.titulok' | translate
                   }}</mat-label>
                   <input matInput type="text" formControlName="titulok" />
+                  <mat-hint
+                    >{{
+                      'component.article.add.description.titulokDesc'
+                        | translate
+                    }}
+                  </mat-hint>
                 </mat-form-field>
               </div>
             </div>
@@ -121,7 +121,7 @@
             <div class="col form-group">
               <h2 class="h4">
                 {{ 'component.article.add.description.popis' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
               </h2>
 
               <mat-form-field appearance="outline">
@@ -141,7 +141,7 @@
             <div class="col form-group">
               <h2 class="h4">
                 {{ 'component.article.add.description.foto' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
                 <mat-icon
                   class="ml-2 cursor-help"
                   matTooltip="{{
@@ -151,7 +151,11 @@
                   >help</mat-icon
                 >
               </h2>
-              <app-dnd formControlName="foto" [limit]="dndLimit"></app-dnd>
+              <app-dnd
+                formControlName="foto"
+                [context]="enumImageContext.articleDress"
+                [limit]="dndLimit"
+              ></app-dnd>
             </div>
           </div>
           <div class="row / my-4 justify-content-center">
@@ -177,7 +181,7 @@
             <div class="col-md form-group">
               <h2 class="h4">
                 {{ 'component.article.add.categorize.preKoho' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
                 <mat-icon
                   class="ml-2 cursor-help"
                   matTooltip="{{
@@ -195,7 +199,7 @@
             <div class="col-md form-group / mt-4 mt-md-0">
               <h2 class="h4">
                 {{ 'component.article.add.categorize.obdobie' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
                 <mat-icon
                   class="ml-2 cursor-help"
                   matTooltip="{{
@@ -217,7 +221,7 @@
             <div class="col-md form-group">
               <h2 class="h4">
                 {{ 'component.article.add.categorize.kategoria' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
                 <mat-icon
                   class="ml-2 cursor-help"
                   matTooltip="{{
@@ -280,7 +284,7 @@
             <div class="col-md form-group">
               <h2 class="h4">
                 {{ 'component.article.add.categorize.znacka' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
                 <mat-icon
                   class="ml-2 cursor-help"
                   matTooltip="{{
@@ -333,7 +337,7 @@
             <div class="col-md form-group">
               <h2 class="h4">
                 {{ 'component.article.add.dress.prilezitost' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
                 <mat-icon
                   class="ml-2 cursor-help"
                   matTooltip="{{
@@ -351,7 +355,7 @@
             <div class="col-md form-group">
               <h2 class="h4">
                 {{ 'component.article.add.dress.zostrih' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
                 <mat-icon
                   class="ml-2 cursor-help"
                   matTooltip="{{
@@ -369,7 +373,7 @@
               ></app-select>
               <h2 class="h4 / mt-4">
                 {{ 'component.article.add.categorize.velkost' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
                 <mat-icon
                   class="ml-2 cursor-help"
                   matTooltip="{{
@@ -434,7 +438,7 @@
             <div class="col-md form-group">
               <h2 class="h4">
                 {{ 'component.article.add.dress.styl' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
               </h2>
               <app-select
                 [options]="styl$ | async"
@@ -444,7 +448,7 @@
             <div class="col-md form-group">
               <h2 class="h4">
                 {{ 'component.article.add.dress.zapinanie' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
               </h2>
               <app-select
                 [options]="zapinanie$ | async"
@@ -453,7 +457,7 @@
               <hr />
               <h2 class="h4 / mt-4">
                 {{ 'component.article.add.categorize.stav' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
               </h2>
               <app-select
                 [options]="stav$ | async"
@@ -465,7 +469,7 @@
             <div class="col form-group">
               <h2 class="h4">
                 {{ 'component.article.add.categorize.material' | translate }}
-                <span class="error-color">*</span>
+                <span class="color-error">*</span>
                 <mat-icon
                   class="ml-2 cursor-help"
                   matTooltip="{{

@@ -60,44 +60,44 @@ body {
   }
 
   // Form fields
-  .mat-form-field-appearance-legacy {
-    .mat-form-field-infix {
-      padding-bottom: 0;
-    }
-  }
+  // .mat-form-field-appearance-legacy {
+  //   .mat-form-field-infix {
+  //     padding-bottom: 0;
+  //   }
+  // }
   .mat-form-field-wrapper {
     padding-bottom: 0;
   }
-  .mat-radio-label {
-    white-space: normal !important;
-  }
-  .mat-selection-list {
-    &#{&}--radio {
-      .mat-list-item {
-        display: flex;
-        align-items: center;
-        padding: 0 16px;
-        height: 48px;
+  // .mat-radio-label {
+  //   white-space: normal !important;
+  // }
+  // .mat-selection-list {
+  //   &#{&}--radio {
+  //     .mat-list-item {
+  //       display: flex;
+  //       align-items: center;
+  //       padding: 0 16px;
+  //       height: 48px;
 
-        .mat-radio-button {
-          display: flex;
-          flex-grow: 1;
-          height: 100%;
-        }
+  //       .mat-radio-button {
+  //         display: flex;
+  //         flex-grow: 1;
+  //         height: 100%;
+  //       }
 
-        .mat-radio-label {
-          margin: 0;
-          flex-grow: 1;
-          flex-direction: row-reverse;
-          justify-content: space-between;
-        }
+  //       .mat-radio-label {
+  //         margin: 0;
+  //         flex-grow: 1;
+  //         flex-direction: row-reverse;
+  //         justify-content: space-between;
+  //       }
 
-        .mat-radio-label-content {
-          padding-right: rem-calc(10px);
-        }
-      }
-    }
-  }
+  //       .mat-radio-label-content {
+  //         padding-right: rem-calc(10px);
+  //       }
+  //     }
+  //   }
+  // }
 
   // Dropdown menu
   .dropdown-header {

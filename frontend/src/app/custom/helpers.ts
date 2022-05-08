@@ -1,8 +1,10 @@
 import { AbstractControl } from '@angular/forms';
-import { has, deburr, assign, some, forEach } from 'lodash';
+import { has, deburr, assign, some, forEach, isNil } from 'lodash';
 import { ChildrenNode } from '../model/Entity/Form.entity';
 
 import FuzzySearch from 'fuzzy-search';
+import { TranslateService } from '@ngx-translate/core';
+import { ContainerInjector } from '../module/ContainerGetter/container-getter.module';
 
 export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
   if (abstractControl.validator) {
@@ -111,4 +113,27 @@ export function searchInModel(
   });
 
   return model;
+}
+
+export function validFields(...input) {
+  let valid = true;
+  input.forEach((val) => {
+    if (isNil(val)) {
+      valid = false;
+      throw new Error("Attribute '" + val + "' is required");
+    }
+  });
+  return valid;
+}
+
+export function translate(key) {
+  const translateService = ContainerInjector.get(TranslateService);
+
+  let translated;
+
+  translateService.get(key).subscribe((res) => {
+    translated = res;
+  });
+
+  return translated;
 }

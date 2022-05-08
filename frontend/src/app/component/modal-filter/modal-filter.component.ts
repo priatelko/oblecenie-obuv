@@ -19,7 +19,7 @@ import {
 
 @Component({
   selector: 'app-modal-filter',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './modal-filter.component.html',
   styleUrls: ['./modal-filter.component.scss'],
 })

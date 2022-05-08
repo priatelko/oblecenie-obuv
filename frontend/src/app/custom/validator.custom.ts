@@ -6,8 +6,7 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { isUndefined, isNull, forEach, isEmpty } from 'lodash';
-import { TranslateService } from '@ngx-translate/core';
-import { ContainerInjector } from '../module/ContainerGetter/container-getter.module';
+import { translate } from './helpers';
 
 export class Validator {
   /** Validators */
@@ -69,13 +68,13 @@ export class Validator {
 
     // Email
     if (!isUndefined(control.errors.email)) {
-      err.push(this.translate('common.form.error.email'));
+      err.push(translate('common.form.error.email'));
     }
 
     // Minlength
     if (!isUndefined(control.errors.minlength)) {
       err.push(
-        this.translate('common.form.error.minlength').replace(
+        translate('common.form.error.minlength').replace(
           '%length',
           control.errors.minlength.requiredLength
         )
@@ -85,7 +84,7 @@ export class Validator {
     // Maxlength
     if (!isUndefined(control.errors.maxlength)) {
       err.push(
-        this.translate('common.form.error.maxlength').replace(
+        translate('common.form.error.maxlength').replace(
           '%length',
           control.errors.maxlength.requiredLength
         )
@@ -94,17 +93,17 @@ export class Validator {
 
     // Same As
     if (!isUndefined(control.errors.sameAs)) {
-      err.push(this.translate('common.form.error.sameAs'));
+      err.push(translate('common.form.error.sameAs'));
     }
 
     // One of group
     if (!isUndefined(control.errors.requiredOneOfGroup)) {
-      err.push(this.translate('common.form.error.requiredOneOfGroup'));
+      err.push(translate('common.form.error.requiredOneOfGroup'));
     }
 
     // Required
     if (!isUndefined(control.errors.required)) {
-      err.push(this.translate('common.form.error.required'));
+      err.push(translate('common.form.error.required'));
     }
 
     return err;
@@ -112,17 +111,5 @@ export class Validator {
 
   static isInvalid(form: FormControl | FormGroup) {
     return form.touched && !form.valid && !isEmpty(form.errors);
-  }
-
-  static translate(key) {
-    const translateService = ContainerInjector.get(TranslateService);
-
-    let translated;
-
-    translateService.get(key).subscribe((res) => {
-      translated = res;
-    });
-
-    return translated;
   }
 }

@@ -6,10 +6,10 @@ import { DndComponent } from './dnd.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
-import { BrowserModule } from '@angular/platform-browser';
+import { PluralTranslatePipe } from '../../pipe/pluralTranslate.pipe';
 
 @NgModule({
-  declarations: [DndComponent],
+  declarations: [DndComponent, PluralTranslatePipe],
   imports: [
     CommonModule,
     ValidationModule,

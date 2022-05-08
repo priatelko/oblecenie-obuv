@@ -27,6 +27,7 @@ import { IdentityService } from '../../../service/User/identity.service';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LoginComponent } from '../../user/login/login.component';
 import { ArticleService } from '../../../service/Article/article.service';
+import { enumImageContext } from '../../../model/Model/Appearance';
 
 @UntilDestroy()
 @Component({
@@ -40,6 +41,7 @@ export class AddComponent implements OnInit {
   loaderSize = LoaderSize;
 
   SelectType = SelectType;
+  enumImageContext = enumImageContext;
 
   formStep = 1;
 

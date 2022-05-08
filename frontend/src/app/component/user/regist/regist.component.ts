@@ -8,6 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IdentityService } from '../../../service/User/identity.service';
 import { Validator } from '../../../custom/validator.custom';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { enumImageContext, enumSize } from '../../../model/Model/Appearance';
 
 @UntilDestroy()
 @Component({
@@ -17,6 +18,9 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 })
 export class RegistComponent implements OnInit {
   registForm: FormGroup;
+
+  enumSize = enumSize;
+  enumImageContext = enumImageContext;
 
   // Regist mode
   componentMode = {
@@ -75,6 +79,7 @@ export class RegistComponent implements OnInit {
       ]),
       name: new FormControl(null, [Validators.required, Validator.trim()]),
       surname: new FormControl(null, [Validators.required, Validator.trim()]),
+      photo: new FormControl(null),
       password,
       passwordConfirm,
     });

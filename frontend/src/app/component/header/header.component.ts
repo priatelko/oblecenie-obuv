@@ -48,7 +48,7 @@ export class HeaderComponent {
   openEditProfileModal() {
     this.dialog.open(RegistComponent, {
       data: { editProfile: true },
-      width: GLOBAL.dialogWidth.sm,
+      width: GLOBAL.dialogWidth.md,
     });
   }
   openLoginModal() {

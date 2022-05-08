@@ -5,7 +5,7 @@
   width: 100%;
   padding: 2rem;
   padding-bottom: 1rem;
-  background-color: $color-container-light;
+  background-color: $color-container;
 
   h1 {
     font-size: $h2-font-size;
@@ -21,6 +21,12 @@
     &:last-of-type {
       flex-shrink: 1;
     }
+  }
+}
+
+.search-field {
+  ::ng-deep .mat-form-field-wrapper {
+    padding: 0;
   }
 }
 

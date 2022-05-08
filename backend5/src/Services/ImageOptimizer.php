@@ -10,11 +10,11 @@ use App\Services\ProjectConfig;
 
 class ImageOptimizer {
 
-    const SEP       = DIRECTORY_SEPARATOR;
+    const SEP                            = DIRECTORY_SEPARATOR;
+    const IMAGE_TEMP_RELATIVE_PATH       = '/img/_temp';
 
     private const MAX_WIDTH = 1200;
     private const MAX_HEIGHT = 800;
-    private const MAX_FILE_SIZE = 5; //MB
 
     private $imagine;
     private $projectConfig;
@@ -36,7 +36,8 @@ class ImageOptimizer {
             $height = $width / $ratio;
         }
 
-        $fileRelativePath = '/img/articles/temp/'.$file->getClientOriginalName();
+        $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+        $fileRelativePath = self::IMAGE_TEMP_RELATIVE_PATH . self::SEP . $filename;
         $photo = $this->imagine->open($file->getPathname());
         $photo->resize(new Box($width, $height))->save($this->projectConfig->getProjetAbsRoot(). self::SEP.'public' .$fileRelativePath);
 

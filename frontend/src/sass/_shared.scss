@@ -2,14 +2,14 @@
   min-width: auto;
 }
 
-.form-group {
-  padding: 1rem;
-  border-radius: 0.5rem;
-  background-color: $color-container;
-  margin: 0 0.5rem;
+// .form-group {
+//   padding: 1rem;
+//   border-radius: 0.5rem;
+//   background-color: $color-container;
+//   margin: 0 0.5rem;
 
-  @extend %box-shadow;
-}
+//   @extend %box-shadow;
+// }
 
 .form-group-invalid {
   background-color: rgba($color-error, 0.1);

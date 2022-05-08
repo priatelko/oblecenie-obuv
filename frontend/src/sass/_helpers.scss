@@ -1,15 +1,18 @@
 /* Color */
-.text-color {
-  color: $gray-900;
+.color-body {
+  color: $body-color;
 }
-.error-color {
+.color-error {
   color: $red;
 }
-.success-color {
+.color-success {
   color: var(--teal);
 }
-.primary-color {
+.color-primary {
   color: $color-primary;
+}
+.color-gray {
+  color: var(--gray);
 }
 
 /* Sizes */

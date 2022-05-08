@@ -26,7 +26,7 @@ import { traverseNode } from '../../custom/helpers';
 
 @Component({
   selector: 'app-select',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

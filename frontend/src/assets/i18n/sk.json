@@ -49,7 +49,11 @@
         "search": "hľadaj (min {number}. znaky)...",
         "noSearchEntryFound": "Vyhľadávaný reťazec sa nenašiel.",
         "chooseFromList": "Vyberte zo zoznamu.",
-        "dragAndDrop": "Obrázky presuňte sem.",
+        "profilePicture": "Profilový obrázok",
+        "dragAndDrop": {
+          "plural": "Obrázky presuňte sem.",
+          "singular": "Obrázok presuňte sem."
+        },
         "uploadImagesManually": "Vybrať obrázky z disku",
         "removeAll": "Odstrániť obrázky",
         "uploadAll": "Nahrať vybrané obrázky"
@@ -115,7 +119,7 @@
         "advancedSearch": "Rozšírené vyhľadávanie",
         "user": "Užívateľský účet"
       },
-      "searchPlaceholder": "Hľadaj oblečenie alebo obuv, zadaj názov alebo slovo...",
+      "searchPlaceholder": "Oblečenie a obuv...",
       "user": {
         "login": "Vstúpte",
         "regist": "Zaregistrujte sa zadarmo",
@@ -148,8 +152,8 @@
     },
     "article": {
       "add": {
-        "title": "Pridať artikel",
-        "perex": "Vyberte, čo chete ponúknuť na predaj. Oblečenie alebo obuv?",
+        "title": "Vyberte si, čo chcete pridať. Olečenie alebo obuv?",
+        "perex": "Oporúčame Vám údaje zadávať pravdivo a hodnotne vyplnené pre lepšie vyhľadávanie Vašim zákazníkom. Je striktne zakázané do popisov uvádzať akékoľvek kontaktaktné údaje (vrátane obrázkov).",
         "stepMenuItems": {
           "categorize": "Zaradenie",
           "description": "Popis",
@@ -181,7 +185,7 @@
         },
         "dress": {
           "title": "Pridať oblečenie",
-          "perex": "Oporúčame Vám údaje zadávať pravdivo a hodnotne vyplnené pre lepšie vyhľadávanie Vašim zákazníkom. Je striktne zakázané do popisu uvádzať webové adresy a iné kontakty (vrátane obrázkov). Takýto artikel bude vymazaný alebo Váš účet zablokovaný.",
+          "perex": "...",
           "preKohoDesc": "Komu je oblečenie určené.",
           "kategoriaDesc": "Zkrátené rukávy, nohavice, sukne nastavte v časti „Zostrih“.",
           "znackaDesc": "Sadu oblečenia zadajte pod „Rôzne značky“. Keď neviete, vyberte „Iné“.",

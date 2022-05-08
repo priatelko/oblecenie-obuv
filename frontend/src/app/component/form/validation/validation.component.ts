@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validator } from '../../../custom/validator.custom';
 import { head } from 'lodash';
@@ -7,7 +7,7 @@ import { head } from 'lodash';
   selector: 'app-validation',
   template: `
     <div
-      *ngIf="invalid && error"
+      *ngIf="(invalid && error) || plainMsg"
       class="alert alert-float alert-danger"
       role="alert"
     >
@@ -34,9 +34,11 @@ import { head } from 'lodash';
     `,
   ],
 })
-export class ValidationComponent implements OnInit {
+export class ValidationComponent {
   @Input() formControlRef: FormControl;
   @Input() formGroupRef: FormGroup;
+
+  @Input() plainMsg: string;
 
   get invalid() {
     const x = this.formControlRef
@@ -50,9 +52,10 @@ export class ValidationComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
-
   get error() {
+    if (this.plainMsg) {
+      return this.plainMsg;
+    }
     const errors = this.formControlRef
       ? Validator.getErrors(this.formControlRef)
       : this.formGroupRef
