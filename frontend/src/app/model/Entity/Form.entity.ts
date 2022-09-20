@@ -19,16 +19,16 @@ export interface NoDiaNode {
   noDiaNode: string;
 }
 
-// Pocitadlo id, nazov
+// Pocitadlo id, title
 export interface DBSimpleEntity {
   id: SelectOptionId;
-  nazov: string;
+  title: string;
 }
 
-// Kategorie
-export interface Kategorie {
+// Categories
+export interface Categories {
   item: string;
-  children: KategorieChildren[];
+  children: CategoriesChildren[];
 }
 
-export interface KategorieChildren extends NoDiaNode, DBSimpleEntity {}
+export interface CategoriesChildren extends NoDiaNode, DBSimpleEntity {}

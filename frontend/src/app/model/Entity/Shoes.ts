@@ -1,4 +1,4 @@
-export interface Prilezitost {
+export interface Occasion {
   id: number;
-  nazov: string;
+  title: string;
 }

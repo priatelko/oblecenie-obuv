@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [ModalFilterComponent],
@@ -18,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
     TranslateModule,
 
     MatInputModule,
+    MatIconModule,
     MatFormFieldModule,
     MatDialogModule,
     MatButtonModule,

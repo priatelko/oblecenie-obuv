@@ -56,7 +56,9 @@
         },
         "uploadImagesManually": "Vybrať obrázky z disku",
         "removeAll": "Odstrániť obrázky",
-        "uploadAll": "Nahrať vybrané obrázky"
+        "uploadAll": "Nahrať vybrané obrázky",
+        "notes": "Poznámka pre nás",
+        "notesDesc": "Napíšte nám, aké možnosti Vám chýbali pri vyplňovaní údajov, príp. ak máte iné Vaše pripomienky a podnety. Radi sa na to pozrieme a doplníme."
       }
     },
     "response": {
@@ -90,7 +92,7 @@
     },
     "user": {
       "ANONYMOUS": "Anoným",
-      "ROLE_SELLER": "Predavač",
+      "ROLE_SELLER": "Predajca",
       "ROLE_BUYER": "Kupec"
     }
   },
@@ -142,7 +144,7 @@
       "ownLoginPerex": "Pred prihlásením si vyberte rolu (predajcu alebo kupcu) pod ktorou budete chciet vystupovať.",
       "confirm1": "Neobdržali ste email o potvrdení registrácie?",
       "confirm2": "Nie, poslať znova!",
-      "roleInfo": "Rola oddeluje informácie systému medzi predajom a kúpou. Tým sa stáva portál prehľadnejší. Rolu si môžete meniť podľa potreby kedykoľvek.",
+      "roleInfo": "Rola oddeluje informácie systému medzi predajom a kúpou. Tým sa portál stáva prehľadnejším. Rolu si môžete zmeniť kedykoľvek podľa potreby.",
       "facebook": "Prihlásiť sa cez Facebook",
       "google": "Prihlásiť sa cez Google"
     },
@@ -153,31 +155,31 @@
     "article": {
       "add": {
         "title": "Vyberte si, čo chcete pridať. Olečenie alebo obuv?",
-        "perex": "Oporúčame Vám údaje zadávať pravdivo a hodnotne vyplnené pre lepšie vyhľadávanie Vašim zákazníkom. Je striktne zakázané do popisov uvádzať akékoľvek kontaktaktné údaje (vrátane obrázkov).",
+        "perex": "Oporúčame Vám údaje zadávať pravdivo a hodnotne vyplnené pre lepšie vyhľadávanie Vašim zákazníkom. Je striktne zakázané do descriptionov uvádzať akékoľvek kontaktaktné údaje (vrátane obrázkov).",
         "stepMenuItems": {
           "categorize": "Zaradenie",
           "description": "Popis",
           "contact": "Kontaktné údaje"
         },
         "categorize": {
-          "preKoho": "Pre koho",
-          "obdobie": "Kedy",
-          "kategoria": "Čo (kategória)",
-          "znacka": "Značka",
-          "velkost": "Veľkosť",
-          "velkostCislo": "Veľkosť číslo",
-          "stav": "Stav, závada",
+          "whom": "Pre koho",
+          "season": "Kedy",
+          "category": "Čo (kategória)",
+          "brand": "Značka",
+          "size": "Veľkosť",
+          "sizeNum": "Veľkosť číslo",
+          "state": "Stav, závada",
           "material": "Materiál šitia"
         },
         "description": {
-          "titulok": "Titulok",
-          "titulokDesc": "Zadajte stručný a výstižný názov tovaru.",
-          "popis": "Popis",
-          "popisDesc": "Popíšte Váš tovar. Kľúčové slová budú zohľadnené pri vyhľadávaní.",
-          "cena": "Cena tovaru",
-          "cenaDesc": "V prípade, že sa chcete na cene dohodnúť, zadajte nulu alebo nechajte prázdne políčko.",
-          "foto": "Fotografie tovaru",
-          "fotoDesc": "Obrázky presuňte z priečinka do označenej zóny alebo ich vyberte z disku. Hlavný náhľadový obrázok označte na jeho kliknutím."
+          "title": "Titulok",
+          "titleDesc": "Zadajte stručný a výstižný názov tovaru.",
+          "description": "Popis",
+          "descriptionDesc": "Popíšte Váš tovar. Kľúčové slová budú zohľadnené pri vyhľadávaní.",
+          "price": "Cena tovaru",
+          "priceDesc": "V prípade, že sa chcete na cene dohodnúť, zadajte nulu alebo nechajte prázdne políčko.",
+          "photo": "Fotografie tovaru",
+          "photoDesc": "Obrázky presuňte z priečinka do označenej zóny alebo ich vyberte z disku. Hlavný náhľadový obrázok označte na jeho kliknutím."
         },
         "shoes": {
           "title": "Idem pridať obuv",
@@ -186,21 +188,21 @@
         "dress": {
           "title": "Pridať oblečenie",
           "perex": "...",
-          "preKohoDesc": "Komu je oblečenie určené.",
-          "kategoriaDesc": "Zkrátené rukávy, nohavice, sukne nastavte v časti „Zostrih“.",
-          "znackaDesc": "Sadu oblečenia zadajte pod „Rôzne značky“. Keď neviete, vyberte „Iné“.",
-          "prilezitost": "Príležitosť",
-          "prilezitostDesc": "Na akú príležitosť sa oblečenie hodí.",
-          "zostrih": "Zostrih",
-          "zostrihDesc": "Krátke / dlhé rukávy, nohavice, sukňa.",
-          "styl": "Štýl",
-          "zapinanie": "Zapínanie",
-          "velkostDesc": "Sadu oblečenia zadajte pod „Rôzne veľkosti“.",
-          "obdobieDesc": "Pre aké ročné obdobie je oblečenie šité (ak oblečenie nie je na von, označte indoorové).",
-          "materialDesc": "Sadu oblečenia zadajte pod „Rôzny materiál. Keď neviete, vyberte „Iné“."
+          "whomDesc": "Komu je oblečenie určené.",
+          "categoryDesc": "Zkrátené rukávy, nohavice, sukne nastavte v časti „Zostrih“.",
+          "brandDesc": "Sadu oblečenia zadajte pod „Rôzne značky“. Keď neviete, vyberte „Iné“.",
+          "occasion": "Príležitosť",
+          "occasionDesc": "Na akú príležitosť sa oblečenie hodí.",
+          "cut": "Zostrih",
+          "cutDesc": "Krátke / dlhé rukávy, nohavice, sukňa.",
+          "style": "Štýl",
+          "fastening": "Zapínanie",
+          "sizeDesc": "Ak zadávate sadu oblečenia, vyberte „Rôzne veľkosti“.",
+          "seasonDesc": "Pre aké ročné obdobie je oblečenie šité (ak oblečenie nie je na von, označte indoorové).",
+          "materialDesc": "Ak zadávate sadu oblečenia, vyberte „Rôzny materiál. Keď neviete, vyberte „Iné“."
         },
         "contact": {
-          "info": "Nemusíte mať obavy, email nebude zverejnený. Vaše meno sa bude zobrazovať v tvare",
+          "info": "Vaše osobné údaje nezverejnujeme. Vaša identita sa bude zobrazovať v tvare",
           "logged": "Autorizácia je v poriadku",
           "notLogged": "Prosím, autorizujte sa..."
         }

@@ -15,9 +15,9 @@ class Credit
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_create", type="datetime", nullable=false)
+     * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $dateCreate;
+    private $created;
 
     /**
      * @var string
@@ -75,27 +75,27 @@ class Credit
 
 
     /**
-     * Set dateCreate
+     * Set created
      *
-     * @param \DateTime $dateCreate
+     * @param \DateTime $created
      *
      * @return Credit
      */
-    public function setDateCreate($dateCreate)
+    public function setCreated($created)
     {
-        $this->dateCreate = $dateCreate;
+        $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get dateCreate
+     * Get created
      *
      * @return \DateTime
      */
-    public function getDateCreate()
+    public function getCreated()
     {
-        return $this->dateCreate;
+        return $this->created;
     }
 
     /**

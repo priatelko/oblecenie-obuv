@@ -10,7 +10,7 @@ export class SelectService {
   mapToOptions<T>(
     dataStream$: Observable<T[]>,
     idProp: number | string = 'id',
-    nameProp: string = 'nazov'
+    nameProp: string = 'title'
   ): Observable<MultiSelectOption[]> {
     return dataStream$.pipe(
       map((data) =>

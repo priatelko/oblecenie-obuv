@@ -4,12 +4,59 @@
 
 <div class="container-fluid / mt-3">
   <div class="row">
-    <div class="column">
-      <div class="badge badge-pill badge-primary / mx-1">Babatka</div>
-      <div class="badge badge-pill badge-primary / mx-1">
+    <div class="col-sm">
+      <div class="badge badge-pill badge-primary / h6 mx-1">Babatka</div>
+      <div class="badge badge-pill badge-primary / h6 mx-1">
         Pracovne oblecenie
       </div>
-      <div class="badge badge-pill badge-primary / mx-1">Sezonne</div>
+      <div class="badge badge-pill badge-primary / h6 mx-1">Sezonne</div>
+      <!-- <div
+        class="badge badge-pill badge-secondary / h6 mx-1"
+        (click)="sizeCards(-1)"
+      >
+        -
+      </div>
+      <div
+        class="badge badge-pill badge-secondary / h6 mx-1 ml-4"
+        (click)="sizeCards(1)"
+      >
+        +
+      </div> -->
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid / mt-3">
+  <div class="row">
+    <div
+      class="col-sm / d-flex flex-wrap justify-content-center"
+      [ngClass]="'card-size-' + cardsSize"
+    >
+      <div
+        class="card-wrap"
+        *ngFor="
+          let item of [
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20
+          ]
+        "
+      >
+        <div class="card">
+          <img
+            class="card-img-top"
+            src="https://ironaesthetics.sk/153-large_default/ultrasoft-tricko-iron-aesthetics-vojenska-zelena.jpg.webp"
+            alt="Card image cap"
+          />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

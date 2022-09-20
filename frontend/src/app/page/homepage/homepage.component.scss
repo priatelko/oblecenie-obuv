@@ -1,0 +1,98 @@
+@import '~src/sass/variables';
+@import '~src/sass/mixins/functions';
+
+.card-wrap {
+  $img-height: 10rem;
+
+  position: relative;
+
+  .card {
+    margin: 0.5rem;
+    box-shadow: 0 8px 28px 0 rgb(7 1 58 / 10%);
+    width: calc(100% - 1rem);
+    height: calc(100% - 1rem);
+
+    img {
+      height: 100%;
+      object-fit: cover;
+    }
+    &,
+    img,
+    .card-body {
+      transition: all 0.2s ease-in-out;
+    }
+
+    .card-body {
+      position: absolute;
+      background-color: $card-bg;
+      left: 0;
+      top: calc(#{$img-height} - 20px);
+      pointer-events: none;
+      width: 100%;
+      opacity: 0;
+    }
+  }
+
+  &:hover {
+    .card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 1;
+      z-index: 5;
+      img {
+        height: $img-height;
+        width: 100%;
+        position: absolute;
+      }
+      .card-body {
+        pointer-events: all;
+        opacity: 1;
+        left: -0.5rem;
+        top: $img-height;
+        width: calc(100% + 1rem);
+      }
+      &,
+      .card-body {
+        box-shadow: 0 8px 28px 0 rgb(7 1 58 / 30%);
+      }
+    }
+  }
+}
+
+.card-size-1 {
+  .card-wrap {
+    flex: 0 0 6.6666%;
+    max-width: 6.6666%;
+  }
+}
+.card-size-2 {
+  .card-wrap {
+    flex: 0 0 10%;
+    max-width: 10%;
+  }
+}
+.card-size-3 {
+  .card-wrap {
+    flex: 0 0 12.5%;
+    max-width: 12.5%;
+  }
+}
+.card-size-4 {
+  .card-wrap {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+.card-size-5 {
+  .card-wrap {
+    flex: 0 0 33.3333%;
+    max-width: 33.3333%;
+  }
+}
+.card-size-6 {
+  .card-wrap {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}

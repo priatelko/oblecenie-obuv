@@ -20,56 +20,57 @@ export class AddArticleFormTypeService {
 
   constructor(public identityService: IdentityService) {
     this.commonFieldsZaradenie = {
-      typ: new FormControl(null, []),
-      preKoho: new FormControl(null, [Validators.required]),
-      obdobie: new FormControl(null, [Validators.required]),
-      znacka: new FormControl(null, [Validators.required]),
-      stav: new FormControl(null, [Validators.required]),
+      type: new FormControl(null, []),
+      whom: new FormControl(null, [Validators.required]),
+      season: new FormControl(null, [Validators.required]),
+      brand: new FormControl(null, [Validators.required]),
+      state: new FormControl(null, [Validators.required]),
       material: new FormControl(null, []),
       materialDisplay: new FormControl(null, []),
+      notes: new FormControl(null, []),
     };
 
     this.commonFieldsPopis = {
-      titulok: new FormControl(null, [Validators.required]),
-      popis: new FormControl(null, [Validators.required]),
-      foto: new FormControl(null, [
+      title: new FormControl(null, [Validators.required]),
+      description: new FormControl(null, [Validators.required]),
+      photo: new FormControl(null, [
         Validators.required,
         Validators.maxLength(this.identityService.limit.ArticleImageUpload),
       ]),
-      cena: new FormControl(null, []),
+      price: new FormControl(null, []),
       // url: new FormControl(null, []),
       // expiracia: new FormControl(null, []),
     };
 
     this.dressFieldsZaradenie = {
-      oblecenieKategoria: new FormControl(null, [Validators.required]),
-      prilezitost: new FormControl(null, [Validators.required]),
-      zostrih: new FormControl(null, [Validators.required]),
-      velkost: new FormGroup(
+      dressCategory: new FormControl(null, [Validators.required]),
+      occasion: new FormControl(null, [Validators.required]),
+      cut: new FormControl(null, [Validators.required]),
+      size: new FormGroup(
         {
-          velkost: new FormControl(null),
-          velkostCislo: new FormControl(null),
+          size: new FormControl(null),
+          sizeNum: new FormControl(null),
         },
         [
           Validator.oneOfGroup({
-            velkost: [Validators.required, Validators.min(1)],
-            velkostCislo: [Validators.required, Validators.min(1)],
+            size: [Validators.required, Validators.min(1)],
+            sizeNum: [Validators.required, Validators.min(1)],
           }),
         ]
       ),
-      styl: new FormControl(null, [Validators.required]),
-      zapinanie: new FormControl(null, [Validators.required]),
+      style: new FormControl(null, [Validators.required]),
+      fastening: new FormControl(null, [Validators.required]),
     };
   }
 
   getDress() {
     const form = new FormGroup({
-      zaradenie: new FormGroup(
+      categorize: new FormGroup(
         merge(this.commonFieldsZaradenie, this.dressFieldsZaradenie)
       ),
-      popis: new FormGroup(this.commonFieldsPopis),
+      description: new FormGroup(this.commonFieldsPopis),
     });
-    form.get('zaradenie').get('typ').setValue(ArtikelTyp.dress);
+    form.get('categorize').get('type').setValue(ArtikelTyp.dress);
 
     return form;
   }

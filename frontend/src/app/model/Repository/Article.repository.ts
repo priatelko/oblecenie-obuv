@@ -14,8 +14,8 @@ import { appendNoDiacritics } from '../../custom/helpers';
 import { DressResponseEntity } from '../Entity/DressForm.entity';
 import {
   DBSimpleEntity,
-  Kategorie,
-  KategorieChildren,
+  Categories,
+  CategoriesChildren,
 } from '../Entity/Form.entity';
 
 @Injectable({
@@ -29,13 +29,13 @@ export class ArticleRepositoryService
   API = '/get/add-dress-article';
   dataStreamFinal: Observable<DressResponseEntity>;
 
-  private oblecenieCategories$: Observable<Kategorie[]>;
-  private oblecenieCategoriesFilter$ = new BehaviorSubject<Kategorie[]>([]);
-  oblecenieCategories: Kategorie[];
+  private oblecenieCategories$: Observable<Categories[]>;
+  private oblecenieCategoriesFilter$ = new BehaviorSubject<Categories[]>([]);
+  oblecenieCategories: Categories[];
 
-  private znacka$: Observable<DBSimpleEntity[]>;
-  private znackaFilter$ = new BehaviorSubject<DBSimpleEntity[]>([]);
-  znacka: DBSimpleEntity[];
+  private brand$: Observable<DBSimpleEntity[]>;
+  private brandFilter$ = new BehaviorSubject<DBSimpleEntity[]>([]);
+  brand: DBSimpleEntity[];
 
   private material$: Observable<DBSimpleEntity[]>;
   private materialFilter$ = new BehaviorSubject<DBSimpleEntity[]>([]);
@@ -64,61 +64,61 @@ export class ArticleRepositoryService
     this.dataStreamFinal = this.findAll().result();
   }
 
-  getPreKohoOptions() {
+  getWhomOptions() {
     return this.selectService.mapToOptions<DBSimpleEntity>(
-      this.dataStreamFinal.pipe(map((res) => res.preKoho))
+      this.dataStreamFinal.pipe(map((res) => res.whom))
     );
   }
 
-  getObdobieOptions() {
+  getSeasonOptions() {
     return this.selectService.mapToOptions<DBSimpleEntity>(
-      this.dataStreamFinal.pipe(map((res) => res.obdobie))
+      this.dataStreamFinal.pipe(map((res) => res.season))
     );
   }
 
-  getPrilezitostOptions() {
+  getOccasionOptions() {
     return this.selectService.mapToOptions<DBSimpleEntity>(
-      this.dataStreamFinal.pipe(map((res) => res.prilezitost))
+      this.dataStreamFinal.pipe(map((res) => res.occasion))
     );
   }
 
-  getZapinanieOptions() {
+  getFasteningOptions() {
     return this.selectService.mapToOptions<DBSimpleEntity>(
-      this.dataStreamFinal.pipe(map((res) => res.zapinanie))
+      this.dataStreamFinal.pipe(map((res) => res.fastening))
     );
   }
 
-  getStavOptions() {
+  getStateOptions() {
     return this.selectService.mapToOptions<DBSimpleEntity>(
-      this.dataStreamFinal.pipe(map((res) => res.stav))
+      this.dataStreamFinal.pipe(map((res) => res.state))
     );
   }
 
-  getZostrihOptions() {
+  getCutOptions() {
     return this.selectService.mapToOptions<DBSimpleEntity>(
-      this.dataStreamFinal.pipe(map((res) => res.zostrih))
+      this.dataStreamFinal.pipe(map((res) => res.cut))
     );
   }
 
-  getVelkostOptions() {
+  getSizeOptions() {
     return this.selectService.mapToOptions<DBSimpleEntity>(
-      this.dataStreamFinal.pipe(map((res) => res.velkost))
+      this.dataStreamFinal.pipe(map((res) => res.size))
     );
   }
 
-  getStylOptions() {
+  getStyleOptions() {
     return this.selectService.mapToOptions<DBSimpleEntity>(
-      this.dataStreamFinal.pipe(map((res) => res.styl))
+      this.dataStreamFinal.pipe(map((res) => res.style))
     );
   }
 
   dressCategoriesInit() {
     this.oblecenieCategories$ = this.dataStreamFinal.pipe(
-      map((res) => res.kategorie)
+      map((res) => res.categories)
     );
 
     this.oblecenieCategories$.pipe(share()).subscribe((res) => {
-      this.oblecenieCategories = appendNoDiacritics(res, 'nazov');
+      this.oblecenieCategories = appendNoDiacritics(res, 'title');
       this.oblecenieCategoriesFilter$.next(res);
     });
   }
@@ -131,10 +131,10 @@ export class ArticleRepositoryService
       return;
     }
 
-    let newTree: Kategorie[] = [];
+    let newTree: Categories[] = [];
     this.oblecenieCategories.forEach((rootCategory) => {
       const searcher = new FuzzySearch(rootCategory.children, ['noDiaNode']);
-      const result: KategorieChildren[] = searcher.search(string);
+      const result: CategoriesChildren[] = searcher.search(string);
       if (result.length) {
         const newRoot = assign([], rootCategory);
         newRoot.children = result;
@@ -145,34 +145,34 @@ export class ArticleRepositoryService
     this.oblecenieCategoriesFilter$.next(newTree);
   }
 
-  znackaInit() {
-    this.znacka$ = this.dataStreamFinal.pipe(map((res) => res.znacka));
+  brandInit() {
+    this.brand$ = this.dataStreamFinal.pipe(map((res) => res.brand));
 
-    this.znacka$.pipe(share()).subscribe((res) => {
-      this.znacka = appendNoDiacritics(res, 'nazov');
-      this.znackaFilter$.next(res);
+    this.brand$.pipe(share()).subscribe((res) => {
+      this.brand = appendNoDiacritics(res, 'title');
+      this.brandFilter$.next(res);
     });
   }
-  getZnackaFilter() {
-    return this.znackaFilter$.asObservable();
+  getBrandFilter() {
+    return this.brandFilter$.asObservable();
   }
-  filterZnacka(string: string) {
+  filterBrand(string: string) {
     if (string.length < 2) {
-      this.znackaFilter$.next(this.znacka);
+      this.brandFilter$.next(this.brand);
       return;
     }
 
-    const searcher = new FuzzySearch(this.znacka, ['noDiaNode']);
-    const result: KategorieChildren[] = searcher.search(string);
+    const searcher = new FuzzySearch(this.brand, ['noDiaNode']);
+    const result: CategoriesChildren[] = searcher.search(string);
 
-    this.znackaFilter$.next(result);
+    this.brandFilter$.next(result);
   }
 
   materialInit() {
     this.material$ = this.dataStreamFinal.pipe(map((res) => res.material));
 
     this.material$.pipe(share()).subscribe((res) => {
-      this.material = appendNoDiacritics(res, 'nazov');
+      this.material = appendNoDiacritics(res, 'title');
       this.materialFilter$.next(res);
     });
   }

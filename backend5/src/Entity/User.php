@@ -99,6 +99,13 @@ class User implements UserInterface
      * @ORM\Column(name="surname", type="string", length=50, nullable=false, options={"default":""})
      */
     private $surname = '';
+
+/**
+     * @var string
+     *
+     * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
+     */
+    private $avatar = '';
 	
 	/**
      * @var \App\Entity\UserLoginRole
@@ -317,6 +324,30 @@ class User implements UserInterface
     }
 
 /**
+     * Set avatar
+     *
+     * @param string $avatar
+     *
+     * @return User
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+/**
      * Set VIP
      *
      * @param boolean $bool
@@ -365,6 +396,7 @@ class User implements UserInterface
 			'email' => (string) $this->getEmail(),
 			'name' => (string) $this->getName(),
 			'surname' => (string) $this->getSurname(),
+      'avatar' => $this->getAvatar(),
       'roles' => $this->getRoles(),
 			'createdAt' => (string) $this->getCreatedAt()->format(\DateTime::ATOM),
 			'updatedAt' => (string) $this->getUpdatedAt()->format(\DateTime::ATOM),

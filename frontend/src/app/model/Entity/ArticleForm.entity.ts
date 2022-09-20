@@ -8,17 +8,18 @@ export enum ArtikelTyp {
 
 // Form article
 export interface ArticleFormEntity {
-  typ: ArtikelTyp;
-  preKoho: Number[];
-  obdobie: Number[];
-  znacka: Number;
-  stav: Number[];
+  type: ArtikelTyp;
+  whom: Number[];
+  season: Number[];
+  brand: Number;
+  state: Number[];
   material: Number[];
-  titulok: String;
-  popis: String;
-  cena: Number;
+  title: String;
+  description: String;
+  price: Number;
 }
 
 export interface ImageEntity {
   imgPath: string;
+  progress: number;
 }

@@ -64,7 +64,7 @@ class UserController extends BaseController {
 				$user = $this->userManager->createUser($post->get('email'), $post->get('password'));
 				$returnData = UserManager::ANONYMOUS_RESPONSE;
 			} else {		// Edit user
-				$this->userManager->updateUser($this->getUser(), $post->get('email'), $post->get('password'), $post->get('name'), $post->get('surname'));
+				$this->userManager->updateUser($this->getUser(), $post);
 				$returnData = $this->getUser()->toArray();
 			}
 

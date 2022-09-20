@@ -35,13 +35,13 @@ class AbstractEntityRepository extends \Doctrine\ORM\EntityRepository {
     protected function returnAsCollectionOfSimpleArray( $result ) {
         return new \Doctrine\Common\Collections\ArrayCollection( $this->returnAsSimpleArray( $result ) );
     }
-	
+
 	/**
 	 * Basic selectbox options
 	 * @return type
 	 */
 	public function getDataToSelectForm() {
-		return $this->findBy( [], ['zorad' => 'ASC'] );
+		return $this->findBy( [], ['order' => 'ASC'] );
 	}
 
 }

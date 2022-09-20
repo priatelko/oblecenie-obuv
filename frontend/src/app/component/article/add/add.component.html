@@ -19,19 +19,21 @@
   <!-- Pridat oblecenie -->
   <ng-container *ngIf="addKind == articleKind.dress">
     <form
-      *ngIf="preKoho$ | async as preKoho; else loading"
+      *ngIf="whom$ | async as whom; else loading"
       (ngSubmit)="onSubmit()"
       novalidate
       class="form-one-column"
     >
       <div class="container">
-        <button (click)="debug()">debug FORM</button>
-        <button (click)="loadForm()">load FORM</button>
+        <button type="button" (click)="debug()">debug FORM</button>
+        <button type="button" (click)="loadForm()">load FORM</button>
         <!-- Steps -->
         <div class="step-menu-items row / my-4">
           <a [class]="formStep === 1 ? 'active' : ''" (click)="changeStep(1)">
-            <span *ngIf="!addOblecenieForm.get('popis').valid">1</span>
-            <span *ngIf="addOblecenieForm.get('popis').valid" class="valid"
+            <span *ngIf="!addOblecenieForm.get('description').valid">1</span>
+            <span
+              *ngIf="addOblecenieForm.get('description').valid"
+              class="valid"
               ><mat-icon>check</mat-icon></span
             >
             {{
@@ -39,8 +41,8 @@
             }}</a
           >
           <a [class]="formStep === 2 ? 'active' : ''" (click)="changeStep(2)">
-            <span *ngIf="!addOblecenieForm.get('zaradenie').valid">2</span>
-            <span *ngIf="addOblecenieForm.get('zaradenie').valid" class="valid"
+            <span *ngIf="!addOblecenieForm.get('categorize').valid">2</span>
+            <span *ngIf="addOblecenieForm.get('categorize').valid" class="valid"
               ><mat-icon>check</mat-icon></span
             >
             {{ 'component.article.add.stepMenuItems.categorize' | translate }}
@@ -64,7 +66,7 @@
               type="submit"
               color="primary"
             >
-              {{ 'component.article.add.title' | translate }}
+              {{ 'common.form.fields.submit-add' | translate }}
             </button>
           </div>
         </div>
@@ -76,92 +78,88 @@
         >
           <div class="row">
             <div class="col-md-8 / px-0">
-              <div class="form-group">
+              <div class="form-group form-group--white">
                 <mat-form-field appearance="outline">
                   <mat-label>{{
-                    'component.article.add.description.titulok' | translate
+                    'component.article.add.description.title' | translate
                   }}</mat-label>
-                  <input matInput type="text" formControlName="titulok" />
+                  <input
+                    matInput
+                    type="text"
+                    maxlength="65"
+                    formControlName="title"
+                  />
                   <mat-hint
                     >{{
-                      'component.article.add.description.titulokDesc'
-                        | translate
+                      'component.article.add.description.titleDesc' | translate
                     }}
                   </mat-hint>
                 </mat-form-field>
               </div>
             </div>
             <div class="col-md-4 / px-0">
-              <div class="form-group">
-                <h2 class="h4">
-                  {{ 'component.article.add.description.cena' | translate }}
-                  <mat-icon
-                    class="ml-2 cursor-help"
-                    matTooltip="{{
-                      'component.article.add.description.cenaDesc' | translate
-                    }}"
-                    aria-label="common.tooltipAria"
-                    >help</mat-icon
-                  >
-                </h2>
+              <div class="form-group form-group--white">
                 <mat-form-field appearance="outline">
+                  <mat-label>{{
+                    'component.article.add.description.price' | translate
+                  }}</mat-label>
                   <input
                     matInput
                     type="number"
                     min="0"
                     max="1000000"
                     step="0.01"
-                    formControlName="cena"
+                    formControlName="price"
                   />
+                  <mat-hint>{{
+                    'component.article.add.description.priceDesc' | translate
+                  }}</mat-hint>
                 </mat-form-field>
               </div>
             </div>
           </div>
           <div class="row / mt-4">
-            <div class="col form-group">
-              <h2 class="h4">
-                {{ 'component.article.add.description.popis' | translate }}
-                <span class="color-error">*</span>
-              </h2>
-
+            <div class="col form-group form-group--white">
               <mat-form-field appearance="outline">
                 <mat-label>{{
-                  'component.article.add.description.popisDesc' | translate
+                  'component.article.add.description.description' | translate
                 }}</mat-label>
                 <textarea
                   matInput
-                  type="text"
-                  formControlName="popis"
+                  maxlength="1256"
+                  formControlName="description"
                   rows="5"
                 ></textarea>
+                <mat-hint>{{
+                  'component.article.add.description.descriptionDesc'
+                    | translate
+                }}</mat-hint>
               </mat-form-field>
             </div>
           </div>
           <div class="row / mt-4">
-            <div class="col form-group">
-              <h2 class="h4">
-                {{ 'component.article.add.description.foto' | translate }}
-                <span class="color-error">*</span>
-                <mat-icon
-                  class="ml-2 cursor-help"
-                  matTooltip="{{
-                    'component.article.add.description.fotoDesc' | translate
-                  }}"
-                  aria-label="common.tooltipAria"
-                  >help</mat-icon
-                >
-              </h2>
-              <app-dnd
-                formControlName="foto"
-                [context]="enumImageContext.articleDress"
-                [limit]="dndLimit"
-              ></app-dnd>
+            <div class="col form-group form-group--white">
+              <mat-form-field>
+                <mat-label>{{
+                  'component.article.add.description.photo' | translate
+                }}</mat-label>
+                <!-- v reale sa vobec nepouziva -->
+                <input matInput type="text" name="_dummy" />
+                <app-dnd
+                  formControlName="photo"
+                  [context]="enumImageContext.articleDress"
+                  [limit]="dndLimit"
+                ></app-dnd>
+                <mat-hint>{{
+                  'component.article.add.description.photoDesc' | translate
+                }}</mat-hint>
+              </mat-form-field>
             </div>
           </div>
           <div class="row / my-4 justify-content-center">
             <button
               mat-stroked-button
-              [disabled]="!addOblecenieForm.get('popis').valid"
+              [disabled]="!addOblecenieForm.get('description').valid"
               class="mat-button--md"
               type="submit"
               color="primary"
@@ -178,155 +176,148 @@
           [formGroup]="addOblecenieFormZaradenie"
         >
           <div class="row">
-            <div class="col-md form-group">
+            <div class="col-md form-group form-group--white">
               <h2 class="h4">
-                {{ 'component.article.add.categorize.preKoho' | translate }}
+                {{ 'component.article.add.categorize.whom' | translate }}
                 <span class="color-error">*</span>
-                <mat-icon
-                  class="ml-2 cursor-help"
-                  matTooltip="{{
-                    'component.article.add.dress.preKohoDesc' | translate
-                  }}"
-                  aria-label="common.tooltipAria"
-                  >help</mat-icon
-                >
               </h2>
-              <app-select
-                [options]="preKoho"
-                formControlName="preKoho"
-              ></app-select>
+              <mat-form-field class="form-field-no-space">
+                <input matInput type="text" name="_dummy" />
+                <app-select
+                  [options]="whom"
+                  formControlName="whom"
+                ></app-select>
+                <mat-hint>{{
+                  'component.article.add.dress.whomDesc' | translate
+                }}</mat-hint>
+              </mat-form-field>
             </div>
-            <div class="col-md form-group / mt-4 mt-md-0">
+            <div class="col-md form-group form-group--white / mt-4 mt-md-0">
               <h2 class="h4">
-                {{ 'component.article.add.categorize.obdobie' | translate }}
+                {{ 'component.article.add.categorize.season' | translate }}
                 <span class="color-error">*</span>
-                <mat-icon
-                  class="ml-2 cursor-help"
-                  matTooltip="{{
-                    'component.article.add.dress.obdobieDesc' | translate
-                  }}"
-                  aria-label="common.tooltipAria"
-                  >help</mat-icon
-                >
               </h2>
-              <app-select
-                [options]="obdobie$ | async"
-                [type]="SelectType.Radio"
-                [multiselect]="false"
-                formControlName="obdobie"
-              ></app-select>
+              <mat-form-field class="form-field-no-space">
+                <input matInput type="text" name="_dummy" />
+                <app-select
+                  [options]="season$ | async"
+                  [type]="SelectType.Radio"
+                  [multiselect]="false"
+                  formControlName="season"
+                ></app-select>
+                <mat-hint>{{
+                  'component.article.add.dress.seasonDesc' | translate
+                }}</mat-hint>
+              </mat-form-field>
             </div>
           </div>
           <div class="row / mt-4">
-            <div class="col-md form-group">
+            <div class="col-md form-group form-group--white">
               <h2 class="h4">
-                {{ 'component.article.add.categorize.kategoria' | translate }}
+                {{ 'component.article.add.categorize.category' | translate }}
                 <span class="color-error">*</span>
-                <mat-icon
-                  class="ml-2 cursor-help"
-                  matTooltip="{{
-                    'component.article.add.dress.kategoriaDesc' | translate
-                  }}"
-                  aria-label="common.tooltipAria"
-                  >help</mat-icon
-                >
               </h2>
-              <div class="field-dialog-select">
-                <mat-form-field appearance="outline">
+              <div class="d-flex">
+                <mat-form-field class="flex-grow-1">
                   <mat-label>{{
-                    'common.form.fields.category' | translate
+                    'common.form.fields.chooseFromList' | translate
                   }}</mat-label>
-                  <mat-select
-                    appFormControl
-                    formControlName="oblecenieKategoria"
-                    required
-                  >
-                    <!-- <mat-option>
-                      <ngx-mat-select-search
-                  [placeholderLabel]="
-                    'common.form.fields.search' | translate: { number: 3 }
-                  "
-                  [formControl]="oblecenieKategorieFilter"
-                  [noEntriesFoundLabel]="
-                    'common.form.fields.noSearchEntryFound' | translate
-                  "
-                ></ngx-mat-select-search>
-                    </mat-option> -->
-                    <mat-optgroup
-                      *ngFor="
-                        let kategoriaGroup of oblecenieKategorieFilter$ | async;
-                        trackBy: trackByFn
-                      "
-                      [label]="kategoriaGroup.item"
+                  <div class="field-dialog-select">
+                    <mat-select
+                      appFormControl
+                      formControlName="dressCategory"
+                      required
                     >
-                      <ng-container
+                      <!-- <mat-option>
+                        <ngx-mat-select-search
+                    [placeholderLabel]="
+                      'common.form.fields.search' | translate: { number: 3 }
+                    "
+                    [formControl]="oblecenieCategoriesFilter"
+                    [noEntriesFoundLabel]="
+                      'common.form.fields.noSearchEntryFound' | translate
+                    "
+                  ></ngx-mat-select-search>
+                      </mat-option> -->
+                      <mat-optgroup
                         *ngFor="
-                          let kategoria of kategoriaGroup.children;
-                          trackBy: trackByIdFn
+                          let categoryGroup of oblecenieCategoriesFilter$
+                            | async;
+                          trackBy: trackByFn
                         "
+                        [label]="categoryGroup.item"
                       >
-                        <mat-option [value]="kategoria.id">
-                          {{ kategoria.nazov }}
-                        </mat-option>
-                      </ng-container>
-                    </mat-optgroup>
-                  </mat-select>
+                        <ng-container
+                          *ngFor="
+                            let category of categoryGroup.children;
+                            trackBy: trackByIdFn
+                          "
+                        >
+                          <mat-option [value]="category.id">
+                            {{ category.title }}
+                          </mat-option>
+                        </ng-container>
+                      </mat-optgroup>
+                    </mat-select>
+                  </div>
+                  <mat-hint>
+                    {{ 'component.article.add.dress.categoryDesc' | translate }}
+                  </mat-hint>
                 </mat-form-field>
                 <button
                   mat-button
                   (click)="openCategoryFilterDialog()"
                   [title]="'common.modalFilter' | translate"
+                  type="button"
                 >
                   <mat-icon>format_list_bulleted</mat-icon>
                 </button>
               </div>
             </div>
-            <div class="col-md form-group">
+            <div class="col-md form-group form-group--white">
               <h2 class="h4">
-                {{ 'component.article.add.categorize.znacka' | translate }}
+                {{ 'component.article.add.categorize.brand' | translate }}
                 <span class="color-error">*</span>
-                <mat-icon
-                  class="ml-2 cursor-help"
-                  matTooltip="{{
-                    'component.article.add.dress.znackaDesc' | translate
-                  }}"
-                  aria-label="common.tooltipAria"
-                  >help</mat-icon
-                >
               </h2>
-              <div class="field-dialog-select">
-                <mat-form-field appearance="outline">
+              <div class="d-flex">
+                <mat-form-field class="flex-grow-1">
                   <mat-label>{{
-                    'component.article.add.categorize.znacka' | translate
+                    'common.form.fields.chooseFromList' | translate
                   }}</mat-label>
-                  <mat-select appFormControl formControlName="znacka" required>
-                    <!-- <mat-option>
+                  <div class="field-dialog-select">
+                    <mat-select appFormControl formControlName="brand" required>
+                      <!-- <mat-option>
                       <ngx-mat-select-search
                         [placeholderLabel]="
                           'common.form.fields.search' | translate: { number: 2 }
                         "
-                        [formControl]="oblecenieZnackaFilter"
+                        [formControl]="oblecenieBrandFilter"
                         [noEntriesFoundLabel]="
                           'common.form.fields.noSearchEntryFound' | translate
                         "
                       ></ngx-mat-select-search>
                     </mat-option> -->
-                    <ng-container
-                      *ngFor="
-                        let znacka of oblecenieZnackaFilter$ | async;
-                        trackBy: trackByIdFn
-                      "
-                    >
-                      <mat-option [value]="znacka.id">
-                        {{ znacka.nazov }}
-                      </mat-option>
-                    </ng-container>
-                  </mat-select>
+                      <ng-container
+                        *ngFor="
+                          let brand of oblecenieBrandFilter$ | async;
+                          trackBy: trackByIdFn
+                        "
+                      >
+                        <mat-option [value]="brand.id">
+                          {{ brand.title }}
+                        </mat-option>
+                      </ng-container>
+                    </mat-select>
+                  </div>
+                  <mat-hint>
+                    {{ 'component.article.add.dress.brandDesc' | translate }}
+                  </mat-hint>
                 </mat-form-field>
                 <button
                   mat-button
-                  (click)="openZnackaFilterDialog()"
+                  (click)="openBrandFilterDialog()"
                   [title]="'common.modalFilter' | translate"
+                  type="button"
                 >
                   <mat-icon>format_list_bulleted</mat-icon>
                 </button>
@@ -334,185 +325,199 @@
             </div>
           </div>
           <div class="row / mt-4">
-            <div class="col-md form-group">
+            <div class="col-md form-group form-group--white">
               <h2 class="h4">
-                {{ 'component.article.add.dress.prilezitost' | translate }}
+                {{ 'component.article.add.dress.occasion' | translate }}
                 <span class="color-error">*</span>
-                <mat-icon
-                  class="ml-2 cursor-help"
-                  matTooltip="{{
-                    'component.article.add.dress.prilezitostDesc' | translate
-                  }}"
-                  aria-label="common.tooltipAria"
-                  >help</mat-icon
-                >
               </h2>
-              <app-select
-                [options]="prilezitost$ | async"
-                formControlName="prilezitost"
-              ></app-select>
+              <mat-form-field class="form-field-no-space">
+                <input matInput type="text" name="_dummy" />
+                <app-select
+                  [options]="occasion$ | async"
+                  formControlName="occasion"
+                ></app-select>
+                <mat-hint>{{
+                  'component.article.add.dress.occasionDesc' | translate
+                }}</mat-hint>
+              </mat-form-field>
             </div>
-            <div class="col-md form-group">
+            <div class="col-md form-group form-group--white">
               <h2 class="h4">
-                {{ 'component.article.add.dress.zostrih' | translate }}
+                {{ 'component.article.add.dress.cut' | translate }}
                 <span class="color-error">*</span>
-                <mat-icon
-                  class="ml-2 cursor-help"
-                  matTooltip="{{
-                    'component.article.add.dress.zostrihDesc' | translate
-                  }}"
-                  aria-label="common.tooltipAria"
-                  >help</mat-icon
-                >
               </h2>
-              <app-select
-                [options]="zostrih$ | async"
-                [type]="SelectType.Radio"
-                [multiselect]="false"
-                formControlName="zostrih"
-              ></app-select>
-              <h2 class="h4 / mt-4">
-                {{ 'component.article.add.categorize.velkost' | translate }}
+              <mat-form-field class="form-field-no-space">
+                <input matInput type="text" name="_dummy" />
+                <app-select
+                  [options]="cut$ | async"
+                  [type]="SelectType.Radio"
+                  [multiselect]="false"
+                  formControlName="cut"
+                ></app-select>
+                <mat-hint>{{
+                  'component.article.add.dress.cutDesc' | translate
+                }}</mat-hint>
+              </mat-form-field>
+
+              <h2 class="h4 / mt-5">
+                {{ 'component.article.add.categorize.size' | translate }}
                 <span class="color-error">*</span>
-                <mat-icon
-                  class="ml-2 cursor-help"
-                  matTooltip="{{
-                    'component.article.add.dress.velkostDesc' | translate
-                  }}"
-                  aria-label="common.tooltipAria"
-                  >help</mat-icon
-                >
               </h2>
-              <div
-                class="row form-group-invalidate"
-                formGroupName="velkost"
-                [ngClass]="{
-                  'form-group-invalid': isVelkostInvalid
-                }"
-              >
-                <app-validation
-                  [formGroupRef]="addOblecenieFormZaradenieVelkost"
-                ></app-validation>
+
+              <div class="row">
                 <div class="col-md form-group">
-                  <mat-form-field appearance="outline">
-                    <mat-label>{{
-                      'component.article.add.categorize.velkost' | translate
-                    }}</mat-label>
-                    <mat-select formControlName="velkost">
-                      <mat-option [value]="0">
-                        -{{ 'common.choose' | translate }}-
-                      </mat-option>
-                      <ng-container
-                        *ngFor="
-                          let velkost of velkost$ | async;
-                          trackBy: trackByIdFn
-                        "
-                      >
-                        <mat-option [value]="velkost.id">
-                          {{ velkost.label }}
-                        </mat-option>
-                      </ng-container>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-                <div class="col-md form-group">
-                  <mat-form-field appearance="outline">
-                    <mat-label>{{
-                      'component.article.add.categorize.velkostCislo'
-                        | translate
-                    }}</mat-label>
-                    <input
-                      matInput
-                      type="number"
-                      formControlName="velkostCislo"
-                      step="0.1"
-                      min="0"
-                      max="500"
-                    />
-                  </mat-form-field>
+                  <div
+                    class="row form-group-invalidate"
+                    formGroupName="size"
+                    [ngClass]="{
+                      'form-group-invalid': isSizeInvalid
+                    }"
+                  >
+                    <app-validation
+                      [formGroupRef]="addOblecenieFormZaradenieSize"
+                    ></app-validation>
+                    <div class="col-md">
+                      <mat-form-field>
+                        <mat-label>{{
+                          'component.article.add.categorize.size' | translate
+                        }}</mat-label>
+                        <mat-select matInput formControlName="size">
+                          <mat-option [value]="0">
+                            -{{ 'common.choose' | translate }}-
+                          </mat-option>
+                          <ng-container
+                            *ngFor="
+                              let size of size$ | async;
+                              trackBy: trackByIdFn
+                            "
+                          >
+                            <mat-option [value]="size.id">
+                              {{ size.label }}
+                            </mat-option>
+                          </ng-container>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div class="col-md">
+                      <mat-form-field>
+                        <mat-label>{{
+                          'component.article.add.categorize.sizeNum' | translate
+                        }}</mat-label>
+                        <input
+                          matInput
+                          type="number"
+                          formControlName="sizeNum"
+                          step="0.1"
+                          min="0"
+                          max="500"
+                        />
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="mat-hint-custom">
+                    {{ 'component.article.add.dress.sizeDesc' | translate }}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="row / mt-4">
-            <div class="col-md form-group">
+            <div class="col-md form-group form-group--white">
               <h2 class="h4">
-                {{ 'component.article.add.dress.styl' | translate }}
+                {{ 'component.article.add.dress.style' | translate }}
                 <span class="color-error">*</span>
               </h2>
               <app-select
-                [options]="styl$ | async"
-                formControlName="styl"
+                [options]="style$ | async"
+                formControlName="style"
               ></app-select>
             </div>
-            <div class="col-md form-group">
+            <div class="col-md form-group form-group--white">
               <h2 class="h4">
-                {{ 'component.article.add.dress.zapinanie' | translate }}
+                {{ 'component.article.add.dress.fastening' | translate }}
                 <span class="color-error">*</span>
               </h2>
               <app-select
-                [options]="zapinanie$ | async"
-                formControlName="zapinanie"
+                [options]="fastening$ | async"
+                formControlName="fastening"
               ></app-select>
               <hr />
               <h2 class="h4 / mt-4">
-                {{ 'component.article.add.categorize.stav' | translate }}
+                {{ 'component.article.add.categorize.state' | translate }}
                 <span class="color-error">*</span>
               </h2>
               <app-select
-                [options]="stav$ | async"
-                formControlName="stav"
+                [options]="state$ | async"
+                formControlName="state"
               ></app-select>
             </div>
           </div>
           <div class="row / mt-4">
-            <div class="col form-group">
+            <div class="col form-group form-group--white">
               <h2 class="h4">
                 {{ 'component.article.add.categorize.material' | translate }}
-                <span class="color-error">*</span>
-                <mat-icon
-                  class="ml-2 cursor-help"
-                  matTooltip="{{
-                    'component.article.add.dress.materialDesc' | translate
-                  }}"
-                  aria-label="common.tooltipAria"
-                  >help</mat-icon
-                >
               </h2>
-              <div class="field-dialog-select">
-                <mat-form-field appearance="outline">
+              <div class="d-flex">
+                <mat-form-field appearance="outline" class="flex-grow-1 pb-0">
                   <mat-label>{{
                     'common.form.fields.chooseFromList' | translate
                   }}</mat-label>
-                  <textarea
-                    matInput
-                    type="text"
-                    formControlName="materialDisplay"
-                    (click)="openMaterialFilterDialog()"
-                    class="cursor-pointer"
-                    readonly
-                    rows="2"
-                  ></textarea>
-                  <input
-                    type="hidden"
-                    formControlName="material"
-                    (click)="openMaterialFilterDialog()"
-                  />
+                  <div class="field-dialog-select">
+                    <textarea
+                      matInput
+                      formControlName="materialDisplay"
+                      (click)="openMaterialFilterDialog()"
+                      class="cursor-pointer"
+                      readonly
+                      rows="2"
+                    ></textarea>
+                    <input
+                      type="hidden"
+                      formControlName="material"
+                      (click)="openMaterialFilterDialog()"
+                    />
+                  </div>
+                  <mat-hint>
+                    {{ 'component.article.add.dress.materialDesc' | translate }}
+                  </mat-hint>
                 </mat-form-field>
                 <button
                   mat-button
                   (click)="openMaterialFilterDialog()"
                   [title]="'common.modalFilter' | translate"
+                  type="button"
                 >
                   <mat-icon>format_list_bulleted</mat-icon>
                 </button>
+              </div>
+            </div>
+          </div>
+          <div class="row / mt-4">
+            <div class="col form-group form-group--white">
+              <div class="d-flex">
+                <mat-form-field appearance="outline" class="flex-grow-1 pb-0">
+                  <mat-label>{{
+                    'common.form.fields.notes' | translate
+                  }}</mat-label>
+                  <div class="field-dialog-select">
+                    <textarea
+                      matInput
+                      formControlName="notes"
+                      rows="2"
+                    ></textarea>
+                  </div>
+                  <mat-hint>
+                    {{ 'common.form.fields.notesDesc' | translate }}
+                  </mat-hint>
+                </mat-form-field>
               </div>
             </div>
           </div>
           <div class="row / my-4 justify-content-center">
             <button
               mat-stroked-button
-              [disabled]="!addOblecenieForm.get('zaradenie').valid"
+              [disabled]="!addOblecenieForm.get('categorize').valid"
               class="mat-button--md"
               type="submit"
               color="primary"
@@ -529,7 +534,7 @@
           <div *ngIf="identityService.isLogged" class="row">
             <div class="col-md">
               <div class="d-flex align-items-center / mb-3">
-                <mat-icon class="big-success">face</mat-icon>
+                <app-avatar></app-avatar>
                 <div class="ml-3">
                   <h2 class="h4">
                     {{ 'component.article.add.contact.logged' | translate }}
@@ -547,10 +552,10 @@
               </div>
               <p>
                 {{ 'component.article.add.contact.info' | translate }}
-                <strong
-                  >{{ identityService.identity.name }}
-                  {{ identityService.identity.surname }}</strong
-                >
+                <strong>{{
+                  identityService.identity.name
+                    | nickname: identityService.identity.surname
+                }}</strong>
               </p>
             </div>
           </div>
@@ -558,12 +563,12 @@
           <div *ngIf="!identityService.isLogged" class="row">
             <div class="col-md">
               <div class="d-flex align-items-center">
-                <mat-icon class="big-disabled">person_search</mat-icon>
+                <app-avatar></app-avatar>
                 <div class="ml-3">
                   <button
                     mat-stroked-button
                     class="mat-button--md"
-                    type="submit"
+                    type="button"
                     color="primary"
                     (click)="changeStep(3)"
                   >

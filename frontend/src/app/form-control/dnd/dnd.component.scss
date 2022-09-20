@@ -1,7 +1,6 @@
 @import '~src/sass/variables';
 @import '~src/sass/mixins/functions';
 
-
 .container {
   max-width: rem-calc(600px);
   padding: 2rem;
@@ -15,7 +14,7 @@
     display: flex;
     align-items: center;
     border-width: 2px;
-    padding: .5rem;
+    padding: 0.5rem;
   }
 
   input {
@@ -26,6 +25,7 @@
     height: 100%;
     top: 0;
     left: 0;
+    cursor: pointer;
   }
 }
 

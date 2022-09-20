@@ -4,6 +4,7 @@ import { UserModel } from '../../model/Model/User.model';
 import { IdentityService } from './identity.service';
 import { HttpParams } from '@angular/common/http';
 import { LogService } from '../Admin/log.service';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root',
@@ -52,6 +53,25 @@ export class UserManagerService {
   }
 
   regist(userToRegister) {
+    // Normalize avatar
+    if (_.isArray(userToRegister.avatar)) {
+      userToRegister.avatar = userToRegister.avatar.length
+        ? userToRegister.avatar[0].imgPath
+        : null;
+    }
+
+    // else if (this.identityService.isLogged) {
+    //     userToRegister.avatar = this.identityService.identity.avatar;
+    //   }
+
+    //userToRegister.avatar = this.identityService.identity.avatar;
+
+    // if (_.isArray(userToRegister.avatar) && userToRegister.avatar.length) {
+    //   userToRegister.avatar = userToRegister.avatar[0].imgPath;
+    // } else {
+    //   userToRegister.avatar = null;
+    // }
+
     const request = this.apiRequestService.post<UserModel>(
       '/user/new',
       userToRegister

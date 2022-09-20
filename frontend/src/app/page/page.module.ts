@@ -7,10 +7,10 @@ import { BaseComponent } from './base.component';
 import { ContainerGetterModule } from '../module/ContainerGetter/container-getter.module';
 import { HeaderModule } from '../component/header/header.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
-  imports: [RouterModule, TranslateModule, HeaderModule],
+  imports: [BrowserModule, RouterModule, TranslateModule, HeaderModule],
   declarations: [BaseComponent, HomepageComponent, PageNotFoundComponent],
   exports: [ContainerGetterModule],
 })

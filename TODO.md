@@ -1,5 +1,6 @@
 # To do
 
+- (mam) Inputy length znaky
 - Flash messages, quiet message - authentification refresh
 - Znacka, negenrovat zoznam, len pisanie, autodoplnenie, alebo pridanie automaticky ako nove
 - Fuzzy search v modaly
@@ -11,10 +12,12 @@
 - Design by Facebook, svetly a tmavy mod
 - Optimalizovat obrazky
 - vyskusat font Poppins
+- Uprava profilu, nove tlacitko, Napiste nieco o vas
 - nahodit informaciu, ze na stranke sa stale pracuje a dakujeme za vase napoady a postrehy, ktore radi odmenime sluzbami zadarmo
 - Názvy obrázkov budú začínať oblečenie alebo obuv pomlčka názov tovaru
 - Akrtikle budú mať správne URL napríklad obuv/tenisky/Adidas/\[titulok\]
 - Registracia, texty, Vseobecne obchod. podmienky SuperSused, a upravit
+- Kontaktujte nas prosim v error hlaskach nalinkovat na modal okno s formularom
 
 # Production settings
 
@@ -24,6 +27,7 @@
 # After deploy
 
 - Popis hore na stranke pri scrollu dole schovat,
+- Zadavanie hesla, zobrazit ho. Oko ikonka
 - Ukladat sablony pridania artiklov, hlavne Zaradenie.
 - Logovat chyby z BE social userov a vseobecne
 - Uprava profilo, treba zadat stare heslo
@@ -38,6 +42,8 @@
 - API responzi (tie iste za sebou) by mohly mat delay asi 5sec. Kvoli force requestom
 - Login modal, tabulator, po zadani udajov na button prihlasit
 - matTooltip vyriesit aria-label
+- zoom tehliciek na zobrazovanie artiklov
+- Formy spravit v Symfony
 
 ## Hints
 

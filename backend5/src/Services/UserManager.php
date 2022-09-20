@@ -144,7 +144,14 @@ class UserManager {
 	/**
 	 * UPDATE 
 	 */
-	public function updateUser(User $user, $email, $password, $name, $surname) {
+	public function updateUser(User $user, $post) {
+    $email = $post->get('email');
+    $password = $post->get('password');
+    $name = $post->get('name');
+    $surname = $post->get('surname');
+    $avatar = $post->get('avatar');
+
+    $user->setAvatar($avatar ?? null);
 		$user->setName($name);
 		$user->setSurname($surname);
 		$user->setUpdatedAt(new \Datetime("now"));

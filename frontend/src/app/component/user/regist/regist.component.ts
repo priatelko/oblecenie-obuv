@@ -79,7 +79,7 @@ export class RegistComponent implements OnInit {
       ]),
       name: new FormControl(null, [Validators.required, Validator.trim()]),
       surname: new FormControl(null, [Validators.required, Validator.trim()]),
-      photo: new FormControl(null),
+      avatar: new FormControl(null),
       password,
       passwordConfirm,
     });

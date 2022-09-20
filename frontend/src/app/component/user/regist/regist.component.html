@@ -33,7 +33,7 @@
         />
       </mat-form-field>
       <div class="row">
-        <div class="column col-6">
+        <div class="col-6">
           <mat-form-field class="mb-2" appearance="outline">
             <mat-label>{{ 'common.form.fields.name' | translate }}</mat-label>
             <input
@@ -47,7 +47,7 @@
             />
           </mat-form-field>
         </div>
-        <div class="column col-6">
+        <div class="col-6">
           <mat-form-field class="mb-2" appearance="outline">
             <mat-label>{{
               'common.form.fields.surname' | translate
@@ -63,7 +63,7 @@
             />
           </mat-form-field>
         </div>
-        <div class="column col-6">
+        <div class="col-6">
           <mat-form-field *ngIf="!isSocial" class="mb-2" appearance="outline">
             <mat-label>{{
               'common.form.fields.password' | translate
@@ -79,7 +79,7 @@
             />
           </mat-form-field>
         </div>
-        <div class="column col-6">
+        <div class="col-6">
           <mat-form-field *ngIf="!isSocial" class="mb-2" appearance="outline">
             <mat-label>{{
               'common.form.fields.confirmPassword' | translate
@@ -97,12 +97,12 @@
         </div>
       </div>
       <div class="row">
-        <div class="column col-12">
+        <div class="col-12">
           <p class="mt-1">
             {{ 'common.form.fields.profilePicture' | translate }}:
           </p>
           <app-dnd
-            formControlName="photo"
+            formControlName="avatar"
             [size]="enumSize.sm"
             [context]="enumImageContext.avatar"
             [limit]="1"

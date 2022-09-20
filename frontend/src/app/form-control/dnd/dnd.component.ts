@@ -19,16 +19,12 @@ import {
 import { ApiRequestService } from '../../service/ApiRequest/api-request.service';
 import { ApiResponseModel } from '../../model/Model/ApiResponse.model';
 import { ImageEntity } from 'src/app/model/Entity/ArticleForm.entity';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import * as _ from 'lodash';
 import { enumImageContext, enumSize } from '../../model/Model/Appearance';
 import { translate, validFields } from '../../custom/helpers';
 
-interface DndFile extends File {
-  progress: number;
-  imgPath: SafeUrl;
-}
+interface DndFile extends ImageEntity, Partial<File> {}
 
 @Component({
   selector: 'app-dnd',
@@ -71,8 +67,7 @@ export class DndComponent
     private flashmessage: FlashMessageService,
     private debug: LogService,
     private injector: Injector,
-    private apiRequestService: ApiRequestService,
-    private domSanitizer: DomSanitizer
+    private apiRequestService: ApiRequestService
   ) {}
 
   ngOnInit(): void {
@@ -121,9 +116,10 @@ export class DndComponent
       return;
     }
     this.files.splice(index, 1);
-    if (this.formControlRef) {
-      this.formControlRef.updateValueAndValidity();
-    }
+
+    this.CVA_ON_TOUCHED();
+    this.CVA_ON_CHANGE(this.files);
+    this.writeValue(this.files);
   }
 
   /**
@@ -156,9 +152,8 @@ export class DndComponent
               );
               break;
             case HttpEventType.Response:
-              item.imgPath = this.domSanitizer.bypassSecurityTrustUrl(
-                environment.urlBe + data.data.imgPath
-              );
+              item.imgPath = environment.urlBe + data.data.imgPath; //this.domSanitizer.bypassSecurityTrustUrl(
+              //);
               this.debug.log('Image Upload Successfully!', data);
           }
         });
@@ -169,6 +164,10 @@ export class DndComponent
 
     this.writeValue(this.files);
     this.fileDropEl.nativeElement.value = '';
+  }
+
+  getFiles() {
+    return this.files;
   }
 
   /**
@@ -203,6 +202,20 @@ export class DndComponent
 
   writeValue(files: DndFile[]): void {
     this.files = files || [];
+
+    // Normalize string img paths
+    if (_.isString(this.files)) {
+      this.files = [
+        {
+          imgPath: this.files,
+          progress: 100,
+        },
+      ];
+    }
+
+    if (this.formControlRef) {
+      this.formControlRef.updateValueAndValidity();
+    }
   }
 
   registerOnChange(fn: (files: DndFile[]) => void): void {

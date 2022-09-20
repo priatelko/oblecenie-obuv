@@ -109,8 +109,12 @@ export function searchInModel(
           itemPath.hidden = false;
         });
       }
+
+      console.log(resultChildren);
     }
   });
+
+  console.log('model', model);
 
   return model;
 }

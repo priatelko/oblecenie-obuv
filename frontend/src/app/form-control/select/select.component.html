@@ -14,34 +14,38 @@
   <ng-container *ngIf="(type$ | async) == selectType.Radio">
     <mat-radio-group *ngIf="(type$ | async) == selectType.Radio">
       <ng-container *ngFor="let toggle of items">
-        <!-- Group name -->
-        <div *ngIf="toggle.id === null" class="h4 mt-3">{{ toggle.label }}</div>
-        <div
-          *ngIf="toggle.id !== null"
-          class="mat-selection-list mat-selection-list--radio"
-        >
-          <div class="mat-list-item mat-list-option">
-            <mat-radio-button
-              *ngIf="toggle.id !== null"
-              [value]="toggle.id"
-              [disabled]="disabled || toggle.disabled"
-              [checked]="toggle.checked"
-              (change)="toggleEvent(toggle.id, toggle.checked)"
-            >
-              {{ toggle.label }}
-            </mat-radio-button>
+        <ng-container *ngIf="!toggle.hidden">
+          <!-- Group name -->
+          <div *ngIf="toggle.id === null" class="h4 mt-3">
+            {{ toggle.label }}
           </div>
-        </div>
+          <div
+            *ngIf="toggle.id !== null"
+            class="mat-selection-list mat-selection-list--radio"
+          >
+            <div class="mat-list-item mat-list-option">
+              <mat-radio-button
+                *ngIf="toggle.id !== null"
+                [value]="toggle.id"
+                [disabled]="disabled || toggle.disabled"
+                [checked]="toggle.checked"
+                (change)="toggleEvent(toggle.id, toggle.checked)"
+              >
+                {{ toggle.label }}
+              </mat-radio-button>
+            </div>
+          </div>
 
-        <!-- Children -->
-        <div *ngIf="toggle.children && toggle.children.length > 0">
-          <ng-container
-            *ngTemplateOutlet="
-              itemList;
-              context: { items: toggle.children, child: 'ANOOO' }
-            "
-          ></ng-container>
-        </div>
+          <!-- Children -->
+          <div *ngIf="toggle.children && toggle.children.length > 0">
+            <ng-container
+              *ngTemplateOutlet="
+                itemList;
+                context: { items: toggle.children, child: 'ANOOO' }
+              "
+            ></ng-container>
+          </div>
+        </ng-container>
       </ng-container>
     </mat-radio-group>
   </ng-container>

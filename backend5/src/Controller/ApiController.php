@@ -34,29 +34,29 @@ class ApiController extends BaseController {
 
 			case 'add-dress-article':
 				//die('what?');
-				$preKoho = Helpers::entityToArray($em->getRepository('\App\Entity\Prekoho')->findBy([], ['zorad' => 'ASC']));
-				$obdobie = Helpers::entityToArray($em->getRepository('\App\Entity\Obdobie')->findBy([], ['zorad' => 'ASC']));
-				$kategorie = $em->getRepository('\App\Entity\OblecenieKategorie')->getDataToSelectForm();
-				$znacka = Helpers::entityToArray($em->getRepository('\App\Entity\Znacka')->findBy([], ['nazov' => 'ASC']));
-				$prilezitost = Helpers::entityToArray($em->getRepository('\App\Entity\ObleceniePrilezitost')->findBy([], ['zorad' => 'ASC']));
-				$zostrih = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieZostrih')->findBy([], ['zorad' => 'ASC']));
-				$velkost = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieVelkost')->findBy([], ['zorad' => 'ASC']));
-				$styl = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieStyl')->findBy([], ['zorad' => 'ASC']));
-				$stav = Helpers::entityToArray($em->getRepository('\App\Entity\Stav')->findBy([], ['zorad' => 'ASC']));
-				$zapinanie = Helpers::entityToArray($em->getRepository('\App\Entity\OblecenieZapinanie')->findBy([], ['zorad' => 'ASC']));
-				$material = Helpers::entityToArray($em->getRepository('\App\Entity\Material')->findBy([], ['nazov' => 'ASC']));
+				$whom = Helpers::entityToArray($em->getRepository('\App\Entity\Whom')->findBy([], ['order' => 'ASC']));
+				$season = Helpers::entityToArray($em->getRepository('\App\Entity\Season')->findBy([], ['order' => 'ASC']));
+				$categories = $em->getRepository('\App\Entity\DressCategory')->getDataToSelectForm();
+				$brand = Helpers::entityToArray($em->getRepository('\App\Entity\Brand')->findBy([], ['title' => 'ASC']));
+				$occasion = Helpers::entityToArray($em->getRepository('\App\Entity\DressOccasion')->findBy([], ['order' => 'ASC']));
+				$cut = Helpers::entityToArray($em->getRepository('\App\Entity\DressCut')->findBy([], ['order' => 'ASC']));
+				$size = Helpers::entityToArray($em->getRepository('\App\Entity\DressSize')->findBy([], ['order' => 'ASC']));
+				$style = Helpers::entityToArray($em->getRepository('\App\Entity\DressStyle')->findBy([], ['order' => 'ASC']));
+				$state = Helpers::entityToArray($em->getRepository('\App\Entity\State')->findBy([], ['order' => 'ASC']));
+				$fastening = Helpers::entityToArray($em->getRepository('\App\Entity\DressFastening')->findBy([], ['order' => 'ASC']));
+				$material = Helpers::entityToArray($em->getRepository('\App\Entity\Material')->findBy([], ['title' => 'ASC']));
 				
 				return $this->respond([
-					'preKoho' => $preKoho,
-					'obdobie' => $obdobie,
-					'kategorie' => $kategorie,
-					'znacka' => $znacka,
-					'prilezitost' => $prilezitost,
-					'zostrih' => $zostrih,
-					'velkost' => $velkost,
-					'styl' => $styl,
-					'stav' => $stav,
-					'zapinanie' => $zapinanie,
+					'whom' => $whom,
+					'season' => $season,
+					'categories' => $categories,
+					'brand' => $brand,
+					'occasion' => $occasion,
+					'cut' => $cut,
+					'size' => $size,
+					'style' => $style,
+					'state' => $state,
+					'fastening' => $fastening,
 					'material' => $material,
 				]);
 			default:

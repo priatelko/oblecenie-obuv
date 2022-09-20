@@ -14,8 +14,8 @@ import {
 
 import {
   DBSimpleEntity,
-  Kategorie,
-  KategorieChildren,
+  Categories,
+  CategoriesChildren,
   MultiSelectOption,
   SelectOption,
 } from '../../../model/Entity/Form.entity';
@@ -28,6 +28,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LoginComponent } from '../../user/login/login.component';
 import { ArticleService } from '../../../service/Article/article.service';
 import { enumImageContext } from '../../../model/Model/Appearance';
+import { pairwise, startWith } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
@@ -48,36 +49,36 @@ export class AddComponent implements OnInit {
   addOblecenieForm: FormGroup;
   addOblecenieFormPopis: FormGroup;
   addOblecenieFormZaradenie: FormGroup;
-  addOblecenieFormZaradenieVelkost: FormGroup;
+  addOblecenieFormZaradenieSize: FormGroup;
 
-  preKoho$: Observable<MultiSelectOption[]>;
-  obdobie$: Observable<MultiSelectOption[]>;
-  styl$: Observable<MultiSelectOption[]>;
-  znacka$: Observable<MultiSelectOption[]>;
-  prilezitost$: Observable<MultiSelectOption[]>;
-  zapinanie$: Observable<MultiSelectOption[]>;
-  stav$: Observable<MultiSelectOption[]>;
-  zostrih$: Observable<SelectOption[]>;
-  velkost$: Observable<SelectOption[]>;
+  whom$: Observable<MultiSelectOption[]>;
+  season$: Observable<MultiSelectOption[]>;
+  style$: Observable<MultiSelectOption[]>;
+  brand$: Observable<MultiSelectOption[]>;
+  occasion$: Observable<MultiSelectOption[]>;
+  fastening$: Observable<MultiSelectOption[]>;
+  state$: Observable<MultiSelectOption[]>;
+  cut$: Observable<SelectOption[]>;
+  size$: Observable<SelectOption[]>;
 
   @Input() addKind: ArtikelTyp;
 
   // Dress
-  oblecenieKategorieFilter: FormControl = new FormControl();
-  oblecenieZnackaFilter: FormControl = new FormControl();
+  oblecenieCategoriesFilter: FormControl = new FormControl();
+  oblecenieBrandFilter: FormControl = new FormControl();
 
   dndLimit = this.identityService.limit.ArticleImageUpload;
 
-  get oblecenieKategorieFilter$() {
+  get oblecenieCategoriesFilter$() {
     return this.addArticleDressRepository.getDressCategoriesFilter();
   }
-  get oblecenieZnackaFilter$() {
-    return this.addArticleDressRepository.getZnackaFilter();
+  get oblecenieBrandFilter$() {
+    return this.addArticleDressRepository.getBrandFilter();
   }
 
-  get isVelkostInvalid() {
+  get isSizeInvalid() {
     return Validator.isInvalid(
-      this.addOblecenieFormZaradenie.get('velkost') as FormGroup
+      this.addOblecenieFormZaradenie.get('size') as FormGroup
     );
   }
 
@@ -90,10 +91,10 @@ export class AddComponent implements OnInit {
     public identityService: IdentityService
   ) {}
 
-  trackByFn(index, item: Kategorie) {
+  trackByFn(index, item: Categories) {
     return item.item;
   }
-  // trackByIdFn(index, item: KategorieChildren) {
+  // trackByIdFn(index, item: CategoriesChildren) {
   //   return item.id;
   // }
   trackByIdFn: TrackByFunction<any> = (index: number, item: any) => item.id;
@@ -101,36 +102,59 @@ export class AddComponent implements OnInit {
   ngOnInit() {
     this.addOblecenieForm = this.formType.getDress();
     this.addOblecenieFormPopis = this.addOblecenieForm.get(
-      'popis'
+      'description'
     ) as FormGroup;
     this.addOblecenieFormZaradenie = this.addOblecenieForm.get(
-      'zaradenie'
+      'categorize'
     ) as FormGroup;
-    this.addOblecenieFormZaradenieVelkost = this.addOblecenieFormZaradenie.get(
-      'velkost'
+    this.addOblecenieFormZaradenieSize = this.addOblecenieFormZaradenie.get(
+      'size'
     ) as FormGroup;
 
-    this.preKoho$ = this.addArticleDressRepository.getPreKohoOptions();
-    this.obdobie$ = this.addArticleDressRepository.getObdobieOptions();
-    this.styl$ = this.addArticleDressRepository.getStylOptions();
-    this.prilezitost$ = this.addArticleDressRepository.getPrilezitostOptions();
-    this.zapinanie$ = this.addArticleDressRepository.getZapinanieOptions();
-    this.stav$ = this.addArticleDressRepository.getStavOptions();
-    this.zostrih$ = this.addArticleDressRepository.getZostrihOptions();
-    this.velkost$ = this.addArticleDressRepository.getVelkostOptions();
+    this.whom$ = this.addArticleDressRepository.getWhomOptions();
+    this.season$ = this.addArticleDressRepository.getSeasonOptions();
+    this.style$ = this.addArticleDressRepository.getStyleOptions();
+    this.occasion$ = this.addArticleDressRepository.getOccasionOptions();
+    this.fastening$ = this.addArticleDressRepository.getFasteningOptions();
+    this.state$ = this.addArticleDressRepository.getStateOptions();
+    this.cut$ = this.addArticleDressRepository.getCutOptions();
+    this.size$ = this.addArticleDressRepository.getSizeOptions();
     this.addArticleDressRepository.dressCategoriesInit();
-    this.addArticleDressRepository.znackaInit();
+    this.addArticleDressRepository.brandInit();
     this.addArticleDressRepository.materialInit();
 
-    this.oblecenieKategorieFilter.valueChanges
-      .pipe(untilDestroyed(this))
-      .subscribe((value) => {
-        this.addArticleDressRepository.filterDressCategories(value);
-      });
-    this.oblecenieZnackaFilter.valueChanges
-      .pipe(untilDestroyed(this))
-      .subscribe((value) => {
-        this.addArticleDressRepository.filterZnacka(value);
+    // Not used now
+    // this.oblecenieCategoriesFilter.valueChanges
+    //   .pipe(untilDestroyed(this))
+    //   .subscribe((value) => {
+    //     console.log('category filter');
+
+    //     this.addArticleDressRepository.filterDressCategories(value);
+    //   });
+    // this.oblecenieBrandFilter.valueChanges
+    //   .pipe(untilDestroyed(this))
+    //   .subscribe((value) => {
+    //     this.addArticleDressRepository.filterBrand(value);
+    //   });
+    // end not used
+
+    // Velkost, disable jedno alebo druhe, ak je vyplnene uz
+    this.addOblecenieFormZaradenieSize.valueChanges
+      .pipe(startWith({ size: null, sizeNum: null }), pairwise())
+      .subscribe(([prev, next]) => {
+        if (prev.size === next.size && prev.sizeNum === next.sizeNum) {
+          return;
+        }
+        if (next.size) {
+          this.addOblecenieFormZaradenie.get('size').get('sizeNum').disable();
+        } else {
+          this.addOblecenieFormZaradenie.get('size').get('sizeNum').enable();
+        }
+        if (next.sizeNum) {
+          this.addOblecenieFormZaradenie.get('size').get('size').disable();
+        } else {
+          this.addOblecenieFormZaradenie.get('size').get('size').enable();
+        }
       });
 
     // this.formDress.on('change', function () {
@@ -139,16 +163,16 @@ export class AddComponent implements OnInit {
 
     // chooseKind(kind: ArtikelTyp) {
     //   this.chosenKind = kind;
-    //   this.addOblecenieForm.get('typ').patchValue(kind);
+    //   this.addOblecenieForm.get('type').patchValue(kind);
     // }
 
     // setTimeout(() => {
     //   this.addOblecenieForm.get('material').setValue('niexo');
 
-    //   this.oblecenieKategorieFilter$.subscribe(res => {
+    //   this.oblecenieCategoriesFilter$.subscribe(res => {
     //     console.log(res);
 
-    //     this.addOblecenieForm.get('oblecenieKategoria').setValue(8);
+    //     this.addOblecenieForm.get('dressCategory').setValue(8);
     //   });
     // }, 2000);
 
@@ -206,16 +230,14 @@ export class AddComponent implements OnInit {
   /** Helpers */
   openCategoryFilterDialog() {
     const data: ModalFilterOptions = {
-      header: 'component.article.add.categorize.kategoria',
+      header: 'component.article.add.categorize.category',
       required: true,
-      defaultValue: this.addOblecenieForm
-        .get('zaradenie')
-        .get('oblecenieKategoria').value,
+      defaultValue: this.addOblecenieFormZaradenie.get('dressCategory').value,
       multiselect: false,
       checkType: SelectType.Radio,
       items: this.modalFilterService.transformItems<
-        Kategorie,
-        KategorieChildren
+        Categories,
+        CategoriesChildren
       >(
         this.addArticleDressRepository.oblecenieCategories,
         (item): MultiSelectOption => {
@@ -228,7 +250,7 @@ export class AddComponent implements OnInit {
         (item): MultiSelectOption => {
           return {
             id: item.id,
-            label: item.nazov,
+            label: item.title,
           };
         }
       ),
@@ -242,29 +264,26 @@ export class AddComponent implements OnInit {
       .beforeClosed()
       .subscribe((value) => {
         if (value) {
-          this.addOblecenieForm
-            .get('zaradenie')
-            .get('oblecenieKategoria')
-            .setValue(value);
+          this.addOblecenieFormZaradenie.get('dressCategory').setValue(value);
         }
       });
   }
 
-  openZnackaFilterDialog() {
+  openBrandFilterDialog() {
     const data: ModalFilterOptions = {
-      header: 'component.article.add.categorize.znacka',
+      header: 'component.article.add.categorize.brand',
       required: true,
       multiselect: false,
       minSearchLength: 2,
-      defaultValue: this.addOblecenieFormZaradenie.get('znacka').value,
+      defaultValue: this.addOblecenieFormZaradenie.get('brand').value,
       checkType: SelectType.Radio,
       items: this.modalFilterService.transformItems<
         DBSimpleEntity,
         DBSimpleEntity
-      >(this.addArticleDressRepository.znacka, (item): MultiSelectOption => {
+      >(this.addArticleDressRepository.brand, (item): MultiSelectOption => {
         return {
           id: item.id,
-          label: item.nazov,
+          label: item.title,
         };
       }),
     };
@@ -277,7 +296,7 @@ export class AddComponent implements OnInit {
       .beforeClosed()
       .subscribe((value) => {
         if (value) {
-          this.addOblecenieFormZaradenie.get('znacka').setValue(value);
+          this.addOblecenieFormZaradenie.get('brand').setValue(value);
         }
       });
   }
@@ -285,7 +304,7 @@ export class AddComponent implements OnInit {
   openMaterialFilterDialog() {
     const data: ModalFilterOptions = {
       header: 'component.article.add.categorize.material',
-      required: true,
+      required: false,
       defaultValue: this.addOblecenieFormZaradenie.get('material').value,
       items: this.modalFilterService.transformItems<
         DBSimpleEntity,
@@ -293,7 +312,7 @@ export class AddComponent implements OnInit {
       >(this.addArticleDressRepository.material, (item): MultiSelectOption => {
         return {
           id: item.id,
-          label: item.nazov,
+          label: item.title,
         };
       }),
     };
@@ -308,11 +327,10 @@ export class AddComponent implements OnInit {
         if (res) {
           const materialNames = this.addArticleDressRepository.material
             .filter((item) => includes(res, item.id))
-            .map((item) => item.nazov);
+            .map((item) => item.title);
 
           this.addOblecenieFormZaradenie.get('material').setValue(res);
-          this.addOblecenieForm
-            .get('zaradenie')
+          this.addOblecenieFormZaradenie
             .get('materialDisplay')
             .setValue(materialNames.join(', '));
         }

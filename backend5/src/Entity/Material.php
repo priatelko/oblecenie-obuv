@@ -15,9 +15,9 @@ class Material implements \App\Interfaces\ToStringInterface, \App\Interfaces\ToA
     /**
      * @var string
      *
-     * @ORM\Column(name="nazov", type="string", length=255, nullable=false)
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
-    private $nazov;
+    private $title;
 
     /**
      * @var integer
@@ -31,41 +31,41 @@ class Material implements \App\Interfaces\ToStringInterface, \App\Interfaces\ToA
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="App\Entity\Artikel", mappedBy="material")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Article", mappedBy="material")
      */
-    private $artikel;
+    private $article;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->artikel = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->article = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
     /**
-     * Set nazov
+     * Set title
      *
-     * @param string $nazov
+     * @param string $title
      *
      * @return Material
      */
-    public function setNazov($nazov)
+    public function setTitle($title)
     {
-        $this->nazov = $nazov;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get nazov
+     * Get title
      *
      * @return string
      */
-    public function getNazov()
+    public function getTitle()
     {
-        return $this->nazov;
+        return $this->title;
     }
 
     /**
@@ -79,47 +79,47 @@ class Material implements \App\Interfaces\ToStringInterface, \App\Interfaces\ToA
     }
 
     /**
-     * Add artikel
+     * Add article
      *
-     * @param \App\Entity\Artikel $artikel
+     * @param \App\Entity\Article $article
      *
      * @return Material
      */
-    public function addArtikel(\App\Entity\Artikel $artikel)
+    public function addArticle(\App\Entity\Article $article)
     {
-        $this->artikel[] = $artikel;
+        $this->article[] = $article;
 
         return $this;
     }
 
     /**
-     * Remove artikel
+     * Remove article
      *
-     * @param \App\Entity\Artikel $artikel
+     * @param \App\Entity\Article $article
      */
-    public function removeArtikel(\App\Entity\Artikel $artikel)
+    public function removeArticle(\App\Entity\Article $article)
     {
-        $this->artikel->removeElement($artikel);
+        $this->article->removeElement($article);
     }
 
     /**
-     * Get artikel
+     * Get article
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getArtikel()
+    public function getArticle()
     {
-        return $this->artikel;
+        return $this->article;
     }
-    
+
     public function __toString() {
-		return $this->getNazov();
+		return $this->getTitle();
 	}
-	
+
 	public function toArrayObject() {
 		return [
 			'id' => $this->getId(),
-			'nazov' => $this->getNazov()
+			'title' => $this->getTitle()
 		];
 	}
 }

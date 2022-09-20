@@ -14,7 +14,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatOptionModule } from '@angular/material/core';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { DndModule } from '../../form-control/dnd/dnd.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -30,7 +29,6 @@ import { MatSelectModule } from '@angular/material/select';
     MatSelectModule,
     MatFormFieldModule,
     MatOptionModule,
-    MatTooltipModule,
     MatDialogModule,
     MatButtonModule,
     MatProgressSpinnerModule,

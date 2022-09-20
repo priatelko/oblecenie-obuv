@@ -10,7 +10,8 @@ class Helpers {
 	}
 	
 	public static function trimArray(array $array) {
-	   return array_map('trim', $array);
+    array_walk_recursive($array, function(&$v) { $v = trim($v); });
+    return $array;
    }
    
    public static function getCacheStorage($namespace, $lifeTime = 0) {

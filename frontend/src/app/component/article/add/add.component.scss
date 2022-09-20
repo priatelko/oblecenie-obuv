@@ -124,7 +124,7 @@ h4 {
       margin-right: 0.25rem;
 
       &.valid {
-        background-color: var(--teal) !important;
+        background-color: var(--success) !important;
       }
     }
 
@@ -138,11 +138,22 @@ h4 {
   }
 }
 
-.big-success,
-.big-disabled {
-  color: var(--blue);
-  font-size: 7rem;
+input[name='_dummy'] {
+  display: none;
 }
-.big-disabled {
-  color: var(--gray);
+
+::ng-deep .form-field-no-space {
+  .mat-form-field-infix {
+    padding: 0;
+    border-top: 0 none;
+  }
+}
+
+.mat-hint-custom {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 75%;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-wrapper {
+  padding-bottom: 1.5rem;
 }

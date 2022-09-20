@@ -23,6 +23,7 @@ import { head } from 'lodash';
         position: relative;
         display: block;
         width: 100%;
+        z-index: 10;
       }
       .alert {
         user-select: none;

@@ -9,35 +9,30 @@ export class ArticleService {
 
   loadForm() {
     return {
-      popis: {
-        titulok: 'test',
-        popis: 'test',
-        foto: [
-          {
-            progress: 100,
-            imgPath:
-              'https://localhost:4200/img/articles/temp/IMG_20220418_091317_367.jpg',
-          },
-        ],
-        cena: null,
+      description: {
+        title: 'test',
+        description: 'test',
+        photo: 'https://localhost:4200/be/img/_temp/631e095c95da1.jpg',
+        price: null,
       },
-      zaradenie: {
-        preKoho: [1, 3],
-        obdobie: 1,
-        znacka: 1,
-        stav: [1, 3],
+      categorize: {
+        whom: [1, 3],
+        season: 1,
+        brand: 1,
+        state: [1, 3],
         material: [1, 3],
         materialDisplay: 'loprem...',
-        typ: ArtikelTyp.dress,
-        oblecenieKategoria: 10,
-        prilezitost: [1, 3],
-        zostrih: 1,
-        velkost: {
-          velkost: 2,
-          velkostCislo: 25,
+        type: ArtikelTyp.dress,
+        dressCategory: 10,
+        occasion: [1, 3],
+        cut: 1,
+        size: {
+          size: 2,
+          sizeNum: 25,
         },
-        styl: [1, 3],
-        zapinanie: [1, 3],
+        style: [1, 3],
+        fastening: [1, 3],
+        notes: '',
       },
     };
   }

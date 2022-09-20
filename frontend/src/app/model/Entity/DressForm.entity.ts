@@ -1,28 +1,28 @@
-import { DBSimpleEntity, Kategorie } from './Form.entity';
+import { DBSimpleEntity, Categories } from './Form.entity';
 import { ArticleFormEntity } from './ArticleForm.entity';
 
 // Data response article
 export interface DressResponseEntity {
-  preKoho: DBSimpleEntity[];
-  obdobie: DBSimpleEntity[];
-  kategorie: Kategorie[];
-  znacka: DBSimpleEntity[];
-  prilezitost: DBSimpleEntity[];
-  zostrih: DBSimpleEntity[];
-  velkost: DBSimpleEntity[];
-  velkostCislo: number;
-  styl: DBSimpleEntity[];
-  zapinanie: DBSimpleEntity[];
-  stav: DBSimpleEntity[];
+  whom: DBSimpleEntity[];
+  season: DBSimpleEntity[];
+  categories: Categories[];
+  brand: DBSimpleEntity[];
+  occasion: DBSimpleEntity[];
+  cut: DBSimpleEntity[];
+  size: DBSimpleEntity[];
+  sizeNum: number;
+  style: DBSimpleEntity[];
+  fastening: DBSimpleEntity[];
+  state: DBSimpleEntity[];
   material: DBSimpleEntity[];
 }
 
 // Form article
 export interface DressFormEntity extends ArticleFormEntity {
-  oblecenieKategoria: Number;
-  prilezitost: Number[];
-  zostrih: Number;
-  velkost: { velkost: Number; velkostCislo: Number };
-  styl: Number[];
-  zapinanie: Number[];
+  dressCategory: Number;
+  occasion: Number[];
+  cut: Number;
+  size: { size: Number; sizeNum: Number };
+  style: Number[];
+  fastening: Number[];
 }

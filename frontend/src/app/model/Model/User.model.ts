@@ -1,4 +1,5 @@
 import { FacebookLoginProvider } from 'angularx-social-login';
+import { ImageEntity } from '../Entity/ArticleForm.entity';
 
 export interface UserModel {
   loginRole: UserBussinesRoleModel;
@@ -10,6 +11,7 @@ export interface UserModel {
   roles?: UserRoleModel[];
   token?: string;
   provider?: SocialProvider;
+  avatar?: string;
   extra?: boolean; // ma platene
 }
 

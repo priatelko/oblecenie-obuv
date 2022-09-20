@@ -24,9 +24,18 @@
   }
 }
 
+.mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
 .search-field {
   ::ng-deep .mat-form-field-wrapper {
     padding: 0;
+  }
+  .mat-icon {
+    top: 0.25rem;
+    position: relative;
+    color: var(--gray);
   }
 }
 

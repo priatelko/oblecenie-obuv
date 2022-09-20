@@ -86,16 +86,12 @@
         <mat-select appFormControl formControlName="role" required>
           <mat-option *ngFor="let role of roles" [value]="role.id">
             {{ role.description }}
-          </mat-option> </mat-select
-        ><mat-icon
-          class="role-tooltip"
-          matTooltip="{{ 'component.user-login.roleInfo' | translate }}"
-          [attr.aria-label]="'common.tooltipAria' | translate"
-          >help</mat-icon
-        >
+          </mat-option>
+        </mat-select>
+        <mat-hint>{{ 'component.user-login.roleInfo' | translate }}</mat-hint>
       </mat-form-field>
 
-      <div class="mt-2 text-right">
+      <div class="mt-4 text-right">
         <a appVoidLink (click)="forgotPassword()">{{
           'component.header.user.forgotPassword' | translate
         }}</a>

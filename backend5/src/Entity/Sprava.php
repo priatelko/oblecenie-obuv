@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Sprava
+ * Message
  *
- * @ORM\Table(name="sprava", indexes={@ORM\Index(name="IDX_E5578BD43AE519E", columns={"id_user_from"}), @ORM\Index(name="IDX_E5578BD114DCF71", columns={"id_user_to"}), @ORM\Index(name="IDX_E5578BD1BB9D5A2", columns={"id_parent"}), @ORM\Index(name="IDX_E5578BD7AAAF543", columns={"id_artikel"})})
+ * @ORM\Table(name="message", indexes={@ORM\Index(name="IDX_E5578BD43AE519E", columns={"id_user_from"}), @ORM\Index(name="IDX_E5578BD114DCF71", columns={"id_user_to"}), @ORM\Index(name="IDX_E5578BD1BB9D5A2", columns={"id_parent"}), @ORM\Index(name="IDX_E5578BD7AAAF543", columns={"id_article"})})
  * @ORM\Entity
  */
-class Sprava
+class Message
 {
     /**
      * @var string
@@ -29,9 +29,9 @@ class Sprava
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_create", type="datetime", nullable=false)
+     * @ORM\Column(name="created", type="datetime", nullable=false)
      */
-    private $dateCreate;
+    private $created;
 
     /**
      * @var boolean
@@ -67,9 +67,9 @@ class Sprava
     private $idUserTo;
 
     /**
-     * @var \App\Entity\Sprava
+     * @var \App\Entity\Message
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sprava")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Message")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="id_parent", referencedColumnName="id")
      * })
@@ -87,14 +87,14 @@ class Sprava
     private $idUserFrom;
 
     /**
-     * @var \App\Entity\Artikel
+     * @var \App\Entity\Article
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Artikel")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Article")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_artikel", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="id_article", referencedColumnName="id")
      * })
      */
-    private $idArtikel;
+    private $idArticle;
 
 
 
@@ -103,7 +103,7 @@ class Sprava
      *
      * @param string $subject
      *
-     * @return Sprava
+     * @return Message
      */
     public function setSubject($subject)
     {
@@ -127,7 +127,7 @@ class Sprava
      *
      * @param string $text
      *
-     * @return Sprava
+     * @return Message
      */
     public function setText($text)
     {
@@ -147,27 +147,27 @@ class Sprava
     }
 
     /**
-     * Set dateCreate
+     * Set created
      *
-     * @param \DateTime $dateCreate
+     * @param \DateTime $created
      *
-     * @return Sprava
+     * @return Message
      */
-    public function setDateCreate($dateCreate)
+    public function setCreated($created)
     {
-        $this->dateCreate = $dateCreate;
+        $this->created = $created;
 
         return $this;
     }
 
     /**
-     * Get dateCreate
+     * Get created
      *
      * @return \DateTime
      */
-    public function getDateCreate()
+    public function getCreated()
     {
-        return $this->dateCreate;
+        return $this->created;
     }
 
     /**
@@ -175,7 +175,7 @@ class Sprava
      *
      * @param boolean $isActive
      *
-     * @return Sprava
+     * @return Message
      */
     public function setIsActive($isActive)
     {
@@ -199,7 +199,7 @@ class Sprava
      *
      * @param \DateTime $dateReading
      *
-     * @return Sprava
+     * @return Message
      */
     public function setDateReading($dateReading)
     {
@@ -233,7 +233,7 @@ class Sprava
      *
      * @param \App\Entity\User $idUserTo
      *
-     * @return Sprava
+     * @return Message
      */
     public function setIdUserTo(\App\Entity\User $idUserTo = null)
     {
@@ -255,11 +255,11 @@ class Sprava
     /**
      * Set idParent
      *
-     * @param \App\Entity\Sprava $idParent
+     * @param \App\Entity\Message $idParent
      *
-     * @return Sprava
+     * @return Message
      */
-    public function setIdParent(\App\Entity\Sprava $idParent = null)
+    public function setIdParent(\App\Entity\Message $idParent = null)
     {
         $this->idParent = $idParent;
 
@@ -269,7 +269,7 @@ class Sprava
     /**
      * Get idParent
      *
-     * @return \App\Entity\Sprava
+     * @return \App\Entity\Message
      */
     public function getIdParent()
     {
@@ -281,7 +281,7 @@ class Sprava
      *
      * @param \App\Entity\User $idUserFrom
      *
-     * @return Sprava
+     * @return Message
      */
     public function setIdUserFrom(\App\Entity\User $idUserFrom = null)
     {
@@ -301,26 +301,26 @@ class Sprava
     }
 
     /**
-     * Set idArtikel
+     * Set idArticle
      *
-     * @param \App\Entity\Artikel $idArtikel
+     * @param \App\Entity\Article $idArticle
      *
-     * @return Sprava
+     * @return Message
      */
-    public function setIdArtikel(\App\Entity\Artikel $idArtikel = null)
+    public function setIdArticle(\App\Entity\Article $idArticle = null)
     {
-        $this->idArtikel = $idArtikel;
+        $this->idArticle = $idArticle;
 
         return $this;
     }
 
     /**
-     * Get idArtikel
+     * Get idArticle
      *
-     * @return \App\Entity\Artikel
+     * @return \App\Entity\Article
      */
-    public function getIdArtikel()
+    public function getIdArticle()
     {
-        return $this->idArtikel;
+        return $this->idArticle;
     }
 }
