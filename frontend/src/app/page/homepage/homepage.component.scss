@@ -1,5 +1,6 @@
 @import '~src/sass/variables';
 @import '~src/sass/mixins/functions';
+@import '~src/sass/placeholders';
 
 .card-wrap {
   $img-height: 10rem;
@@ -19,7 +20,7 @@
     &,
     img,
     .card-body {
-      transition: all 0.2s ease-in-out;
+      @extend %transition;
     }
 
     .card-body {

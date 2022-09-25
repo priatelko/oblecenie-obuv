@@ -58,7 +58,7 @@
         "removeAll": "Odstrániť obrázky",
         "uploadAll": "Nahrať vybrané obrázky",
         "notes": "Poznámka pre nás",
-        "notesDesc": "Napíšte nám, aké možnosti Vám chýbali pri vyplňovaní údajov, príp. ak máte iné Vaše pripomienky a podnety. Radi sa na to pozrieme a doplníme."
+        "notesDesc": "Napíšte nám Vaše pripomienky, podnety alebo aké možnosti Vám chýbali pri vyplňovaní údajov. Overíme ich a doplníme (dočasne vyplňte ľubovoľné)."
       }
     },
     "response": {
@@ -144,7 +144,7 @@
       "ownLoginPerex": "Pred prihlásením si vyberte rolu (predajcu alebo kupcu) pod ktorou budete chciet vystupovať.",
       "confirm1": "Neobdržali ste email o potvrdení registrácie?",
       "confirm2": "Nie, poslať znova!",
-      "roleInfo": "Rola oddeluje informácie systému medzi predajom a kúpou. Tým sa portál stáva prehľadnejším. Rolu si môžete zmeniť kedykoľvek podľa potreby.",
+      "roleInfo": "Rola oddeluje informácie systému medzi predajom a kúpou. Tým sa portál stáva prehľadnejším. Rolu si môžete zmeniť kedykoľvek počas sedenia.",
       "facebook": "Prihlásiť sa cez Facebook",
       "google": "Prihlásiť sa cez Google"
     },
@@ -202,7 +202,7 @@
           "materialDesc": "Ak zadávate sadu oblečenia, vyberte „Rôzny materiál. Keď neviete, vyberte „Iné“."
         },
         "contact": {
-          "info": "Vaše osobné údaje nezverejnujeme. Vaša identita sa bude zobrazovať v tvare",
+          "info": "Vaše osobné údaje nezverejnujeme ani neposkytujeme tretím stranám. Vaše meno sa bude zobrazovať v tvare",
           "logged": "Autorizácia je v poriadku",
           "notLogged": "Prosím, autorizujte sa..."
         }

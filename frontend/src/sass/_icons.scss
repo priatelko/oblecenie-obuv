@@ -55,7 +55,8 @@
   //     url('~src/assets/fonts/MaterialIcons-Regular.svg#svgFontName')
   //     format('svg'); /* Legacy iOS */
 
-    src: url('~src/assets/fonts/MaterialIconsRound-Regular.otf') format("opentype");
+  src: url('~src/assets/fonts/MaterialIconsRound-Regular.otf')
+    format('opentype');
 }
 
 .mat-icon {
@@ -85,6 +86,9 @@
   width: auto !important;
   height: auto !important;
 
+  &--xs {
+    font-size: 1.5rem !important;
+  }
   &--sm {
     font-size: 2.25rem !important;
   }

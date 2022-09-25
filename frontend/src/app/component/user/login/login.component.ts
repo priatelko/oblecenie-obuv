@@ -148,11 +148,11 @@ export class LoginComponent implements OnInit {
     this.loginForm.get('password').setValidators(null);
     this.loginForm.get('password').updateValueAndValidity();
 
-    // if (!this.loginForm.valid) {
-    //   this.loginForm.get('role').markAsTouched();
-    //   this.loginForm.updateValueAndValidity();
-    //   return;
-    // }
+    // Ked bola uz vybrana rola - form je validny, tak hned prihlasime
+    if (this.loginForm.valid) {
+      this.onSubmit();
+      return;
+    }
   }
 
   test() {

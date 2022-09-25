@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ArtikelTyp } from '../../model/Entity/ArticleForm.entity';
 
 @Injectable({
@@ -7,12 +8,15 @@ import { ArtikelTyp } from '../../model/Entity/ArticleForm.entity';
 export class ArticleService {
   constructor() {}
 
-  loadForm() {
-    return {
+  loadForm(form: FormGroup) {
+    form.patchValue({
       description: {
         title: 'test',
         description: 'test',
-        photo: 'https://localhost:4200/be/img/_temp/631e095c95da1.jpg',
+        photo: [
+          'https://localhost:4200/be/img/_temp/300658214_6323146.jpg',
+          'https://localhost:4200/be/img/_temp/632c8de962455.jpg',
+        ],
         price: null,
       },
       categorize: {
@@ -28,12 +32,14 @@ export class ArticleService {
         cut: 1,
         size: {
           size: 2,
-          sizeNum: 25,
+          sizeNum: '',
         },
         style: [1, 3],
         fastening: [1, 3],
-        notes: '',
+        notes: 'Hkasdjkaj sdajd jasdj asj adjs ',
       },
-    };
+    });
+
+    form.updateValueAndValidity();
   }
 }

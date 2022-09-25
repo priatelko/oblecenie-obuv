@@ -5,6 +5,8 @@ import { ChildrenNode } from '../model/Entity/Form.entity';
 import FuzzySearch from 'fuzzy-search';
 import { TranslateService } from '@ngx-translate/core';
 import { ContainerInjector } from '../module/ContainerGetter/container-getter.module';
+import { DndFile } from '../form-control/dnd/dnd.component';
+import * as _ from 'lodash';
 
 export const hasRequiredField = (abstractControl: AbstractControl): boolean => {
   if (abstractControl.validator) {
@@ -140,4 +142,21 @@ export function translate(key) {
   });
 
   return translated;
+}
+
+export function dndFileToImgPaths(files: DndFile): string[] {
+  if (_.isEmpty(files)) {
+    return null;
+  }
+
+  const imgPaths = [];
+  if (_.isArray(files)) {
+    files.forEach((file) => {
+      files.push(file.imgPath);
+    });
+  } else {
+    imgPaths.push(files);
+  }
+
+  return imgPaths;
 }

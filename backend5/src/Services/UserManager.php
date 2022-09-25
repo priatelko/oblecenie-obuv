@@ -150,6 +150,7 @@ class UserManager {
     $name = $post->get('name');
     $surname = $post->get('surname');
     $avatar = $post->get('avatar');
+dump($avatar); exit;
 
     $user->setAvatar($avatar ?? null);
 		$user->setName($name);

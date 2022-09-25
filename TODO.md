@@ -26,6 +26,7 @@
 
 # After deploy
 
+- Uprava profilu, pri uprave zadat povodne heslo
 - Popis hore na stranke pri scrollu dole schovat,
 - Zadavanie hesla, zobrazit ho. Oko ikonka
 - Ukladat sablony pridania artiklov, hlavne Zaradenie.
@@ -43,6 +44,7 @@
 - Login modal, tabulator, po zadani udajov na button prihlasit
 - matTooltip vyriesit aria-label
 - zoom tehliciek na zobrazovanie artiklov
+- Previazat Google account s Facebook. Overit ci ide o to toho isteho uzivatela. Musi sa prihlasit aj tam, aj tam sucasne
 - Formy spravit v Symfony
 
 ## Hints

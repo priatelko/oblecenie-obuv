@@ -23,8 +23,8 @@ import { IdentityService } from '../../../service/User/identity.service';
   styles: [
     `
       img {
-        width: 6rem;
-        height: 6rem;
+        width: 7rem;
+        height: 7rem;
         border-radius: 50%;
       }
       .big-success,

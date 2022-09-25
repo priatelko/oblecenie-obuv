@@ -1,6 +1,6 @@
-// Layout
+@import '~src/sass/placeholders';
 
 // Single tags
 a {
-  transition: all 0.2s;
+  @extend %transition;
 }

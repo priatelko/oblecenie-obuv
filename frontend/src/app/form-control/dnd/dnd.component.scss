@@ -1,5 +1,6 @@
 @import '~src/sass/variables';
 @import '~src/sass/mixins/functions';
+@import '~src/sass/placeholders';
 
 .container {
   max-width: rem-calc(600px);
@@ -90,11 +91,24 @@
     display: flex;
     flex-wrap: wrap;
     .single-file {
+      position: relative;
       flex-grow: 0;
       margin: 0.5rem;
       .img-prev {
         max-width: 10rem;
         max-height: 10rem;
+      }
+      .mat-icon {
+        position: absolute;
+        color: $color-border;
+        //text-shadow: 1px 1px 5px rgb(255 0 0 / 25%);
+        top: -0.75rem;
+        right: -0.75rem;
+        @extend %transition;
+        &:hover {
+          color: var(--red);
+          transform: scale(1.5);
+        }
       }
     }
   }

@@ -7,9 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { PluralTranslatePipe } from '../../pipe/pluralTranslate.pipe';
+import { DndDirective } from './dnd.directive';
 
 @NgModule({
-  declarations: [DndComponent, PluralTranslatePipe],
+  declarations: [DndComponent, DndDirective, PluralTranslatePipe],
   imports: [
     CommonModule,
     ValidationModule,

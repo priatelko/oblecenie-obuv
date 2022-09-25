@@ -24,7 +24,7 @@ import * as _ from 'lodash';
 import { enumImageContext, enumSize } from '../../model/Model/Appearance';
 import { translate, validFields } from '../../custom/helpers';
 
-interface DndFile extends ImageEntity, Partial<File> {}
+export interface DndFile extends ImageEntity, Partial<File> {}
 
 @Component({
   selector: 'app-dnd',
@@ -196,6 +196,14 @@ export class DndComponent
     }, 5000);
   }
 
+  // Guards
+  isImgString = (img: string | string[] | DndFile[]): img is string => {
+    return _.isString(img);
+  };
+  isImgStringArray = (img: string | string[] | DndFile[]): img is string[] => {
+    return _.isArray(img) && _.isString(img[0]);
+  };
+
   // CVA
   CVA_ON_CHANGE = (files: DndFile[]) => {};
   CVA_ON_TOUCHED = () => {};
@@ -203,14 +211,20 @@ export class DndComponent
   writeValue(files: DndFile[]): void {
     this.files = files || [];
 
-    // Normalize string img paths
-    if (_.isString(this.files)) {
+    // Normalize img paths strings into DndFile object
+    if (this.isImgString(this.files)) {
       this.files = [
         {
           imgPath: this.files,
           progress: 100,
         },
       ];
+    }
+    if (this.isImgStringArray(this.files)) {
+      this.files = this.files.map((filePath: string) => ({
+        imgPath: filePath,
+        progress: 100,
+      }));
     }
 
     if (this.formControlRef) {

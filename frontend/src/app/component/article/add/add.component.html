@@ -62,7 +62,7 @@
             <button
               mat-flat-button
               class="mat-button--md"
-              [disabled]="!addOblecenieForm.valid"
+              [disabled]="!addOblecenieForm.valid || !identityService.isLogged"
               type="submit"
               color="primary"
             >
@@ -161,7 +161,7 @@
               mat-stroked-button
               [disabled]="!addOblecenieForm.get('description').valid"
               class="mat-button--md"
-              type="submit"
+              type="button"
               color="primary"
               (click)="changeStep(2)"
             >
@@ -454,7 +454,7 @@
             </div>
           </div>
           <div class="row / mt-4">
-            <div class="col form-group form-group--white">
+            <div class="col-md form-group form-group--white">
               <h2 class="h4">
                 {{ 'component.article.add.categorize.material' | translate }}
               </h2>
@@ -492,14 +492,12 @@
                 </button>
               </div>
             </div>
-          </div>
-          <div class="row / mt-4">
-            <div class="col form-group form-group--white">
+            <div class="col-md form-group form-group--white">
+              <h2 class="h4">
+                {{ 'common.form.fields.notes' | translate }}
+              </h2>
               <div class="d-flex">
                 <mat-form-field appearance="outline" class="flex-grow-1 pb-0">
-                  <mat-label>{{
-                    'common.form.fields.notes' | translate
-                  }}</mat-label>
                   <div class="field-dialog-select">
                     <textarea
                       matInput
@@ -519,7 +517,7 @@
               mat-stroked-button
               [disabled]="!addOblecenieForm.get('categorize').valid"
               class="mat-button--md"
-              type="submit"
+              type="button"
               color="primary"
               (click)="changeStep(3)"
             >
@@ -603,7 +601,7 @@
         <button
           mat-flat-button
           [disabled]="addForm.invalid"
-          type="submit"
+          type="button"
           color="primary"
         >
           {{ 'common.form.fields.submit' | translate }}

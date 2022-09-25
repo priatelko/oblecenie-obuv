@@ -341,6 +341,6 @@ export class AddComponent implements OnInit {
     console.log(this.addOblecenieForm);
   }
   loadForm() {
-    this.addOblecenieForm.setValue(this.articleService.loadForm());
+    this.articleService.loadForm(this.addOblecenieForm);
   }
 }
